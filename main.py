@@ -5,7 +5,8 @@ def limpiar_pantalla():
 
 def kiosco() -> str:
     limpiar_pantalla()
-    print("""1.Kiosco Dulce
+    print("""
+             1.Kiosco Dulce
              2. Kiosco Gomitas
              3. Super Kiosco
              4. Todos los Kioscos.
@@ -20,4 +21,6 @@ def kiosco() -> str:
             return "Super Kiosco"
         elif opcion == 4:
             return "Todos los Kioscos"
+        else:
+            print("Opcion invalida")
 print(kiosco())
