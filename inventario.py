@@ -17,7 +17,7 @@ def menu_inventario():
         print("0. Volver al Menu Principal")
         print("=" * 50)
         
-        opcion = input("Seleccione una opcion: ").strip()
+        opcion = input("Seleccione una opcion: ")
         
         if opcion == "1":
             agregar_producto()
@@ -50,7 +50,7 @@ def agregar_producto():
     datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
     
     # Solicitar detalles del producto
-    nombre = input("Nombre del Producto: ").strip()
+    nombre = input("Nombre del Producto: ").strip().upper()
     if not nombre:
         print("El nombre del producto no puede estar vacio.")
         input("Presione Enter para continuar...")
@@ -101,7 +101,7 @@ def mostrar_productos():
     print("=" * 50)
     print("    PRODUCTOS")
     print("=" * 50)
-    
+
     datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
     productos = datos_inventario.get("productos", [])
     
@@ -128,7 +128,39 @@ def mostrar_productos():
 
 def detalles_producto():
     """Mostrar detalles de un producto especifico"""
-    pass
+    limpiar_pantalla()
+    
+    encontrado = False
+    print("=" * 50)
+    print("   DETALLES DE PRODUCTOS")
+    print("=" * 50)
+    datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
+    productos = datos_inventario.get("productos", [])
+
+    producto_buscado = input("Ingrese el Nombre del producto que quiere 2buscar:")
+    producto_buscado = producto_buscado.strip().upper()
+    for producto in productos:
+        if producto["nombre"] == producto_buscado:
+            encontrado = True
+            break
+    if encontrado:
+        print(f"ID: {producto["id"]}")
+        print(f"Nombre: {producto["nombre"]}")
+        print(f"Descripcion {producto["descripcion"]}")
+        print(f"Categoría: {producto['categoria']}")
+        print(f"Precio: ${producto['precio']}")
+        print(f"Costo: ${producto['costo']}")
+        print(f"Stock: {producto['stock']}")
+        print(f"Stock mínimo: {producto['min_stock']}")
+        print(f"Proveedor: {producto['proveedor']}")
+        print(f"Sucursal: {producto['sucursal']}")
+        print(f"Fecha de creación: {producto['fecha_creacion']}")
+        print(f"Última actualización: {producto['fecha_actualizacion']}")
+    else:
+        print("producto no encontrado")
+
+
+
 
 def actualizar_producto():
     """Actualizar la informacion de un producto"""
@@ -145,3 +177,4 @@ def buscar_producto():
 def alerta_stock_bajo():
     """Mostrar productos con stock por debajo del nivel minimo"""
     pass
+
