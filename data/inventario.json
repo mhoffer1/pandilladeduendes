@@ -1,0 +1,33 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "mate",
+      "descripcion": "azuk",
+      "categoria": "mate",
+      "precio": 500.0,
+      "costo": 200.0,
+      "stock": 30,
+      "min_stock": 5,
+      "proveedor": "Juan",
+      "sucursal": "1",
+      "fecha_creacion": "2025-09-13 21:48:28",
+      "fecha_actualizacion": "2025-09-13 21:48:28"
+    },
+    {
+      "id": 2,
+      "nombre": "Mate",
+      "descripcion": "Azul",
+      "categoria": "domestico",
+      "precio": 1000.0,
+      "costo": 400.0,
+      "stock": 10,
+      "min_stock": 3,
+      "proveedor": "juan",
+      "sucursal": "lucas",
+      "fecha_creacion": "2025-09-13 22:22:15",
+      "fecha_actualizacion": "2025-09-13 22:22:15"
+    }
+  ],
+  "prox_id": 3
+}
