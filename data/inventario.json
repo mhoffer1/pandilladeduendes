@@ -27,7 +27,21 @@
       "sucursal": "lucas",
       "fecha_creacion": "2025-09-13 22:22:15",
       "fecha_actualizacion": "2025-09-13 22:22:15"
+    },
+    {
+      "id": 3,
+      "nombre": "/usr/local/bin/python3 /users/santinofaccio/desktop/pandilladeduendes/main.py",
+      "descripcion": "0",
+      "categoria": "0",
+      "precio": 0.0,
+      "costo": 0.0,
+      "stock": 0,
+      "min_stock": 0,
+      "proveedor": "0",
+      "sucursal": "0",
+      "fecha_creacion": "2025-09-14 01:07:03",
+      "fecha_actualizacion": "2025-09-14 01:07:03"
     }
   ],
-  "prox_id": 3
+  "prox_id": 4
 }

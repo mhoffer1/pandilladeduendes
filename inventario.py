@@ -172,17 +172,31 @@ def detalles_producto():
 
 def actualizar_producto():
     """Actualizar la informacion de un producto"""
-    pass
+    limpiar_pantalla()
+    
+    print("=" * 50)
+    print("ACTUALIZAR LISTA PRODUCTOS")
+    print("=" * 50)
 
 def borrar_producto():
     """Borrar un producto del inventario"""
-    pass
+    limpiar_pantalla()
+    print("=" * 50)
+    print("BORRAR PRODUCTO")
+    print("=" * 50)
 
 def buscar_producto():
     """Buscar productos por nombre o categoria"""
-    pass
+    limpiar_pantalla()
+    
+    print("=" * 50)
+    print("BUSCAR LISTA PRODUCTOS")
+    print("=" * 50)
 
 def alerta_stock_bajo():
     """Mostrar productos con stock por debajo del nivel minimo"""
-    pass
+    limpiar_pantalla()
+    print("=" * 50)
+    print("ALERTA STOCK BAJO PRODUCTOS")
+    print("=" * 50)
 
