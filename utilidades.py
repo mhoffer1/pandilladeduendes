@@ -183,7 +183,7 @@ def mostrar_tabla_pag(datos:list[list], headers:list[str], titulo="Datos", taman
     while True:
         limpiar_pantalla()
         print("=" * 70)
-        print(f"    {titulo.upper()} - Pagina {pagina_actual + 1} de {len([paginas])}")
+        print(f"    {titulo.upper()} - Pagina {pagina_actual + 1} de {len(paginas)}")
         print("=" * 70)
         
         # prerpara los datos para la pagina actual

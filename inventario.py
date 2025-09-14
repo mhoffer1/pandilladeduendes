@@ -50,7 +50,7 @@ def agregar_producto():
     datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
     
     # Solicitar detalles del producto
-    nombre = input("Nombre del Producto: ").strip().upper()
+    nombre = input("Nombre del Producto: ").strip().lower()
     if not nombre:
         print("El nombre del producto no puede estar vacio.")
         input("Presione Enter para continuar...")
@@ -130,37 +130,45 @@ def detalles_producto():
     """Mostrar detalles de un producto especifico"""
     limpiar_pantalla()
     
-    encontrado = False
     print("=" * 50)
     print("   DETALLES DE PRODUCTOS")
     print("=" * 50)
     datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
     productos = datos_inventario.get("productos", [])
 
-    producto_buscado = input("Ingrese el Nombre del producto que quiere 2buscar:")
-    producto_buscado = producto_buscado.strip().upper()
-    for producto in productos:
-        if producto["nombre"] == producto_buscado:
-            encontrado = True
-            break
-    if encontrado:
-        print(f"ID: {producto["id"]}")
-        print(f"Nombre: {producto["nombre"]}")
-        print(f"Descripcion {producto["descripcion"]}")
-        print(f"Categoría: {producto['categoria']}")
-        print(f"Precio: ${producto['precio']}")
-        print(f"Costo: ${producto['costo']}")
-        print(f"Stock: {producto['stock']}")
-        print(f"Stock mínimo: {producto['min_stock']}")
-        print(f"Proveedor: {producto['proveedor']}")
-        print(f"Sucursal: {producto['sucursal']}")
-        print(f"Fecha de creación: {producto['fecha_creacion']}")
-        print(f"Última actualización: {producto['fecha_actualizacion']}")
-    else:
-        print("producto no encontrado")
+    producto_buscado = input("Ingrese el Nombre del producto que quiere buscar: ").strip().lower()
+    
+    if not producto_buscado:
+        print("El nombre del producto no puede estar vacio.")
+        input("Presione Enter para continuar...")
+        return
 
+    productos_filtrados = [p for p in productos if producto_buscado in p['nombre'].lower()]
+    
+    if not productos_filtrados:
+        print(f"No se encontraron productos con el nombre '{producto_buscado}'.")
+        input("Presione Enter para continuar...")
+        return
 
+    mapeo_campos = {
+        'id': {'max_largo': 5},
+        'nombre': {'max_largo': 25},
+        'descripcion': {'max_largo': 40},
+        'categoria': {'max_largo': 15},
+        'precio': {'formato': 'moneda', 'max_largo': 12},
+        'costo': {'formato': 'moneda', 'max_largo': 12},
+        'stock': {'max_largo': 8},
+        'min_stock': {'max_largo': 10},
+        'proveedor': {'max_largo': 20},
+        'sucursal': {'max_largo': 20},
+        'fecha_creacion': {'formato': 'fecha', 'max_largo': 10},
+        'fecha_actualizacion': {'formato': 'fecha', 'max_largo': 10}
+    }
 
+    headers = ['ID', 'Nombre', 'Descripcion', 'Categoria', 'Precio', 'Costo', 'Stock', 'Min Stock', 'Proveedor', 'Sucursal', 'Creacion', 'Actualizacion']
+    tabla_datos = formatear_tabla(productos_filtrados, mapeo_campos)
+
+    mostrar_tabla_pag(tabla_datos, headers, "Detalles del Producto", tamanio_pag=10)
 
 def actualizar_producto():
     """Actualizar la informacion de un producto"""
