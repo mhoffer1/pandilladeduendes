@@ -4,15 +4,16 @@ def menu_proveedores():
     while True:
         limpiar_pantalla()
         print("=" * 50)
-        print(" Ventas")
+        print("    PROVEEDORES")
         print("=" * 50)
         print("1.Registrar Proveedor")
         print("2.Solicitar productos a proveedor.")
         print("3.Ver pagos pendientes")
         print("4.Ver historial de Compra de Cada Proveedor.")
         print("5.Ver proveedor por Nombre.")
-        print("0.Salir")
-        opcion = input("Ingrese una opcion:")
+        print("0. Volver al Menu Principal")
+        print("=" * 50)
+        opcion = input("Ingrese una opcion: ")
     
         if opcion == "1":
             registrar_provedores()

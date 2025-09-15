@@ -4,12 +4,14 @@ datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES)
 
 def menu_sucursales():
      while True:
+        limpiar_pantalla()
         print("=" * 50)
-        print("Menu Sucursales")
+        print("    SUCURSALES")
         print("=" * 50)
         print("1. Agregar Sucursales.")
         print("2. Editar Sucursales.")
         print("3. Eliminar Sucursales.")
+        print("0. Volver al Menu Principal")
         opcion = input("Seleccione una opcion: ")
         if opcion == "0":
             break
@@ -31,7 +33,7 @@ def editar_sucursales():
         print("Editar Sucursales.")
         print("=" * 50)
         mostrar_sucursales()
-        opcion = input("Ingrese una opcion:")
+        opcion = input("Ingrese una opcion: ")
         if opcion == "0":
             break
         else:

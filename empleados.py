@@ -4,17 +4,17 @@ def menu_empleados():
     while True:
         limpiar_pantalla()
         print("=" * 50)
-        print(" Ventas")
+        print("    EMPLEADOS")
         print("=" * 50)
-        print("1.Registrar empleado")
-        print("2.Editar datos de empleado.")
-        print("3.Registrar asistencia.")
-        print("4.Asignar roles a empleados.")
-        print("5.Reportes por desempeño.")
-        print("6.Dar de alta o baja un empleado.")
-        print("0.Exit")
+        print("1. Registrar empleado")
+        print("2. Editar datos de empleado.")
+        print("3. Registrar asistencia.")
+        print("4. Asignar roles a empleados.")
+        print("5. Reportes por desempeño.")
+        print("6. Dar de alta o baja un empleado.")
+        print("0. Volver al Menu Principal")
 
-        opcion = input("Ingrese una opcion:")
+        opcion = input("Ingrese una opcion: ")
         if opcion == "1":
                 registrar_empleados()
         elif opcion == "2":
@@ -104,7 +104,7 @@ def dar_de_alta_o_baja():
         print("=" * 50)
         print("Registrar y dar de BajaEmpleados")
         print("=" * 50)
-        opcion = input("Ingrese 1.para dar de alta, 2.Para dar de baja, 0.Para retroceder:")
+        opcion = input("Ingrese 1. Para dar de alta, 2. Para dar de baja, 0. Para retroceder: ")
         if opcion == "0":
             break
         elif opcion == "1":
@@ -121,7 +121,7 @@ def dar_de_alta():
         print("=" * 50)
         print("Dar de alta")
         print("=" * 50)
-        opcion = input("Ingrese 0 para retroceder.")
+        opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
         else:
@@ -134,7 +134,7 @@ def dar_de_baja():
         print("=" * 50)
         print("Dar de baja")
         print("=" * 50)
-        opcion = input("Ingrese 0 para retroceder.")
+        opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
            break
         else:

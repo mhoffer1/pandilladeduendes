@@ -96,7 +96,7 @@ def main_menu(sucursal_seleccionada):
         elif opcion == "6":
             menu_sucursales()
         elif opcion == "0":
-            elegir_kiosco()
+            break
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
@@ -126,10 +126,6 @@ def menu_reportes():
         else:
             print("opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-
-def primer_uso():
-    """Funcion para inicializar los datos si es el primer uso del sistema"""
-
 
 if __name__ == "__main__":
     # Inicializa los .json

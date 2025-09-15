@@ -45,7 +45,7 @@ def agregar_producto():
         print("=" * 50)
         print("Agregar Producto")
         print("=" * 50)
-        opcion = input("Ingrese 0 para salir.")
+        opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
         else:
@@ -57,7 +57,7 @@ def ver_todos_los_productos():
         print("=" * 50)
         print("Ver todos los productos")
         print("=" * 50)
-        opcion = input("Ingrese 0 para salir.")
+        opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
         else:
@@ -69,7 +69,7 @@ def detalles_producto():
         print("=" * 50)
         print("Detalles de producto")
         print("=" * 50)
-        opcion = input("Ingrese 0 para salir.")
+        opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
         else:
@@ -83,7 +83,7 @@ def actualizar_producto():
         print("=" * 50)
         print("ACTUALIZAR LISTA PRODUCTOS")
         print("=" * 50)
-        opcion = input("Ingrese 0 para salir.")
+        opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
         else:
@@ -97,7 +97,7 @@ def borrar_producto():
         print("=" * 50)
         print("BORRAR PRODUCTO")
         print("=" * 50)
-        opcion = input("Ingrese 0 para salir.")
+        opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
         else:
@@ -113,7 +113,7 @@ def buscar_producto():
         print("=" * 50)
         print("BUSCAR LISTA PRODUCTOS")
         print("=" * 50)
-        opcion = input("Ingrese 0 para salir.")
+        opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
         else:
@@ -127,7 +127,7 @@ def alerta_stock_bajo():
         print("=" * 50)
         print("ALERTA STOCK BAJO PRODUCTOS")
         print("=" * 50)
-        opcion = input("Ingrese 0 para salir.")
+        opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
         else:
