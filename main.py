@@ -1,8 +1,3 @@
-import json
-import os
-from datetime import datetime
-import sys
-
 ## Importar modulos
 from inventario import *
 from utilidades import *
@@ -10,21 +5,80 @@ from reportes import *
 from ventas import *
 from proveedores import *
 from empleados import * 
+from sucursales import *
 #from ventas import *
 #from empleados import *
 
-def main_menu():
+# Menu principal
+def elegir_kiosco():
+
+    datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES)
+    
+    if not datos_sucursales.get("sucursales"):
+        print("No se encontraron sucursales. Ingrese una a continuacion...")
+        nombre = input("Nombre de la sucursal: ").strip()
+        direccion = input("Direccion de la sucursal: ").strip()
+        sucursal = {
+            "id": datos_sucursales["prox_id"],
+            "nombre": nombre,
+            "direccion": direccion
+        }
+        datos_sucursales["prox_id"] += 1
+        datos_sucursales["sucursales"].append(sucursal)
+        
+        guardar_datos_json(ARCHIVO_SUCURSALES, datos_sucursales)
+        print("Se agrego la sucursal correctamente.")
+
+    while True:
+        limpiar_pantalla()
+        print("=" * 50)
+        print(" Seleccionar sucursal")
+        print("=" * 50)
+        for sucursal in datos_sucursales["sucursales"]:
+            print(f"{sucursal['id']}. {sucursal['nombre']}")
+        print("0. Salir")
+
+        opcion = input("Seleccione una sucursal: ").strip()
+        
+        if opcion == "0":
+            print("Saliendo del sistema...")
+            break
+        
+        if not opcion.isdigit():
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+            continue
+        
+        opcion = int(opcion)
+
+        sucursal_seleccionada = None
+        for s in datos_sucursales["sucursales"]:
+            if s["id"] == opcion:
+                sucursal_seleccionada = s
+                break
+        
+        if sucursal_seleccionada:
+            print(f"Sucursal seleccionada: {sucursal_seleccionada['nombre']}")
+            input("Presione Enter para continuar...")
+            main_menu(sucursal_seleccionada)
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+
+def main_menu(sucursal_seleccionada):
     """Muestra el menu principal y maneja la entrada del usuario"""
     while True:
         limpiar_pantalla()
         print("=" * 50)
-        print("    ERP - Pandilla de Duendes")
+        print(f"  ERP - Pandilla de Duendes - Sucursal: {sucursal_seleccionada['id']}/{sucursal_seleccionada['nombre']}")
         print("=" * 50)
         print("1. Inventario")
         print("2. Ventas")
         print("3. Empleados")
-        print("4. Reportes")
-        print("0. Exit")
+        print("4. Proveedores")
+        print("5. Reportes")
+        print("6. Sucursales")
+        print("0. Atras")
         print("=" * 50)
         
         opcion = input("Seleccione una opcion: ").strip()
@@ -36,97 +90,16 @@ def main_menu():
         elif opcion == "3":
             menu_empleados()
         elif opcion == "4":
-             menu_proveedores()
+            menu_proveedores()
         elif opcion == "5":
-             menu_reportes()
+            menu_reportes()
+        elif opcion == "6":
+            menu_sucursales()
         elif opcion == "0":
-            print("Gracias por usar el ERP - Pandilla de Duendes!")
-            break
+            elegir_kiosco()
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def menu_empleados():
-    limpiar_pantalla()
-    print("=" * 50)
-    print(" Ventas")
-    print("=" * 50)
-    print("1.Registrar empleado")
-    print("2.Editar datos de empleado.")
-    print("3.Registrar asistencia.")
-    print("4.Asignar roles a empleados.")
-    print("5.Reportes por desempeño.")
-    print("6.Dar de alta o baja un empleado.")
-    print("0.Exit")
-    while True:
-        opcion = input("Ingrese una opcion:")
-        if opcion == "1":
-            registrar_empleados()
-        elif opcion == "2":
-            editar_datos_de_empleados()
-        elif opcion == "3":
-            registrar_asistencia()
-        elif opcion == "4":
-            asignar_roles()
-        elif opcion == "5":
-            generar_reportes_desempeño()
-        elif opcion == "6":
-            dar_de_alta_o_baja()
-        elif opcion == "0":
-            break
-
-def menu_proveedores():
-    limpiar_pantalla()
-    print("=" * 50)
-    print(" Ventas")
-    print("=" * 50)
-    print("1.Registrar Proveedor")
-    print("2.Solicitar productos a proveedor.")
-    print("3.Ver pagos pendientes")
-    print("4.Ver historial de Compra de Cada Proveedor.")
-    print("5.Ver proveedor por Nombre.")
-    print("0.Salir")
-    opcion = input("Ingrese una opcion:")
-    while True:
-        if opcion == "1":
-            registrar_provedores()
-        elif opcion == "2":
-            solicitar_productos_a_proveedor()
-        elif opcion == "3":
-            pagos_pendientes()
-        elif opcion == "4":
-            historial_de_compras_a_cada_proveedor()
-        elif opcion == "5":
-            buscar_proveedor_por_nombre()
-        elif opcion == "0":
-            break
-        else:
-            print("Opcion invalida")
-
-def menu_ventas():
-    "Muestra el menu de Ventas"
-    while True:
-        limpiar_pantalla()
-        print("=" * 50)
-        print(" Ventas")
-        print("=" * 50)
-        print("1.Registrar venta")
-        print("2.Aplicar Descuento/Promocion")
-        print("3.Mostrar historial de ventas")
-        print("0.Salir")
-        opcion = input("Ingrese una opcion:")
-        if opcion == "1":
-            registrar_ventas()
-        elif opcion == "2":
-            aplicar_descuento()
-            
-        elif opcion == "3":
-            mostrar_historial_ventas()
-        elif opcion == "0":
-            break
-        else:
-            print("Opcion invalida.")
-
-
 
 def menu_reportes():
     """Muestra el menu de reportes"""
@@ -154,8 +127,12 @@ def menu_reportes():
             print("opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
+def primer_uso():
+    """Funcion para inicializar los datos si es el primer uso del sistema"""
+
+
 if __name__ == "__main__":
-    # Inicia los archivos de datos si no existen
+    # Inicializa los .json
     incializar_datos()
     # Muestra el menu principal
-    main_menu()
+    elegir_kiosco()

@@ -1,7 +1,35 @@
 from utilidades import *
-def registrar_ventas():
-    limpiar_pantalla()
+
+def menu_ventas():
+    "Muestra el menu de Ventas"
     while True:
+        limpiar_pantalla()
+        print("=" * 50)
+        print(" Ventas")
+        print("=" * 50)
+        print("1.Registrar venta")
+        print("2.Aplicar Descuento/Promocion")
+        print("3.Mostrar historial de ventas")
+        print("0.Salir")
+        opcion = input("Ingrese una opcion:")
+        if opcion == "1":
+            registrar_ventas()
+        elif opcion == "2":
+            aplicar_descuento()
+            
+        elif opcion == "3":
+            mostrar_historial_ventas()
+        elif opcion == "0":
+            break
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+
+
+def registrar_ventas():
+    
+    while True:
+        limpiar_pantalla()
         print("=" * 50)
         print("Reporte De Ventas")
         print("=" * 50)
@@ -9,12 +37,14 @@ def registrar_ventas():
         if opcion == "0":
             break
         else:
-            print("Opcion invalida. Por favor, ingrese 0 para salir.")
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
          
     
 def aplicar_descuento(): 
-    limpiar_pantalla()
+    
     while True:
+        limpiar_pantalla()
         print("=" * 50)
         print("Aplicar descuento.")
         print("=" * 50)
@@ -22,13 +52,13 @@ def aplicar_descuento():
         if opcion == "0":
             break
         else:
-            print("Opcion invalida. Por favor, ingrese 0 para salir.")
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
 
 def mostrar_historial_ventas():
-    limpiar_pantalla()
+    
     print("=" * 50)
     print("Mostrar historial de Ventas")
-    
     print("=" * 50)
     while True:
         opcion = input("Seleccione 1.si quiere ver el historial del dia, 2. si quiere ver el semanal, 3.si quiere ver el mensual,0.Para salir.")
@@ -43,40 +73,47 @@ def mostrar_historial_ventas():
             break
         elif opcion == "0":
             break
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+
 def historial_por_dia():
-    limpiar_pantalla()
-    print("=" * 50)
-    print("Mostrar historial de Ventas Por Dias")
-    print("=" * 50)
-    opcion =  input("Presiona 0 para retroceder.")
-    if opcion == "0":
-        mostrar_historial_ventas()
-    else:
-        print("Opcion invalida.")
+    while True:
+        limpiar_pantalla()
+        print("=" * 50)
+        print("Mostrar historial de Ventas Por Dias")
+        print("=" * 50)
+        opcion =  input("Presiona 0 para retroceder.")
+        if opcion == "0":
+            mostrar_historial_ventas()
+        else:
+                print("Opcion invalida. Intente de nuevo.")
+                input("Presione Enter para continuar...")
 
 def historial_por_semana():
-    limpiar_pantalla()
-    print("=" * 50)
-    print("Mostrar historial de Ventas Por Semana")
-    print("=" * 50)
-    opcion =  input("Presiona 0 para retroceder.")
-    if opcion == "0":
-        mostrar_historial_ventas()
-    else:
-        print("Opcion invalida.")
+    while True:
+        limpiar_pantalla()
+        print("=" * 50)
+        print("Mostrar historial de Ventas Por Semana")
+        print("=" * 50)
+        opcion =  input("Presiona 0 para retroceder.")
+        if opcion == "0":
+            mostrar_historial_ventas()
+        else:
+                print("Opcion invalida. Intente de nuevo.")
+                input("Presione Enter para continuar...")
+        
         
 def historial_por_mes():
-    limpiar_pantalla()
-    print("=" * 50)
-    print("Mostrar historial de Ventas Por Mes.")
-    print("=" * 50)
-    opcion =  input("Presiona 0 para retroceder.")
-    if opcion == "0":
-        mostrar_historial_ventas()
-    else:
-        print("Opcion invalida.")
-
-        
-
-    
-
+    while True:
+        limpiar_pantalla()
+        print("=" * 50)
+        print("Mostrar historial de Ventas Por Mes.")
+        print("=" * 50)
+        opcion =  input("Presiona 0 para retroceder.")
+        if opcion == "0":
+            mostrar_historial_ventas()
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+            

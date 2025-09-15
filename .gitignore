@@ -1,5 +1,8 @@
 __pycache__/inventario.cpython-312.pyc
 __pycache__/utilidades.cpython-312.pyc
-data/empleados.json
-data/inventario.json
-data/ventas.json
+__pycache__/sucursales.cpython-312.pyc
+__pycache__/reportes.cpython-312.pyc
+__pycache__/main.cpython-312.pyc
+__pycache__/empleados.cpython-312.pyc
+__pycache__/ventas.cpython-312.pyc
+*.json

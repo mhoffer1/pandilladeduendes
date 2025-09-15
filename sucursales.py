@@ -1,0 +1,68 @@
+from utilidades import *
+
+datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES)
+
+def menu_sucursales():
+     while True:
+        print("=" * 50)
+        print("Menu Sucursales")
+        print("=" * 50)
+        opcion = input("1. Para agregar sucursales 2. Para eliminar .0 para salir:")
+        if opcion == "0":
+            break
+        elif opcion == "1":
+            agregar_sucursales()
+        elif opcion == "2":
+            eliminar_sucursales()
+        elif opcion == "0":
+            break
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+
+def eliminar_sucursales():
+    while True:
+        print("=" * 50)
+        print("Eliminar sucursales.")
+        print("=" * 50)
+        mostrar_sucursales()
+        print()
+        nombre = input("Nombre de la sucursal: ").strip()
+        input("Presione Enter para continuar...")
+        break
+        
+def agregar_sucursales():
+     while True:
+        print("=" * 50)
+        print("Agregar sucursales")
+        print("=" * 50)
+        mostrar_sucursales()
+        nombre = input("Nombre de la sucursal: ").strip()
+        direccion = input("Direccion de la sucursal: ").strip()
+        sucursal = {
+                "id": datos_sucursales["prox_id"],
+                "nombre": nombre,
+                "direccion": direccion
+            }
+        datos_sucursales["prox_id"] += 1
+        datos_sucursales["sucursales"].append(sucursal)
+            
+        guardar_datos_json(ARCHIVO_SUCURSALES, datos_sucursales)
+        print("Se agrego la sucursal correctamente.")
+        input("Presione Enter para continuar...")
+        break
+
+def mostrar_sucursales():
+    while True:
+        print("=" * 50)
+        print("Sucursales disponibles")
+        print("=" * 50)
+        for sucursal in datos_sucursales["sucursales"]:
+            print(f"ID: {sucursal['id']}, Nombre: {sucursal['nombre']}, Direccion: {sucursal['direccion']}")
+        print("=" * 50)
+        opcion = input("Presiona 0 para regresar al menu principal.")
+        if opcion == "0":
+            menu_sucursales()
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")

@@ -1,4 +1,34 @@
 from utilidades import *
+
+def menu_empleados():
+    limpiar_pantalla()
+    print("=" * 50)
+    print(" Ventas")
+    print("=" * 50)
+    print("1.Registrar empleado")
+    print("2.Editar datos de empleado.")
+    print("3.Registrar asistencia.")
+    print("4.Asignar roles a empleados.")
+    print("5.Reportes por desempeño.")
+    print("6.Dar de alta o baja un empleado.")
+    print("0.Exit")
+    while True:
+        opcion = input("Ingrese una opcion:")
+        if opcion == "1":
+            registrar_empleados()
+        elif opcion == "2":
+            editar_datos_de_empleados()
+        elif opcion == "3":
+            registrar_asistencia()
+        elif opcion == "4":
+            asignar_roles()
+        elif opcion == "5":
+            generar_reportes_desempeño()
+        elif opcion == "6":
+            dar_de_alta_o_baja()
+        elif opcion == "0":
+            break
+
 def registrar_empleados():
     limpiar_pantalla()
     while True:
@@ -69,8 +99,6 @@ def dar_de_alta():
         opcion = input("Ingrese 0 para retroceder.")
         if opcion == "0":
             break
-    
-
 
 def dar_de_baja():
     limpiar_pantalla()
