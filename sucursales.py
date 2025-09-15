@@ -7,7 +7,10 @@ def menu_sucursales():
         print("=" * 50)
         print("Menu Sucursales")
         print("=" * 50)
-        opcion = input("1. Para agregar sucursales 2. Para eliminar .0 para salir:")
+        print("1. Agregar Sucursales.")
+        print("2. Editar Sucursales.")
+        print("3. Eliminar Sucursales.")
+        opcion = input("Seleccione una opcion: ")
         if opcion == "0":
             break
         elif opcion == "1":
@@ -19,7 +22,7 @@ def menu_sucursales():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-
+            
 def eliminar_sucursales():
     while True:
         print("=" * 50)
