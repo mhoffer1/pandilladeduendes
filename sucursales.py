@@ -16,15 +16,32 @@ def menu_sucursales():
         elif opcion == "1":
             agregar_sucursales()
         elif opcion == "2":
+            editar_sucursales()
+        elif opcion == "3":
             eliminar_sucursales()
         elif opcion == "0":
             break
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-            
+def editar_sucursales():
+    while True:
+        limpiar_pantalla()
+        print("=" * 50)
+        print("Editar Sucursales.")
+        print("=" * 50)
+        mostrar_sucursales()
+        opcion = input("Ingrese una opcion:")
+        if opcion == "0":
+            break
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+
+
 def eliminar_sucursales():
     while True:
+        limpiar_pantalla()
         print("=" * 50)
         print("Eliminar sucursales.")
         print("=" * 50)
@@ -36,6 +53,7 @@ def eliminar_sucursales():
         
 def agregar_sucursales():
      while True:
+        limpiar_pantalla()
         print("=" * 50)
         print("Agregar sucursales")
         print("=" * 50)
@@ -56,16 +74,11 @@ def agregar_sucursales():
         break
 
 def mostrar_sucursales():
-    while True:
+    
         print("=" * 50)
         print("Sucursales disponibles")
         print("=" * 50)
         for sucursal in datos_sucursales["sucursales"]:
             print(f"ID: {sucursal['id']}, Nombre: {sucursal['nombre']}, Direccion: {sucursal['direccion']}")
         print("=" * 50)
-        opcion = input("Presiona 0 para regresar al menu principal.")
-        if opcion == "0":
-            menu_sucursales()
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+       
