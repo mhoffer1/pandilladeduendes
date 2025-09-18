@@ -128,7 +128,7 @@ def menu_reportes():
             input("Presione Enter para continuar...")
 
 if __name__ == "__main__":
-    # Inicializa los .json
+    # Inicializa los .jsona
     incializar_datos()
     # Muestra el menu principal
     elegir_kiosco()
