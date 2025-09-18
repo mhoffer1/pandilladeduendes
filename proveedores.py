@@ -1,10 +1,11 @@
 from utilidades import *
 
-def menu_proveedores():
+def menu_proveedores(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("    PROVEEDORES")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         print("1.Registrar Proveedor")
         print("2.Solicitar productos a proveedor.")
@@ -16,15 +17,15 @@ def menu_proveedores():
         opcion = input("Ingrese una opcion: ")
     
         if opcion == "1":
-            registrar_provedores()
+            registrar_provedores(sucursal)
         elif opcion == "2":
-            solicitar_productos_a_proveedor()
+            solicitar_productos_a_proveedor(sucursal)
         elif opcion == "3":
-            pagos_pendientes()
+            pagos_pendientes(sucursal)
         elif opcion == "4":
-            historial_de_compras_a_cada_proveedor()
+            historial_de_compras_a_cada_proveedor(sucursal)
         elif opcion == "5":
-            buscar_proveedor_por_nombre()
+            buscar_proveedor_por_nombre(sucursal)
         elif opcion == "0":
             break
         else:
@@ -32,12 +33,13 @@ def menu_proveedores():
             input("Presione Enter para continuar...")
             
 
-def registrar_provedores():
+def registrar_provedores(sucursal):
 
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Registrar proveedores")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -45,11 +47,12 @@ def registrar_provedores():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def solicitar_productos_a_proveedor():
+def solicitar_productos_a_proveedor(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Solicitar productos A Provedores")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -57,11 +60,12 @@ def solicitar_productos_a_proveedor():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def pagos_pendientes():
+def pagos_pendientes(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Pagos pendientes a proveedores")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder:")
         if opcion == "0":
@@ -70,11 +74,12 @@ def pagos_pendientes():
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def historial_de_compras_a_cada_proveedor():
+def historial_de_compras_a_cada_proveedor(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Historial de compras de cada proveedor")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -83,11 +88,12 @@ def historial_de_compras_a_cada_proveedor():
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def buscar_proveedor_por_nombre():
+def buscar_proveedor_por_nombre(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Buscar proveedor por nombre.")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":

@@ -2,7 +2,7 @@ from utilidades import *
 
 datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES)
 
-def menu_sucursales():
+def menu_sucursales(sucursal):
      while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -16,23 +16,25 @@ def menu_sucursales():
         if opcion == "0":
             break
         elif opcion == "1":
-            agregar_sucursales()
+            agregar_sucursales(sucursal)
         elif opcion == "2":
-            editar_sucursales()
+            editar_sucursales(sucursal)
         elif opcion == "3":
-            eliminar_sucursales()
+            eliminar_sucursales(sucursal)
         elif opcion == "0":
             break
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def editar_sucursales():
+def editar_sucursales(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Editar Sucursales.")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
-        mostrar_sucursales()
+        mostrar_sucursales(sucursal)
+        print("0. Retroceder")
         opcion = input("Ingrese una opcion: ")
         if opcion == "0":
             break
@@ -41,25 +43,27 @@ def editar_sucursales():
             input("Presione Enter para continuar...")
 
 
-def eliminar_sucursales():
+def eliminar_sucursales(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Eliminar sucursales.")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
-        mostrar_sucursales()
+        mostrar_sucursales(sucursal)
         print()
         nombre = input("Nombre de la sucursal: ").strip()
         input("Presione Enter para continuar...")
         break
         
-def agregar_sucursales():
+def agregar_sucursales(sucursal):
      while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Agregar sucursales")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
-        mostrar_sucursales()
+        mostrar_sucursales(sucursal)
         nombre = input("Nombre de la sucursal: ").strip()
         direccion = input("Direccion de la sucursal: ").strip()
         sucursal = {
@@ -75,10 +79,11 @@ def agregar_sucursales():
         input("Presione Enter para continuar...")
         break
 
-def mostrar_sucursales():
+def mostrar_sucursales(sucursal):
     
         print("=" * 50)
         print("Sucursales disponibles")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         for sucursal in datos_sucursales["sucursales"]:
             print(f"ID: {sucursal['id']}, Nombre: {sucursal['nombre']}, Direccion: {sucursal['direccion']}")

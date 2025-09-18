@@ -6,8 +6,7 @@ from ventas import *
 from proveedores import *
 from empleados import * 
 from sucursales import *
-#from ventas import *
-#from empleados import *
+
 
 # Menu principal
 def elegir_kiosco():
@@ -60,17 +59,17 @@ def elegir_kiosco():
         if sucursal_seleccionada:
             print(f"Sucursal seleccionada: {sucursal_seleccionada['nombre']}")
             input("Presione Enter para continuar...")
-            main_menu(sucursal_seleccionada)
+            return sucursal
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def main_menu(sucursal_seleccionada):
+def main_menu():
     """Muestra el menu principal y maneja la entrada del usuario"""
     while True:
         limpiar_pantalla()
         print("=" * 50)
-        print(f"  ERP - Pandilla de Duendes - Sucursal: {sucursal_seleccionada['id']}/{sucursal_seleccionada['nombre']}")
+        print(f"  ERP - Pandilla de Duendes - Sucursal: {sucursal['id']}/{sucursal['nombre']}")
         print("=" * 50)
         print("1. Inventario")
         print("2. Ventas")
@@ -84,17 +83,17 @@ def main_menu(sucursal_seleccionada):
         opcion = input("Seleccione una opcion: ").strip()
         
         if opcion == "1":
-            menu_inventario()
+            menu_inventario(sucursal)
         elif opcion == "2":
-            menu_ventas()
+            menu_ventas(sucursal)
         elif opcion == "3":
-            menu_empleados()
+            menu_empleados(sucursal)
         elif opcion == "4":
-            menu_proveedores()
+            menu_proveedores(sucursal)
         elif opcion == "5":
-            menu_reportes()
+            menu_reportes(sucursal)
         elif opcion == "6":
-            menu_sucursales()
+            menu_sucursales(sucursal)
         elif opcion == "0":
             break
         else:
@@ -107,6 +106,7 @@ def menu_reportes():
         limpiar_pantalla()
         print("=" * 50)
         print("    REPORTES")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         print("1. Reporte de Inventario")
         print("2. Reporte de Ventas")
@@ -116,19 +116,22 @@ def menu_reportes():
         opcion = input("Select an option: ").strip()
         
         if opcion == "1":
-            mostrar_reporte_inventario()
+            mostrar_reporte_inventario(sucursal)
         elif opcion == "2":
-            mostrar_reporte_venta()
+            mostrar_reporte_venta(sucursal)
         elif opcion == "3":
-            mostrar_reporte_empleados()
+            mostrar_reporte_empleados(sucursal)
         elif opcion == "0":
             break
         else:
             print("opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
+   
 if __name__ == "__main__":
-    # Inicializa los .jsona
+    # Inicializa los .json e invoca elegir kiosco
     incializar_datos()
-    # Muestra el menu principal
-    elegir_kiosco()
+    
+    sucursal = elegir_kiosco() #se almacena kiosco en una variable global.
+    #se invoca el menu principal.
+    main_menu() 

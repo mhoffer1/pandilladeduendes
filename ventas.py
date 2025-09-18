@@ -1,11 +1,12 @@
 from utilidades import *
 
-def menu_ventas():
+def menu_ventas(sucursal):
     "Muestra el menu de Ventas"
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("    VENTAS")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         print("1. Registrar venta")
         print("2. Aplicar Descuento/Promocion")
@@ -13,11 +14,11 @@ def menu_ventas():
         print("0. Volver al Menu Principal")
         opcion = input("Ingrese una opcion: ")
         if opcion == "1":
-            registrar_ventas()
+            registrar_ventas(sucursal)
         elif opcion == "2":
-            aplicar_descuento()
+            aplicar_descuento(sucursal)
         elif opcion == "3":
-            mostrar_historial_ventas()
+            mostrar_historial_ventas(sucursal)
         elif opcion == "0":
             break
         else:
@@ -25,12 +26,13 @@ def menu_ventas():
             input("Presione Enter para continuar...")
 
 
-def registrar_ventas():
+def registrar_ventas(sucursal):
     
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Reporte De Ventas")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -40,12 +42,13 @@ def registrar_ventas():
             input("Presione Enter para continuar...")
          
     
-def aplicar_descuento(): 
+def aplicar_descuento(sucursal): 
     
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Aplicar descuento.")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -54,13 +57,14 @@ def aplicar_descuento():
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def mostrar_historial_ventas():
+def mostrar_historial_ventas(sucursal):
     
 
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Mostrar historial de Ventas")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         print("1. Ver historial de ventas del dia")
         print("2. Ver historial de ventas de la semana")
@@ -68,22 +72,23 @@ def mostrar_historial_ventas():
         print("0. Salir")
         opcion = input("Ingrese una opcion: ")
         if opcion == "1":
-            historial_por_dia()
+            historial_por_dia(sucursal)
         elif opcion == "2":
-            historial_por_semana()
+            historial_por_semana(sucursal)
         elif opcion == "3":
-            historial_por_mes()
+            historial_por_mes(sucursal)
         elif opcion == "0":
             break
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def historial_por_dia():
+def historial_por_dia(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Mostrar historial de Ventas Por Dias")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion =  input("Presiona 0 para retroceder: ")
         if opcion == "0":
@@ -92,11 +97,12 @@ def historial_por_dia():
                 print("Opcion invalida. Intente de nuevo.")
                 input("Presione Enter para continuar...")
 
-def historial_por_semana():
+def historial_por_semana(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Mostrar historial de Ventas Por Semana")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion =  input("Presiona 0 para retroceder: ")
         if opcion == "0":
@@ -106,11 +112,12 @@ def historial_por_semana():
                 input("Presione Enter para continuar...")
         
         
-def historial_por_mes():
+def historial_por_mes(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Mostrar historial de Ventas Por Mes.")
+        print(f"usted esta trabajando en {sucursal['nombre']}")
         print("=" * 50)
         opcion =  input("Presiona 0 para retroceder: ")
         if opcion == "0":
