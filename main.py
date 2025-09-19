@@ -66,7 +66,7 @@ def elegir_kiosco():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-    return False #esto es para que no se inicie main menu en caso de que pongan 0!
+     #SI llega aca retorna None y no se ejecuta main_menu.
 
 def main_menu():
     """Muestra el menu principal una vez que elegiste sucursal."""
@@ -134,10 +134,13 @@ def menu_reportes(sucursal):
 
    
 if __name__ == "__main__":
-    # Inicializa los .json(utilidades.py) 
-    incializar_datos()
-    sucursal = elegir_kiosco()
-    if sucursal: #si no es false,osea no ingresan salir del programa.
-    #se invoca el menu principal.
-        main_menu() 
-        
+    while True:
+        # Inicializa los .json(utilidades.py) 
+        incializar_datos()
+        sucursal = elegir_kiosco()
+        if sucursal: #si no es false,osea no ingresan salir del programa.
+        #se invoca el menu principal.
+            main_menu() 
+        else:
+            break
+            
