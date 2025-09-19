@@ -53,7 +53,6 @@ def elegir_kiosco()->dict:
         
         opcion = int(opcion) #casteo para comparar con ["id"]!
 
-        sucursal_seleccionada = None
         for s in datos_sucursales["sucursales"]:
             if s["id"] == opcion:
                 sucursal_seleccionada = s
