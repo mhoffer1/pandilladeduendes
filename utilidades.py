@@ -1,7 +1,7 @@
 import json
 import os
-from datetime import datetime
-from tabulate import tabulate
+# from datetime import datetime
+# from tabulate import tabulate
 
 # Rutas de los archivos de datos, si existen se devuelven y si no se crea mas abajo!!!
 DATA_DIR = "data" #carpeta
@@ -11,8 +11,10 @@ ARCHIVO_EMPLEADOS = f"{DATA_DIR}/empleados.json"
 ARCHIVO_SUCURSALES = f"{DATA_DIR}/sucursales.json"
 
 
-def cargar_datos_json(file_path):
-    """Cargar datos desde un archivo JSON"""
+def cargar_datos_json(file_path:str) -> dict: #para mostrar SOLO sucursales(por ahora.).
+    """Cargar datos desde un archivo JSON, se almacena en una variable
+       Al principio de cada .py 
+    """
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             return json.load(file)
@@ -22,7 +24,7 @@ def cargar_datos_json(file_path):
         print(f"Error leyendo {file_path}. El archivo puede estar corrupto.")
         return {}
 
-def guardar_datos_json(file_path, data):
+def guardar_datos_json(file_path:str, data:dict): #para guardar las sucursales(por ahora.)
     """Guardar datos en un archivo JSON"""
     try:
         with open(file_path, 'w', encoding='utf-8') as file:
@@ -33,7 +35,7 @@ def guardar_datos_json(file_path, data):
         return False
 
 
-def incializar_datos():
+def incializar_datos()->None:
     """Incializa todos los archivos de datos con estructuras vacias"""
     # Crea el directorio de datos si no existe
     if not os.path.exists(DATA_DIR):
@@ -55,6 +57,6 @@ def incializar_datos():
     if not os.path.exists(ARCHIVO_SUCURSALES): #se usa como file path
         guardar_datos_json(ARCHIVO_SUCURSALES, {"sucursales": [], "prox_id": 1})
 
-def limpiar_pantalla():
+def limpiar_pantalla()-> None:
     """limpiar la pantalla de la consola"""
     os.system('cls' if os.name == 'nt' else 'clear')

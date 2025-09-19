@@ -9,7 +9,7 @@ from sucursales import menu_sucursales
 
 
 # Menu principal
-def elegir_kiosco():
+def elegir_kiosco()->dict:
     """En caso de no haber datos en sucursales.json, te obliga a generar una(primer inicio
     por cliente). Despues se muestra en pantalla las sucursales y por ultimo se selecciona
     una, la cual se retorna."""
