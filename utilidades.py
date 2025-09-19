@@ -44,15 +44,15 @@ def incializar_datos():
         guardar_datos_json(ARCHIVO_INVENTARIO, {"productos": [], "prox_id": 1})
     
     # Inicializa el archivo de ventas
-    if not os.path.exists(ARCHIVO_VENTAS):
+    if not os.path.exists(ARCHIVO_VENTAS): #se usa como file path.
         guardar_datos_json(ARCHIVO_VENTAS, {"ventas": [], "prox_id": 1})
     
     # Inicializa el archivo de empleados
-    if not os.path.exists(ARCHIVO_EMPLEADOS):
+    if not os.path.exists(ARCHIVO_EMPLEADOS): #se usa como file path
         guardar_datos_json(ARCHIVO_EMPLEADOS, {"empleados": [], "prox_id": 1})
 
     # Inicializa el archivo de sucursales
-    if not os.path.exists(ARCHIVO_SUCURSALES):
+    if not os.path.exists(ARCHIVO_SUCURSALES): #se usa como file path
         guardar_datos_json(ARCHIVO_SUCURSALES, {"sucursales": [], "prox_id": 1})
 
 def limpiar_pantalla():
