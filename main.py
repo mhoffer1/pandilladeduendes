@@ -118,7 +118,7 @@ def menu_reportes(sucursal):
         print("3. Reporte de Empleados")
         print("0. Volver al menu principal")
         
-        opcion = input("Seleccione una opcion": ").strip()
+        opcion = input("Seleccione una opcion: ").strip()
         
         if opcion == "1":
             mostrar_reporte_inventario(sucursal)
