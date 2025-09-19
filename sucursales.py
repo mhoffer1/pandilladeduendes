@@ -1,6 +1,6 @@
 from utilidades import *
 
-datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES)
+datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES) #archivos de las sucursales.
 
 def menu_sucursales(sucursal):
      """
@@ -86,7 +86,7 @@ def agregar_sucursales(sucursal):
         datos_sucursales["prox_id"] += 1
         datos_sucursales["sucursales"].append(sucursal)
             
-        guardar_datos_json(ARCHIVO_SUCURSALES, datos_sucursales)
+        guardar_datos_json(ARCHIVO_SUCURSALES, datos_sucursales) #el archivo y lo que queres almacenar.
         print("Se agrego la sucursal correctamente.")
         input("Presione Enter para continuar...")
         break
