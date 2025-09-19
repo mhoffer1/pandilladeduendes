@@ -10,6 +10,9 @@ from sucursales import *
 
 # Menu principal
 def elegir_kiosco():
+    """En caso de no haber datos en sucursales.json, te obliga a generar una(primer inicio
+    por cliente). Despues se muestra en pantalla las sucursales y por ultimo se selecciona
+    una, la cual se retorna."""
 
     datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES)
     
@@ -48,7 +51,7 @@ def elegir_kiosco():
             input("Presione Enter para continuar...")
             continue
         
-        opcion = int(opcion)
+        opcion = int(opcion) #casteo para comparar con ["id"]!
 
         sucursal_seleccionada = None
         for s in datos_sucursales["sucursales"]:
@@ -59,13 +62,13 @@ def elegir_kiosco():
         if sucursal_seleccionada:
             print(f"Sucursal seleccionada: {sucursal_seleccionada['nombre']}")
             input("Presione Enter para continuar...")
-            return sucursal
+            return sucursal_seleccionada
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
 def main_menu():
-    """Muestra el menu principal y maneja la entrada del usuario"""
+    """Muestra el menu principal una vez que elegiste sucursal."""
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -99,6 +102,7 @@ def main_menu():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
+    return False #esto es para que no se inicie main menu en caso de que pongan 0!
 
 def menu_reportes(sucursal):
     """Muestra el menu de reportes"""
@@ -106,7 +110,7 @@ def menu_reportes(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("    REPORTES")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+        print(f"usted esta trabajando en --{sucursal['nombre']}")
         print("=" * 50)
         print("1. Reporte de Inventario")
         print("2. Reporte de Ventas")
@@ -129,9 +133,10 @@ def menu_reportes(sucursal):
 
    
 if __name__ == "__main__":
-    # Inicializa los .json e invoca elegir kiosco
+    # Inicializa los .json(utilidades.py) e invoca elegir kiosco
     incializar_datos()
-    
-    sucursal = elegir_kiosco() #se almacena kiosco en una variable global.
+    sucursal = elegir_kiosco()
+    if sucursal: #si no es false.
     #se invoca el menu principal.
-    main_menu() 
+        main_menu() 
+        

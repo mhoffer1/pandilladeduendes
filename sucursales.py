@@ -27,6 +27,9 @@ def menu_sucursales(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 def editar_sucursales(sucursal):
+    """
+    Permite editar informacion de sucursales ya creadas.
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -44,6 +47,9 @@ def editar_sucursales(sucursal):
 
 
 def eliminar_sucursales(sucursal):
+    """
+    Te muestra las sucursales y te dice cual queres eliminar.
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -57,6 +63,9 @@ def eliminar_sucursales(sucursal):
         break
         
 def agregar_sucursales(sucursal):
+     """
+     Sirve para agregar sucursales, tambien se ven las ya creadas.
+     """
      while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -80,6 +89,11 @@ def agregar_sucursales(sucursal):
         break
 
 def mostrar_sucursales(sucursal):
+        """
+        Sirve para ver las sucursales, en el resto de funciones de este menu tambien se
+        puede visualizar por una cuestion practica a la hora de editar y agregar y evitar
+        repeticiones accidentales.
+        """
     
         print("=" * 50)
         print("Sucursales disponibles")

@@ -1,6 +1,9 @@
 from utilidades import *
 
 def menu_proveedores(sucursal):
+    """"
+    menu de proveedores, te permite hacer todas las acciones.
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -34,6 +37,9 @@ def menu_proveedores(sucursal):
             
 
 def registrar_provedores(sucursal):
+    """"
+    Registra provedores
+    """
 
     while True:
         limpiar_pantalla()
@@ -61,6 +67,9 @@ def solicitar_productos_a_proveedor(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 def pagos_pendientes(sucursal):
+    """
+    Podes ver pagos pendientes a proveedores
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -76,6 +85,9 @@ def pagos_pendientes(sucursal):
 
 def historial_de_compras_a_cada_proveedor(sucursal):
     while True:
+        """
+        Podes ver el historial de compras a cada proveedor
+        """
         limpiar_pantalla()
         print("=" * 50)
         print("Historial de compras de cada proveedor")
@@ -89,6 +101,9 @@ def historial_de_compras_a_cada_proveedor(sucursal):
             input("Presione Enter para continuar...")
 
 def buscar_proveedor_por_nombre(sucursal):
+    """
+    Podes buscar proveedores por nombre y apellido.
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)
