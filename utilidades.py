@@ -23,7 +23,7 @@ def guardar_datos_json(file_path:str, data:dict): #para guardar las sucursales(p
 
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=2, ensure_ascii=False) #dump= escribee
-
+                                        #para que no lo pase a ascci y se vean tildes, ñ,etc.
 
 def incializar_datos()->None:
     """Incializa todos los archivos de datos con estructuras vacias"""
