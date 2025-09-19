@@ -6,7 +6,7 @@ def menu_ventas(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("    VENTAS")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         print("1. Registrar venta")
         print("2. Aplicar Descuento/Promocion")
@@ -32,7 +32,7 @@ def registrar_ventas(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Reporte De Ventas")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -48,7 +48,7 @@ def aplicar_descuento(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Aplicar descuento.")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -64,7 +64,7 @@ def mostrar_historial_ventas(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Mostrar historial de Ventas")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         print("1. Ver historial de ventas del dia")
         print("2. Ver historial de ventas de la semana")
@@ -89,7 +89,7 @@ def historial_por_dia(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Mostrar historial de Ventas Por Dias")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion =  input("Presiona 0 para retroceder: ")
         if opcion == "0":
@@ -104,7 +104,7 @@ def historial_por_semana(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Mostrar historial de Ventas Por Semana")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion =  input("Presiona 0 para retroceder: ")
         if opcion == "0":
@@ -120,7 +120,7 @@ def historial_por_mes(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Mostrar historial de Ventas Por Mes.")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion =  input("Presiona 0 para retroceder: ")
         if opcion == "0":

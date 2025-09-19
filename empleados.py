@@ -1,4 +1,4 @@
-from utilidades import *
+from utilidades import limpiar_pantalla
 
 def menu_empleados(sucursales):
     while True:

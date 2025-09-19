@@ -1,4 +1,4 @@
-from utilidades import *
+from utilidades import limpiar_pantalla
 
 def menu_inventario(sucursal):
     """Muestra el menu de inventario"""
@@ -6,7 +6,7 @@ def menu_inventario(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("    INVENTARIO")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         print("1. Agregar Producto")
         print("2. Ver Todos los Productos")
@@ -45,7 +45,7 @@ def agregar_producto(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Agregar Producto")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
@@ -58,7 +58,7 @@ def ver_todos_los_productos(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Ver todos los productos")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
@@ -71,7 +71,7 @@ def detalles_producto(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Detalles de producto")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
@@ -86,7 +86,7 @@ def actualizar_producto(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("ACTUALIZAR LISTA PRODUCTOS")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
@@ -101,7 +101,7 @@ def borrar_producto(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("BORRAR PRODUCTO")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
@@ -118,7 +118,7 @@ def buscar_producto(sucursal):
         
         print("=" * 50)
         print("BUSCAR LISTA PRODUCTOS")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
@@ -133,7 +133,7 @@ def alerta_stock_bajo(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("ALERTA STOCK BAJO PRODUCTOS")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":

@@ -1,4 +1,4 @@
-from utilidades import *
+from utilidades import cargar_datos_json, ARCHIVO_SUCURSALES, limpiar_pantalla, guardar_datos_json
 
 datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES) #archivos de las sucursales.
 
@@ -37,7 +37,7 @@ def editar_sucursales(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Editar Sucursales.")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         mostrar_sucursales(sucursal)
         print("0. Retroceder")
@@ -57,7 +57,7 @@ def eliminar_sucursales(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Eliminar sucursales.")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         mostrar_sucursales(sucursal)
         print()
@@ -73,7 +73,7 @@ def agregar_sucursales(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Agregar sucursales")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         mostrar_sucursales(sucursal)
         nombre = input("Nombre de la sucursal: ").strip()
@@ -84,6 +84,7 @@ def agregar_sucursales(sucursal):
                 "direccion": direccion
             }
         datos_sucursales["prox_id"] += 1
+        #se appendea el nuevo id, nombre y direccion a la variable importada al principio!!
         datos_sucursales["sucursales"].append(sucursal)
             
         guardar_datos_json(ARCHIVO_SUCURSALES, datos_sucursales) #el archivo y lo que queres almacenar.
@@ -100,7 +101,7 @@ def mostrar_sucursales(sucursal):
     
         print("=" * 50)
         print("Sucursales disponibles")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         for sucursal in datos_sucursales["sucursales"]:
             print(f"ID: {sucursal['id']}, Nombre: {sucursal['nombre']}, Direccion: {sucursal['direccion']}")

@@ -1,4 +1,4 @@
-from utilidades import *
+from utilidades import limpiar_pantalla
 
 def menu_proveedores(sucursal):
     """"
@@ -7,8 +7,7 @@ def menu_proveedores(sucursal):
     while True:
         limpiar_pantalla()
         print("=" * 50)
-        print("    PROVEEDORES")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+        print(f"    PROVEEDORES -- Sucursal: {sucursal['nombre']}")
         print("=" * 50)
         print("1.Registrar Proveedor")
         print("2.Solicitar productos a proveedor.")
@@ -45,7 +44,7 @@ def registrar_provedores(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Registrar proveedores")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -62,7 +61,7 @@ def solicitar_productos_a_proveedor(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Solicitar productos A Provedores")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -78,7 +77,7 @@ def pagos_pendientes(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Pagos pendientes a proveedores")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder:")
         if opcion == "0":
@@ -95,7 +94,7 @@ def historial_de_compras_a_cada_proveedor(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Historial de compras de cada proveedor")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -112,7 +111,7 @@ def buscar_proveedor_por_nombre(sucursal):
         limpiar_pantalla()
         print("=" * 50)
         print("Buscar proveedor por nombre.")
-        print(f"usted esta trabajando en {sucursal['nombre']}")
+ 
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":

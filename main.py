@@ -1,11 +1,11 @@
 ## Importar modulos
-from inventario import *
-from utilidades import *
+from inventario import menu_inventario
+from utilidades import limpiar_pantalla, guardar_datos_json, cargar_datos_json, incializar_datos, ARCHIVO_SUCURSALES
 from reportes import *
-from ventas import *
-from proveedores import *
-from empleados import * 
-from sucursales import *
+from ventas import menu_ventas
+from proveedores import menu_proveedores
+from empleados import menu_empleados
+from sucursales import menu_sucursales
 
 
 # Menu principal
