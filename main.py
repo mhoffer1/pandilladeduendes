@@ -100,7 +100,7 @@ def main_menu():
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def menu_reportes():
+def menu_reportes(sucursal):
     """Muestra el menu de reportes"""
     while True:
         limpiar_pantalla()
