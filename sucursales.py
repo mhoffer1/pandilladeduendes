@@ -78,14 +78,14 @@ def agregar_sucursales(sucursal):
         mostrar_sucursales(sucursal)
         nombre = input("Nombre de la sucursal: ").strip()
         direccion = input("Direccion de la sucursal: ").strip()
-        sucursal = {
+        sucursal_nueva = {
                 "id": datos_sucursales["prox_id"],
                 "nombre": nombre,
                 "direccion": direccion
             }
         datos_sucursales["prox_id"] += 1
         #se appendea el nuevo id, nombre y direccion a la variable importada al principio!!
-        datos_sucursales["sucursales"].append(sucursal)
+        datos_sucursales["sucursales"].append(sucursal_nueva)
             
         guardar_datos_json(ARCHIVO_SUCURSALES, datos_sucursales) #el archivo y lo que queres almacenar.
         print("Se agrego la sucursal correctamente.")
