@@ -30,7 +30,7 @@ def elegir_kiosco():
         
         guardar_datos_json(ARCHIVO_SUCURSALES, datos_sucursales)
         print("Se agrego la sucursal correctamente.")
-
+    #ACA ARRANCA EL PROGRAMA A PARTIR DEL SEGUNDO USO!!!
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -66,6 +66,7 @@ def elegir_kiosco():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
+    return False #esto es para que no se inicie main menu en caso de que pongan 0!
 
 def main_menu():
     """Muestra el menu principal una vez que elegiste sucursal."""
@@ -102,7 +103,7 @@ def main_menu():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-    return False #esto es para que no se inicie main menu en caso de que pongan 0!
+    
 
 def menu_reportes(sucursal):
     """Muestra el menu de reportes"""
@@ -133,10 +134,10 @@ def menu_reportes(sucursal):
 
    
 if __name__ == "__main__":
-    # Inicializa los .json(utilidades.py) e invoca elegir kiosco
+    # Inicializa los .json(utilidades.py) 
     incializar_datos()
     sucursal = elegir_kiosco()
-    if sucursal: #si no es false.
+    if sucursal: #si no es false,osea no ingresan salir del programa.
     #se invoca el menu principal.
         main_menu() 
         

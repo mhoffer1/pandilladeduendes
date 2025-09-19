@@ -38,7 +38,7 @@ def menu_proveedores(sucursal):
 
 def registrar_provedores(sucursal):
     """"
-    Registra provedores
+    Registra provedores con su nombre.
     """
 
     while True:
@@ -54,6 +54,10 @@ def registrar_provedores(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 def solicitar_productos_a_proveedor(sucursal):
+    """
+    Sirve para solicitar productos a un proveedor, debe ingresarse el provedor, producto/s
+    y cantidad.
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)

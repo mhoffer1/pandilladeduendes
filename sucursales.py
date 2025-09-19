@@ -3,6 +3,9 @@ from utilidades import *
 datos_sucursales = cargar_datos_json(ARCHIVO_SUCURSALES)
 
 def menu_sucursales(sucursal):
+     """
+     Podes acceder a todas las funciones de las sucursales!
+     """
      while True:
         limpiar_pantalla()
         print("=" * 50)

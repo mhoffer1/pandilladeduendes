@@ -58,7 +58,7 @@ def aplicar_descuento(sucursal):
             input("Presione Enter para continuar...")
 
 def mostrar_historial_ventas(sucursal):
-    
+    "podes ver el historial de ventas y filtrar por dia,mes y año."
 
     while True:
         limpiar_pantalla()
@@ -84,6 +84,7 @@ def mostrar_historial_ventas(sucursal):
             input("Presione Enter para continuar...")
 
 def historial_por_dia(sucursal):
+    "ves el historial de ventas diario."
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -98,6 +99,7 @@ def historial_por_dia(sucursal):
                 input("Presione Enter para continuar...")
 
 def historial_por_semana(sucursal):
+    "ves el historial de ventas semanal."
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -113,6 +115,7 @@ def historial_por_semana(sucursal):
         
         
 def historial_por_mes(sucursal):
+    "ves el historial de ventas mensual."
     while True:
         limpiar_pantalla()
         print("=" * 50)

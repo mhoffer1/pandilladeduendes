@@ -1,6 +1,8 @@
 from utilidades import *
 def mostrar_reporte_inventario(sucursal):
-    
+    """
+    Podes ver el reporte de inventario.
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -15,6 +17,9 @@ def mostrar_reporte_inventario(sucursal):
             input("Presione Enter para continuar...")
         
 def mostrar_reporte_venta(sucursal):
+    """
+    Ver el reporte de ventas.
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -29,6 +34,9 @@ def mostrar_reporte_venta(sucursal):
             input("Presione Enter para continuar...")
 
 def mostrar_reporte_empleados(sucursal):
+    """
+    Ver el reporte de los empleados.
+    """
     while True:
         limpiar_pantalla()
         print("=" * 50)
