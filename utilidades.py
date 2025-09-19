@@ -15,24 +15,14 @@ def cargar_datos_json(file_path:str) -> dict: #para mostrar SOLO sucursales(por 
     """Cargar datos desde un archivo JSON, se almacena en una variable
        Al principio de cada .py 
     """
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            return json.load(file) #retorna un dict. load = lee
-    except FileNotFoundError:
-        return {}
-    except json.JSONDecodeError:
-        print(f"Error leyendo {file_path}. El archivo puede estar corrupto.")
-        return {}
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return json.load(file) #retorna un dict. load = lee
 
 def guardar_datos_json(file_path:str, data:dict): #para guardar las sucursales(por ahora.)
     """Guardar datos en un archivo JSON"""
-    try:
-        with open(file_path, 'w', encoding='utf-8') as file:
-            json.dump(data, file, indent=2, ensure_ascii=False) #dump= escribee
-        return True
-    except Exception as e:
-        print(f"Error guardando en {file_path}: {e}")
-        return False
+
+    with open(file_path, 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=2, ensure_ascii=False) #dump= escribee
 
 
 def incializar_datos()->None:
