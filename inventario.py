@@ -1,6 +1,6 @@
 from utilidades import limpiar_pantalla
 
-def menu_inventario(sucursal):
+def menu_inventario():
     """Muestra el menu de inventario"""
     while True:
         limpiar_pantalla()
@@ -21,26 +21,26 @@ def menu_inventario(sucursal):
         opcion = input("Seleccione una opcion: ")
         
         if opcion == "1":
-            agregar_producto(sucursal)
+            agregar_producto()
         elif opcion == "2":
-             ver_todos_los_productos(sucursal)
+             ver_todos_los_productos()
         elif opcion == "3":
-            detalles_producto(sucursal)
+            detalles_producto()
         elif opcion == "4":
-            actualizar_producto(sucursal)
+            actualizar_producto()
         elif opcion == "5":
-            borrar_producto(sucursal)
+            borrar_producto()
         elif opcion == "6":
-            buscar_producto(sucursal)
+            buscar_producto()
         elif opcion == "7":
-            alerta_stock_bajo(sucursal)
+            alerta_stock_bajo()
         elif opcion == "0":
             break
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def agregar_producto(sucursal):
+def agregar_producto():
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -53,7 +53,7 @@ def agregar_producto(sucursal):
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def ver_todos_los_productos(sucursal):
+def ver_todos_los_productos():
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -66,7 +66,7 @@ def ver_todos_los_productos(sucursal):
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def detalles_producto(sucursal):
+def detalles_producto():
     while True:
         limpiar_pantalla()
         print("=" * 50)
@@ -80,7 +80,7 @@ def detalles_producto(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def actualizar_producto(sucursal):
+def actualizar_producto():
     """Actualizar la informacion de un producto"""
     while True:
         limpiar_pantalla()
@@ -95,7 +95,7 @@ def actualizar_producto(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def borrar_producto(sucursal):
+def borrar_producto():
     """Borrar un producto del inventario"""
     while True:
         limpiar_pantalla()
@@ -111,7 +111,7 @@ def borrar_producto(sucursal):
             input("Presione Enter para continuar...")
 
 
-def buscar_producto(sucursal):
+def buscar_producto():
     """Buscar productos por nombre o categoria"""
     while True:
         limpiar_pantalla()
@@ -127,7 +127,7 @@ def buscar_producto(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def alerta_stock_bajo(sucursal):
+def alerta_stock_bajo():
     """Mostrar productos con stock por debajo del nivel minimo"""
     while True:
         limpiar_pantalla()

@@ -1,13 +1,13 @@
 from utilidades import limpiar_pantalla
 
-def menu_proveedores(sucursal):
+def menu_proveedores():
     """"
     menu de proveedores, te permite hacer todas las acciones.
     """
     while True:
         limpiar_pantalla()
         print("=" * 50)
-        print(f"    PROVEEDORES -- Sucursal: {sucursal['nombre']}")
+        print(f"    PROVEEDORES ")
         print("=" * 50)
         print("1.Registrar Proveedor")
         print("2.Solicitar productos a proveedor.")
@@ -19,15 +19,15 @@ def menu_proveedores(sucursal):
         opcion = input("Ingrese una opcion: ")
     
         if opcion == "1":
-            registrar_provedores(sucursal)
+            registrar_provedores()
         elif opcion == "2":
-            solicitar_productos_a_proveedor(sucursal)
+            solicitar_productos_a_proveedor()
         elif opcion == "3":
-            pagos_pendientes(sucursal)
+            pagos_pendientes()
         elif opcion == "4":
-            historial_de_compras_a_cada_proveedor(sucursal)
+            historial_de_compras_a_cada_proveedor()
         elif opcion == "5":
-            buscar_proveedor_por_nombre(sucursal)
+            buscar_proveedor_por_nombre()
         elif opcion == "0":
             break
         else:
@@ -35,7 +35,7 @@ def menu_proveedores(sucursal):
             input("Presione Enter para continuar...")
             
 
-def registrar_provedores(sucursal):
+def registrar_provedores():
     """"
     Registra provedores con su nombre.
     """
@@ -52,7 +52,7 @@ def registrar_provedores(sucursal):
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def solicitar_productos_a_proveedor(sucursal):
+def solicitar_productos_a_proveedor():
     """
     Sirve para solicitar productos a un proveedor, debe ingresarse el provedor, producto/s
     y cantidad.
@@ -69,7 +69,7 @@ def solicitar_productos_a_proveedor(sucursal):
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def pagos_pendientes(sucursal):
+def pagos_pendientes():
     """
     Podes ver pagos pendientes a proveedores
     """
@@ -86,7 +86,7 @@ def pagos_pendientes(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def historial_de_compras_a_cada_proveedor(sucursal):
+def historial_de_compras_a_cada_proveedor():
     while True:
         """
         Podes ver el historial de compras a cada proveedor
@@ -103,7 +103,7 @@ def historial_de_compras_a_cada_proveedor(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def buscar_proveedor_por_nombre(sucursal):
+def buscar_proveedor_por_nombre():
     """
     Podes buscar proveedores por nombre y apellido.
     """

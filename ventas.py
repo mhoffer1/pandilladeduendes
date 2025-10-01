@@ -1,6 +1,6 @@
 from utilidades import *
 
-def menu_ventas(sucursal):
+def menu_ventas():
     "Muestra el menu de Ventas"
     while True:
         limpiar_pantalla()
@@ -14,11 +14,11 @@ def menu_ventas(sucursal):
         print("0. Volver al Menu Principal")
         opcion = input("Ingrese una opcion: ")
         if opcion == "1":
-            registrar_ventas(sucursal)
+            registrar_ventas()
         elif opcion == "2":
-            aplicar_descuento(sucursal)
+            aplicar_descuento()
         elif opcion == "3":
-            mostrar_historial_ventas(sucursal)
+            mostrar_historial_ventas()
         elif opcion == "0":
             break
         else:

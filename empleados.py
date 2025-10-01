@@ -5,7 +5,7 @@ def menu_empleados(sucursales):
         limpiar_pantalla()
         print("=" * 50)
         print("    EMPLEADOS")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
+        
         print("=" * 50)
         print("1. Registrar empleado")
         print("2. Editar datos de empleado.")
@@ -17,29 +17,28 @@ def menu_empleados(sucursales):
 
         opcion = input("Ingrese una opcion: ")
         if opcion == "1":
-                registrar_empleados(sucursales)
+                registrar_empleados()
         elif opcion == "2":
-                editar_datos_de_empleados(sucursales)
+                editar_datos_de_empleados()
         elif opcion == "3":
-                registrar_asistencia(sucursales)
+                registrar_asistencia()
         elif opcion == "4":
-                asignar_roles(sucursales)
+                asignar_roles()
         elif opcion == "5":
-                generar_reportes_desempeño(sucursales)
+                generar_reportes_desempeño()
         elif opcion == "6":
-                dar_de_alta_o_baja(sucursales)
+                dar_de_alta_o_baja()
         elif opcion == "0":
                 break
         else:
                 print("Opcion invalida. Intente de nuevo.")
                 input("Presione Enter para continuar...")
 
-def registrar_empleados(sucursales):
+def registrar_empleados():
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Registrar un nuevo empleado.")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -48,12 +47,12 @@ def registrar_empleados(sucursales):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def editar_datos_de_empleados(sucursales):
+def editar_datos_de_empleados():
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Editar Datos de empleados.")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
+        
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -62,12 +61,12 @@ def editar_datos_de_empleados(sucursales):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def registrar_asistencia(sucursales):
+def registrar_asistencia():
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Registrar asistencia.")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
+        
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -76,12 +75,12 @@ def registrar_asistencia(sucursales):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
             
-def generar_reportes_desempeño(sucursales):
+def generar_reportes_desempeño():
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Reportes de Desempeño.")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
+      
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -90,12 +89,12 @@ def generar_reportes_desempeño(sucursales):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def asignar_roles(sucursales):
+def asignar_roles():
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Asignar roles")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
+       
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -104,30 +103,28 @@ def asignar_roles(sucursales):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def dar_de_alta_o_baja(sucursales):
+def dar_de_alta_o_baja():
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Registrar y dar de Baja Empleados")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 1. Para dar de alta, 2. Para dar de baja, 0. Para retroceder: ")
         if opcion == "0":
             break
         elif opcion == "1":
-            dar_de_alta(sucursales)
+            dar_de_alta()
         elif opcion == "2":
-            dar_de_baja(sucursales)
+            dar_de_baja()
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
         
-def dar_de_alta(sucursales):
+def dar_de_alta():
      while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Dar de alta")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
@@ -136,12 +133,11 @@ def dar_de_alta(sucursales):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def dar_de_baja(sucursales):
+def dar_de_baja():
     while True:
         limpiar_pantalla()
         print("=" * 50)
         print("Dar de baja")
-        print(f"usted esta trabajando en {sucursales['nombre']}")
         print("=" * 50)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
