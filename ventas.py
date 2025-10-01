@@ -26,7 +26,7 @@ def menu_ventas():
             input("Presione Enter para continuar...")
 
 
-def registrar_ventas(sucursal):
+def registrar_ventas():
     
     while True:
         limpiar_pantalla()
@@ -42,7 +42,7 @@ def registrar_ventas(sucursal):
             input("Presione Enter para continuar...")
          
     
-def aplicar_descuento(sucursal): 
+def aplicar_descuento(): 
     
     while True:
         limpiar_pantalla()
@@ -57,7 +57,7 @@ def aplicar_descuento(sucursal):
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def mostrar_historial_ventas(sucursal):
+def mostrar_historial_ventas():
     "podes ver el historial de ventas y filtrar por dia,mes y año."
 
     while True:
@@ -72,18 +72,18 @@ def mostrar_historial_ventas(sucursal):
         print("0. Salir")
         opcion = input("Ingrese una opcion: ")
         if opcion == "1":
-            historial_por_dia(sucursal)
+            historial_por_dia()
         elif opcion == "2":
-            historial_por_semana(sucursal)
+            historial_por_semana()
         elif opcion == "3":
-            historial_por_mes(sucursal)
+            historial_por_mes()
         elif opcion == "0":
             break
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def historial_por_dia(sucursal):
+def historial_por_dia():
     "ves el historial de ventas diario."
     while True:
         limpiar_pantalla()
@@ -98,7 +98,7 @@ def historial_por_dia(sucursal):
                 print("Opcion invalida. Intente de nuevo.")
                 input("Presione Enter para continuar...")
 
-def historial_por_semana(sucursal):
+def historial_por_semana():
     "ves el historial de ventas semanal."
     while True:
         limpiar_pantalla()
@@ -114,7 +114,7 @@ def historial_por_semana(sucursal):
                 input("Presione Enter para continuar...")
         
         
-def historial_por_mes(sucursal):
+def historial_por_mes():
     "ves el historial de ventas mensual."
     while True:
         limpiar_pantalla()
