@@ -37,7 +37,7 @@ def menu_reportes():
     while True:
         limpiar_pantalla()
         opciones_report = ("Reporte de Inventario", "Reporte de Ventas", "Reporte de Empleados", "Volver al menú principal")
-        opciones("REPORTES", opciones_report)
+        opciones("REPORTES", opciones_report) 
         
         opcion = input("Seleccione una opcion: ").strip()
         

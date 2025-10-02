@@ -1,4 +1,6 @@
-from utilidades import limpiar_pantalla, guiones, opciones
+from utilidades import *
+
+datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
 
 def menu_inventario():
     """Muestra el menu de inventario"""
@@ -30,14 +32,42 @@ def menu_inventario():
             input("Presione Enter para continuar...")
 
 def agregar_producto():
+    validar_precio = lambda x: x > 50 #el producto mas barato puede costar 100.
     while True:
         limpiar_pantalla()
-        guiones()
-        print("AGREGAR PRODUCTO")
-        guiones()
-        opcion = input("Ingrese 0 para salir: ")
+        opciones_prod = ["Agregar Producto","Salir"] #damos la oportunidad de salir por que es mucho quilombo si te metiste y no queres agregar nada.
+        opciones("Añadir productos",opciones_prod)
+        
+        opcion = input("Ingrese 1 opcion: ")
         if opcion == "0":
             break
+        if opcion == "1":
+            while True: #hasta que ingresen toda la data bien.
+                nombre = input("Ingrese el nombre del producto:")
+                precio = int(input("Ingrese el precio:$"))
+                if validar_precio :
+                    alta_rotacion = input("Es un producto de alta rotacion?(1 si,0 u otra tecla no.)")
+                    if alta_rotacion == 1:
+                        producto = {
+                                   "id"   : datos_inventario["prox_id"],
+                                  "nombre": nombre,
+                                  "precio": precio,
+                                  "alta_rotacion": "si"
+                                  }
+                    else:
+                         producto = {
+                                  "nombre": nombre,
+                                  "precio": precio,
+                                  "alta_rotacion": "no"
+                                  }
+                    datos_inventario["prox_id"] += 1
+                    datos_inventario["productos"].append(producto)
+                    guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
+                    print("Se agrego la sucursal correctamente.")
+                    input("Presione Enter para continuar...")
+                    break
+                print("precio invalido.")
+
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
@@ -45,14 +75,19 @@ def ver_todos_los_productos():
     while True:
         limpiar_pantalla()
         guiones()
-        print("VER TODOS LOS PRODUCTOS")
+        print("ver productos")
         guiones()
-        opcion = input("Ingrese 0 para salir: ")
-        if opcion == "0":
-            break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+        for producto in datos_inventario["productos"]:
+            print(f"{producto['nombre']}, ${producto['precio']}")
+
+
+        input("Presione espacio para continuar.")
+        break
+        
+    
+        
+      
+
 def detalles_producto():
     while True:
         limpiar_pantalla()

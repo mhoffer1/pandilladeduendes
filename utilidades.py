@@ -43,7 +43,7 @@ def incializar_datos()->None:
 
     # Incializa el archivo de inventario
     if not os.path.exists(ARCHIVO_INVENTARIO): #si no esta en el path, se crea 
-        guardar_datos_json(ARCHIVO_INVENTARIO, {"productos": [], "prox_id": 1})
+        guardar_datos_json(ARCHIVO_INVENTARIO, {"productos": [], "prox_id": 1,})
 
     # Inicializa el archivo de ventas
     if not os.path.exists(ARCHIVO_VENTAS): #se usa como file path.
