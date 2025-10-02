@@ -1,14 +1,14 @@
-from utilidades import limpiar_pantalla
+from utilidades import limpiar_pantalla, guiones
+
 def mostrar_reporte_inventario():
     """
     Podes ver el reporte de inventario.
     """
     while True:
         limpiar_pantalla()
-        print("=" * 50)
+        guiones()
         print("    REPORTE DE INVENTARIO")
-
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
@@ -22,10 +22,9 @@ def mostrar_reporte_venta():
     """
     while True:
         limpiar_pantalla()
-        print("=" * 50)
+        guiones()
         print("    REPORTE DE VENTA")
- 
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
@@ -39,10 +38,9 @@ def mostrar_reporte_empleados():
     """
     while True:
         limpiar_pantalla()
-        print("=" * 50)
+        guiones()
         print("    REPORTE DE EMPLEADOS")
- 
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break

@@ -1,22 +1,11 @@
-from utilidades import limpiar_pantalla
+from utilidades import limpiar_pantalla, guiones, opciones
 
 def menu_inventario():
     """Muestra el menu de inventario"""
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("    INVENTARIO")
- 
-        print("=" * 50)
-        print("1. Agregar Producto")
-        print("2. Ver Todos los Productos")
-        print("3. Ver Detalles del Producto")
-        print("4. Actualizar Producto")
-        print("5. Borrar Producto")
-        print("6. Buscar Producto")
-        print("7. Mostrar Productos con Bajo Stock")
-        print("0. Volver al Menu Principal")
-        print("=" * 50)
+        opciones_inv = ("Agregar Producto", "Ver Todos los Productos", "Ver Detalles del Producto", "Actualizar Producto", "Borrar Producto", "Buscar Producto", "Mostrar Productos con Bajo Stock", "Volver al Menú Principal")
+        opciones("INVENTARIO", opciones_inv)
         
         opcion = input("Seleccione una opcion: ")
         
@@ -43,10 +32,9 @@ def menu_inventario():
 def agregar_producto():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Agregar Producto")
- 
-        print("=" * 50)
+        guiones()
+        print("AGREGAR PRODUCTO")
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
@@ -56,10 +44,9 @@ def agregar_producto():
 def ver_todos_los_productos():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Ver todos los productos")
- 
-        print("=" * 50)
+        guiones()
+        print("VER TODOS LOS PRODUCTOS")
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
@@ -69,10 +56,9 @@ def ver_todos_los_productos():
 def detalles_producto():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Detalles de producto")
- 
-        print("=" * 50)
+        guiones()
+        print("DETALLES DE PRODUCTO")
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
@@ -84,10 +70,9 @@ def actualizar_producto():
     """Actualizar la informacion de un producto"""
     while True:
         limpiar_pantalla()
-        print("=" * 50)
+        guiones()
         print("ACTUALIZAR LISTA PRODUCTOS")
- 
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
@@ -99,10 +84,9 @@ def borrar_producto():
     """Borrar un producto del inventario"""
     while True:
         limpiar_pantalla()
-        print("=" * 50)
+        guiones()
         print("BORRAR PRODUCTO")
- 
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
@@ -115,11 +99,9 @@ def buscar_producto():
     """Buscar productos por nombre o categoria"""
     while True:
         limpiar_pantalla()
-        
-        print("=" * 50)
+        guiones()
         print("BUSCAR LISTA PRODUCTOS")
- 
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
@@ -131,10 +113,9 @@ def alerta_stock_bajo():
     """Mostrar productos con stock por debajo del nivel minimo"""
     while True:
         limpiar_pantalla()
-        print("=" * 50)
+        guiones()
         print("ALERTA STOCK BAJO PRODUCTOS")
- 
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break

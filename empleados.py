@@ -1,19 +1,10 @@
-from utilidades import limpiar_pantalla
+from utilidades import limpiar_pantalla, guiones, opciones
 
-def menu_empleados(sucursales):
+def menu_empleados():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("    EMPLEADOS")
-        
-        print("=" * 50)
-        print("1. Registrar empleado")
-        print("2. Editar datos de empleado.")
-        print("3. Registrar asistencia.")
-        print("4. Asignar roles a empleados.")
-        print("5. Reportes por desempeño.")
-        print("6. Dar de alta o baja un empleado.")
-        print("0. Volver al Menu Principal")
+        opciones_empl = ("Registrar Nuevo Empleado", "Editar Datos de Empleado", "Registrar Asistencia", "Asignar Roles a Empleados", "Reportes por Desempeño", "Dar de Baja a un Empleado", "Volver al Menú Principal")
+        opciones("EMPLEADOS", opciones_empl)
 
         opcion = input("Ingrese una opcion: ")
         if opcion == "1":
@@ -27,7 +18,7 @@ def menu_empleados(sucursales):
         elif opcion == "5":
                 generar_reportes_desempeño()
         elif opcion == "6":
-                dar_de_alta_o_baja()
+                dar_de_baja()
         elif opcion == "0":
                 break
         else:
@@ -37,9 +28,9 @@ def menu_empleados(sucursales):
 def registrar_empleados():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Registrar un nuevo empleado.")
-        print("=" * 50)
+        guiones()
+        print("REGISTRAR EMPLEADO")
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -50,10 +41,10 @@ def registrar_empleados():
 def editar_datos_de_empleados():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Editar Datos de empleados.")
+        guiones()
+        print("EDITAR EMPLEADO")
         
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -64,10 +55,10 @@ def editar_datos_de_empleados():
 def registrar_asistencia():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Registrar asistencia.")
+        guiones()
+        print("REGISTRAR ASISTENCIA")
         
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -78,10 +69,10 @@ def registrar_asistencia():
 def generar_reportes_desempeño():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Reportes de Desempeño.")
+        guiones()
+        print("REPORTES DE DESEMPEÑO")
       
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -92,40 +83,10 @@ def generar_reportes_desempeño():
 def asignar_roles():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Asignar roles")
+        guiones()
+        print("ASIGNAR ROLES")
        
-        print("=" * 50)
-        opcion = input("Ingrese 0 para retroceder: ")
-        if opcion == "0":
-            break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
-
-def dar_de_alta_o_baja():
-    while True:
-        limpiar_pantalla()
-        print("=" * 50)
-        print("Registrar y dar de Baja Empleados")
-        print("=" * 50)
-        opcion = input("Ingrese 1. Para dar de alta, 2. Para dar de baja, 0. Para retroceder: ")
-        if opcion == "0":
-            break
-        elif opcion == "1":
-            dar_de_alta()
-        elif opcion == "2":
-            dar_de_baja()
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
-        
-def dar_de_alta():
-     while True:
-        limpiar_pantalla()
-        print("=" * 50)
-        print("Dar de alta")
-        print("=" * 50)
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -136,9 +97,9 @@ def dar_de_alta():
 def dar_de_baja():
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Dar de baja")
-        print("=" * 50)
+        guiones()
+        print("DAR DE BAJA")
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
            break

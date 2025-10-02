@@ -56,3 +56,28 @@ def incializar_datos()->None:
 def limpiar_pantalla()-> None:
     os.system('cls' if os.name == 'nt' else 'clear')
     """limpiar la pantalla de la consola"""
+
+def guiones(n=50) -> None:
+    """
+    Imprime una línea de "=", cuya cantidad es la cantidad que indique el usuario, o 50 si no se especifica.
+
+    Pre: No recibe parámetros.
+    Post: Imprime la línea de "=". No retorna nada
+    """
+    print("="*n)
+
+def opciones(titulo: str, tupla_opciones: tuple[str]) -> None:
+    """
+    Lista y enumera las opciones recibidas como parámetro, imprimiendo el título del módulo por encima.
+
+    Pre: Recibe el título del módulo y la tupla con las opciones a listar. La última opción debe ser la de Volver atrás o Salir del programa.
+    Post: No retorna nada, imprime el título y el listado de opciones.
+    """
+    guiones()
+    print(f"    {titulo}")
+    guiones()
+    for i, op in enumerate(tupla_opciones):
+        if i == len(tupla_opciones)-1: # Si es la última opción va a ser la de salir del programa y lo imprime con un 0
+            i = -1
+        print(f"{i+1}- {op}")
+    guiones()

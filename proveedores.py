@@ -1,4 +1,4 @@
-from utilidades import limpiar_pantalla
+from utilidades import limpiar_pantalla, guiones, opciones
 
 def menu_proveedores():
     """"
@@ -6,28 +6,20 @@ def menu_proveedores():
     """
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print(f"    PROVEEDORES ")
-        print("=" * 50)
-        print("1.Registrar Proveedor")
-        print("2.Solicitar productos a proveedor.")
-        print("3.Ver pagos pendientes")
-        print("4.Ver historial de Compra de Cada Proveedor.")
-        print("5.Ver proveedor por Nombre.")
-        print("0. Volver al Menu Principal")
-        print("=" * 50)
+        opciones_prov = ("Registrar Proveedor", "Solicitar Productos a Proveedor", "Ver Pagos Pendientes", "Ver Historial de Compras", "Buscar Proveedores", "Volver al Menú Principal")
+        opciones("PROVEEDORES", opciones_prov)
         opcion = input("Ingrese una opcion: ")
     
         if opcion == "1":
             registrar_provedores()
         elif opcion == "2":
-            solicitar_productos_a_proveedor()
+            solicitar_productos()
         elif opcion == "3":
             pagos_pendientes()
         elif opcion == "4":
-            historial_de_compras_a_cada_proveedor()
+            historial_de_compras()
         elif opcion == "5":
-            buscar_proveedor_por_nombre()
+            buscar_proveedor()
         elif opcion == "0":
             break
         else:
@@ -42,27 +34,25 @@ def registrar_provedores():
 
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Registrar proveedores")
- 
-        print("=" * 50)
+        guiones()
+        print("REGISTRAR PROVEEDORES")
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-def solicitar_productos_a_proveedor():
+def solicitar_productos():
     """
     Sirve para solicitar productos a un proveedor, debe ingresarse el provedor, producto/s
     y cantidad.
     """
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Solicitar productos A Provedores")
- 
-        print("=" * 50)
+        guiones()
+        print("SOLICITAR A PROVEEDORES")
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -75,10 +65,9 @@ def pagos_pendientes():
     """
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Pagos pendientes a proveedores")
- 
-        print("=" * 50)
+        guiones()
+        print("PAGOS PENDIENTES")
+        guiones()
         opcion = input("Ingrese 0 para retroceder:")
         if opcion == "0":
             break
@@ -86,16 +75,15 @@ def pagos_pendientes():
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def historial_de_compras_a_cada_proveedor():
+def historial_de_compras():
     while True:
         """
         Podes ver el historial de compras a cada proveedor
         """
         limpiar_pantalla()
-        print("=" * 50)
-        print("Historial de compras de cada proveedor")
- 
-        print("=" * 50)
+        guiones()
+        print("HISTORIAL DE COMPRAS")
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -103,16 +91,15 @@ def historial_de_compras_a_cada_proveedor():
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def buscar_proveedor_por_nombre():
+def buscar_proveedor():
     """
     Podes buscar proveedores por nombre y apellido.
     """
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("Buscar proveedor por nombre.")
- 
-        print("=" * 50)
+        guiones()
+        print("BUSCAR PROVEEDOR")
+        guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break

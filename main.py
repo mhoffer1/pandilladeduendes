@@ -6,23 +6,12 @@ from ventas import menu_ventas
 from proveedores import menu_proveedores
 from empleados import menu_empleados
 
-
-
-
 def main_menu():
     """Muestra el menu principal una vez que elegiste sucursal."""
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print(f"  ERP - Pandilla de Duendes")
-        print("=" * 50)
-        print("1. Inventario")
-        print("2. Ventas")
-        print("3. Empleados")
-        print("4. Proveedores")
-        print("5. Reportes")
-        print("0. Atras")
-        print("=" * 50)
+        opciones_main = ("Inventario", "Ventas", "Empleados", "Proveedores", "Reportes", "Salir del programa")
+        opciones("ERP - Pandilla de Duendes", opciones_main)
         
         opcion = input("Seleccione una opcion: ").strip()
         
@@ -47,13 +36,8 @@ def menu_reportes():
     """Muestra el menu de reportes"""
     while True:
         limpiar_pantalla()
-        print("=" * 50)
-        print("    REPORTES")
-        print("=" * 50)
-        print("1. Reporte de Inventario")
-        print("2. Reporte de Ventas")
-        print("3. Reporte de Empleados")
-        print("0. Volver al menu principal")
+        opciones_report = ("Reporte de Inventario", "Reporte de Ventas", "Reporte de Empleados", "Volver al menú principal")
+        opciones("REPORTES", opciones_report)
         
         opcion = input("Seleccione una opcion: ").strip()
         
@@ -75,7 +59,5 @@ if __name__ == "__main__":
         # Inicializa los .json(utilidades.py) 
         incializar_datos() #primer uso, sino main_menu
         
-        main_menu() 
-        print("Gracias por usar ERP---Pandilla de Duendes!")
-        
-            
+        main_menu()
+        print("\nGracias por usar ERP - Pandilla de Duendes!")
