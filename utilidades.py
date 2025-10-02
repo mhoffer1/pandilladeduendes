@@ -1,7 +1,7 @@
 import json
 import os
+from tabulate import tabulate
 # from datetime import datetime
-# from tabulate import tabulate
 
 # Rutas de los archivos de datos, si existen se devuelven y si no se crea mas abajo!!!
 DATA_DIR = "data" #carpeta
@@ -81,3 +81,20 @@ def opciones(titulo: str, tupla_opciones: tuple[str]) -> None:
             i = -1
         print(f"{i+1}- {op}")
     guiones()
+
+def imprimir_tabla(headers: list[str], data: list[list[str]]) -> None:
+    """
+    Imprime una tabla con los datos y encabezados proporcionados.
+
+    Pre: Recibe una lista de encabezados y una lista de listas con los datos.
+    Post: No retorna nada, imprime la tabla en la consola.
+    """
+    try:
+        print(tabulate(data, headers=headers, tablefmt="grid"))
+    except ImportError:
+        print("La librería 'tabulate' no está instalada. Instálala para ver tablas formateadas.")
+        # Imprime de forma básica si tabulate no está disponible
+        print(" | ".join(headers))
+        print("-" * (len(headers) * 10))
+        for row in data:
+            print(" | ".join(map(str, row)))

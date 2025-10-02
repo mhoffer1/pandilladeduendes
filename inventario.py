@@ -1,4 +1,5 @@
 from utilidades import *
+from datetime import datetime
 
 datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
 
@@ -32,7 +33,7 @@ def menu_inventario():
             input("Presione Enter para continuar...")
 
 def agregar_producto():
-    validar_precio = lambda x: x > 50 #el producto mas barato puede costar 100.
+    #validar_precio = lambda x: x > 50 # el producto mas barato puede costar 100.
     while True:
         limpiar_pantalla()
         opciones_prod = ["Agregar Producto","Salir"] #damos la oportunidad de salir por que es mucho quilombo si te metiste y no queres agregar nada.
@@ -41,29 +42,32 @@ def agregar_producto():
         opcion = input("Ingrese 1 opcion: ")
         if opcion == "0":
             break
+
         if opcion == "1":
             while True: #hasta que ingresen toda la data bien.
-                nombre = input("Ingrese el nombre del producto:")
-                precio = int(input("Ingrese el precio:$"))
-                if validar_precio :
-                    alta_rotacion = input("Es un producto de alta rotacion?(1 si,0 u otra tecla no.)")
-                    if alta_rotacion == 1:
-                        producto = {
-                                   "id"   : datos_inventario["prox_id"],
-                                  "nombre": nombre,
-                                  "precio": precio,
-                                  "alta_rotacion": "si"
-                                  }
-                    else:
-                         producto = {
-                                  "nombre": nombre,
-                                  "precio": precio,
-                                  "alta_rotacion": "no"
-                                  }
+                nombre = input("Ingrese el nombre del producto: ")
+                costo = int(input("Ingrese el costo:$ "))
+                precio = int(input("Ingrese el precio de venta:$ "))
+                stock = int(input("Ingrese el stock inicial: "))
+                categoria = input("Ingrese la categoria del producto: ")
+
+                if precio > costo and precio > 50 and stock > 0: #el precio tiene que ser mayor al costo y mayor a 50
+                    alta_rotacion = input("Es un producto de alta rotacion? (1 si, 0 u otra tecla no.)")
+                    producto = {
+                                "id"   : str(datos_inventario["prox_id"]),
+                                "nombre": nombre.lower(),
+                                "costo" : costo,
+                                "precio": precio,
+                                "stock": stock,
+                                "alta_rotacion": alta_rotacion,
+                                "categoria": categoria.lower(),
+                                "fecha_alta": str(datetime.now().date()),
+                                "ultima_modificacion": str(datetime.now().date())
+                                }
                     datos_inventario["prox_id"] += 1
                     datos_inventario["productos"].append(producto)
                     guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
-                    print("Se agrego la sucursal correctamente.")
+                    print("Se agrego el producto correctamente.")
                     input("Presione Enter para continuar...")
                     break
                 print("precio invalido.")
@@ -71,22 +75,67 @@ def agregar_producto():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
+
 def ver_todos_los_productos():
+    productos = datos_inventario["productos"]
+    if not productos:
+        limpiar_pantalla()
+        guiones()
+        print("Productos en inventario")
+        guiones()
+        print("No hay productos cargados.")
+        input("Presione Enter para continuar...")
+        return
+
+    por_pagina = 10
+    total = len(productos)
+    total_paginas = (total + por_pagina - 1) // por_pagina
+    pagina = 0
+
     while True:
         limpiar_pantalla()
         guiones()
-        print("ver productos")
+        print(f"Productos en inventario (Pagina {pagina + 1} de {total_paginas})")
         guiones()
-        for producto in datos_inventario["productos"]:
-            print(f"{producto['nombre']}, ${producto['precio']}")
 
+        inicio = pagina * por_pagina
+        fin = min(inicio + por_pagina, total)
 
-        input("Presione espacio para continuar.")
+        headers = ["ID", "Nombre", "Precio", "Costo", "Stock", "Categoria", "Alta Rotacion", "Fecha Alta", "Ultima Modificacion"]
+        data = [
+            [
+                producto["id"],
+                producto["nombre"].capitalize(),
+                producto["precio"],
+                producto["costo"],
+                producto["stock"],
+                producto["categoria"].capitalize(),
+                "Si" if producto["alta_rotacion"] == "1" else "No",
+                producto["fecha_alta"],
+                producto["ultima_modificacion"],
+            ]
+            for producto in productos[inicio:fin]
+        ]
+        print(tabulate(data, headers, tablefmt="grid"))
+
+        print("\nOpciones: [N] siguiente, [P] anterior, [0] volver")
+        opcion = input("Seleccione una opcion: ").strip().lower()
+
+        if opcion == "0":
+            return
+        if opcion == "n":
+            if pagina < total_paginas - 1:
+                pagina += 1
+            else:
+                input("Es la ultima pagina. Presione Enter para continuar...")
+        elif opcion == "p":
+            if pagina > 0:
+                pagina -= 1
+            else:
+                input("Es la primera pagina. Presione Enter para continuar...")
+        else:
+            input("Opcion invalida. Presione Enter para continuar...")
         break
-        
-    
-        
-      
 
 def detalles_producto():
     while True:
@@ -94,12 +143,33 @@ def detalles_producto():
         guiones()
         print("DETALLES DE PRODUCTO")
         guiones()
-        opcion = input("Ingrese 0 para salir: ")
+        
+        #buscar por id o nombre
+        opcion = input("Ingrese el ID / nombre del producto o 0 para salir: ")
+        opcion = opcion.strip().lower()
         if opcion == "0":
             break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+        
+        encontrado = False
+        for producto in datos_inventario["productos"]:
+            if producto["id"] == opcion or producto["nombre"] == opcion:
+                print("Detalles del producto:")
+                print(f"ID: {producto['id']}")
+                print(f"Nombre: {producto['nombre'].capitalize()}")
+                print(f"Precio: {producto['precio']}")
+                print(f"Costo: {producto['costo']}")
+                print(f"Stock: {producto['stock']}")
+                print(f"Categoria: {producto['categoria'].capitalize()}")
+                print(f"Alta Rotacion: {'Si' if producto['alta_rotacion'] == '1' else 'No'}")
+                print(f"Fecha Alta: {producto['fecha_alta']}")
+                print(f"Ultima Modificacion: {producto['ultima_modificacion']}")
+                encontrado = True
+                break
+        
+        if not encontrado:
+            print("Producto no encontrado.")
+        
+        input("Presione Enter para continuar...")
 
 def actualizar_producto():
     """Actualizar la informacion de un producto"""
