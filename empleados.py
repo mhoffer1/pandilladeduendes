@@ -1,4 +1,8 @@
 from utilidades import limpiar_pantalla, guiones, opciones
+from utilidades import *
+from datetime import datetime
+
+datos_empleados = cargar_datos_json(ARCHIVO_EMPLEADOS)
 
 def menu_empleados():
     while True:
@@ -31,9 +35,35 @@ def registrar_empleados():
         guiones()
         print("REGISTRAR EMPLEADO")
         guiones()
-        opcion = input("Ingrese 0 para retroceder: ")
+        opcion = input("Ingrese 0 para retroceder y 1 para registrar: ")
         if opcion == "0":
             break
+        if opcion == "1":
+            while True:
+                nombre = input("Nombre completo: ")
+                puesto = input("Puesto: ")
+                try:
+                    sueldo = int(input("Sueldo: "))
+                except ValueError:
+                    print("El sueldo debe ser un numero.")
+                    input("Presione enter para continuar...")
+                    continue
+                if sueldo > 0: 
+                    empleado = {
+                        "id": str(datos_empleados["prox_id"]),
+                        "nombre": nombre.title(),
+                        "puesto": puesto.title(),
+                        "sueldo": sueldo,
+                        "fecha_alta": str(datetime.now().date()),
+                        "asistencias": []
+                    }
+                    datos_empleados["prox_id"] += 1
+                    datos_empleados["empleados"].append(empleado)
+                    guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
+                    print("Empleado agregado correctamente.")
+                    input("Presione Enter para continuar...")
+                    break
+                print("El sueldo debe ser mayor a 0.")
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
