@@ -172,32 +172,74 @@ def detalles_producto():
         input("Presione Enter para continuar...")
 
 def actualizar_producto():
-    """Actualizar la informacion de un producto"""
+    opciones_prod = ["precio","nombre","costo","stock","categoria","alta rotacion",]
     while True:
         limpiar_pantalla()
-        guiones()
-        print("ACTUALIZAR LISTA PRODUCTOS")
-        guiones()
-        opcion = input("Ingrese 0 para salir: ")
-        if opcion == "0":
-            break
+        producto_a_editar = input("Ingrese el nombre del producto:")
+        opciones("Actualizar producto",opciones_prod)
+    
+        for producto in datos_inventario["productos"]:
+            if producto["nombre"] == producto_a_editar:
+                producto_a_editar = producto
+                break
         else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+            print("El producto no existe.")
+            input("enter para continuar")
+            break
+
+        opcion = input("Ingrese que desea actualizar:")
+        if opcion == "1":
+            nuevo_precio = int(input("Ingrese un nuevo precio:"))
+            producto_a_editar["precio"] = nuevo_precio #se modifica la linea, en caso de no existir python crearia este key y value.
+        elif opcion == "2":
+            nuevo_nombre = input("Ingrese el nombre que desea modificar:") 
+            producto_a_editar["nombre"] = nuevo_nombre
+        elif opcion == "3":
+            nuevo_costo = int(input("Ingrese el nuevo costo:"))
+            producto_a_editar["costo"] = nuevo_costo
+        elif opcion == "4":
+            nuevo_stock = int(input("Ingrese el nuevo stock:"))
+            producto_a_editar["stock"] = nuevo_stock
+        elif opcion == "5":
+            nueva_categoria = input("Ingrese la nueva categoria:")
+            producto_a_editar["categoria"] = nueva_categoria
+        elif opcion == "6":
+            alta_rotacion = input("Ingrese 1 si es de alta rotacion, 0 u otra cosa sino.")
+            if alta_rotacion == "1":
+                producto_a_editar["alta_rotacion"] = "si"
+            else:
+                producto_a_editar["alta rotacion"] = "no"
+        elif opcion == "0":
+            break
+        else:  
+            print("Opcion invalida.")
+            break
+
+        guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario) #modificamos datos inventario!
+        print("Precio actualizado y guardado correctamente.")
+        input("Presione enter.")
+        break
+
+
+
+
+        
 
 def borrar_producto():
+    pass
     """Borrar un producto del inventario"""
-    while True:
-        limpiar_pantalla()
-        guiones()
-        print("BORRAR PRODUCTO")
-        guiones()
-        opcion = input("Ingrese 0 para salir: ")
-        if opcion == "0":
-            break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+   # while True:
+        #limpiar_pantalla()
+        #guiones()
+        #print("BORRAR PRODUCTO")
+        #guiones()
+       # prod = input("Ingrese el nombre del producto que desea eliminar:")
+        #for producto in datos_inventario["productos"]:
+            #if producto["nombre"] == prod:
+               # datos_inventario.pop(producto["nombre"])
+                
+                
+        
 
 
 def buscar_producto():
