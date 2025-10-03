@@ -1,4 +1,4 @@
-## Importar modulos
+# Importar modulos
 from inventario import menu_inventario
 from utilidades import *
 from reportes import *

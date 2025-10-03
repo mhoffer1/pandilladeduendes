@@ -116,8 +116,9 @@ def ver_todos_los_productos():
             ]
             for producto in productos[inicio:fin]
         ]
-        print(tabulate(data, headers, tablefmt="grid"))
 
+        print(tabulate(data, headers, tablefmt="grid"))
+        
         print("\nOpciones: [N] siguiente, [P] anterior, [0] volver")
         opcion = input("Seleccione una opcion: ").strip().lower()
 
@@ -172,10 +173,10 @@ def detalles_producto():
         input("Presione Enter para continuar...")
 
 def actualizar_producto():
-    opciones_prod = ["precio","nombre","costo","stock","categoria","alta rotacion",]
+    opciones_prod = ["precio","nombre","costo","stock","categoria","alta rotacion","salir"]
     while True:
         limpiar_pantalla()
-        producto_a_editar = input("Ingrese el nombre del producto:")
+        producto_a_editar = input("Ingrese el nombre del producto:").lower()
         opciones("Actualizar producto",opciones_prod)
     
         for producto in datos_inventario["productos"]:
