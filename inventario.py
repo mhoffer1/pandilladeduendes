@@ -245,17 +245,36 @@ def borrar_producto():
 
 def buscar_producto():
     """Buscar productos por nombre o categoria"""
+    opciones_prod = ["buscar producto","salir"]
     while True:
         limpiar_pantalla()
-        guiones()
-        print("BUSCAR LISTA PRODUCTOS")
-        guiones()
-        opcion = input("Ingrese 0 para salir: ")
+        opciones("Actualizar producto",opciones_prod)
+        opcion = input("Ingrese una opcion:")
         if opcion == "0":
             break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+        elif opcion == "1":
+            producto_buscar = input("Ingrese el nombre del producto a buscar:").lower()
+            for producto in datos_inventario["productos"]:
+                if producto["nombre"] == producto_buscar:
+                    producto_buscar = producto 
+                    break
+                else:
+                    print("Producto no encontrado.")
+                    input("ingrese enter para continuar")
+                    return #para cortar la funcion.
+            print(
+                f"""
+                Producto encontrado:
+                - Id: {producto_buscar["id"]}
+                - Stock: {producto_buscar["stock"]}
+                - Costo: {producto_buscar["costo"]}
+                - Precio de venta: {producto_buscar["precio"]}
+                -Categoria: {producto_buscar["categoria"]}
+                - Ultima modificacion: {producto_buscar["ultima_modificacion"]}
+                - Fecha de alta: {producto_buscar["fecha_alta"]}
+                        """)
+
+            input("enter para continuar.")
 
 def alerta_stock_bajo():
     """Mostrar productos con stock por debajo del nivel minimo"""
