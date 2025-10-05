@@ -46,9 +46,24 @@ def agregar_producto():
         if opcion == "1":
             while True: #hasta que ingresen toda la data bien.
                 nombre = input("Ingrese el nombre del producto: ")
-                costo = int(input("Ingrese el costo:$ "))
-                precio = int(input("Ingrese el precio de venta:$ "))
-                stock = int(input("Ingrese el stock inicial: "))
+                costo = input("Ingrese el costo:$ ")
+                try:
+                    costo = int(costo)
+                except Exception as e:
+                    costo = float(costo)
+                precio = input("Ingrese el precio de venta:$ ")
+                try:
+                    precio = int(precio)
+                except Exception as e:
+                    precio = float(precio)
+                while True:
+                    stock = input("Ingrese el stock:")
+                    try:
+                        stock = int(stock)
+                        break
+                    except:  
+                        print("Ingrese un numero entero.")
+                        
                 categoria = input("Ingrese la categoria del producto: ")
 
                 if precio > costo and precio > 50 and stock > 0: #el precio tiene que ser mayor al costo y mayor a 50
@@ -221,6 +236,7 @@ def actualizar_producto():
                 nuevo_stock = int(nuevo_stock)
             except Exception as e:
                 print("Debe ingresar un numero entero.")
+                break
             producto_a_editar["stock"] = nuevo_stock
 
         elif opcion == "5":
