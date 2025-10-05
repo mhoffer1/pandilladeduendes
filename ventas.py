@@ -1,5 +1,7 @@
 from utilidades import *
-
+datos_ventas = cargar_datos_json(ARCHIVO_VENTAS)
+datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
+from datetime import datetime
 def menu_ventas():
     "Muestra el menu de Ventas"
     while True:
@@ -21,20 +23,61 @@ def menu_ventas():
             input("Presione Enter para continuar...")
 
 
-def registrar_ventas():
-    
+def registrar_ventas():  
+      
     while True:
         limpiar_pantalla()
-        guiones()
-        print("REPORTE DE VENTAS")
-        guiones()
+        costo = 0
+        opcion_ventas = ("registar venta","salir")
+        opciones("Registrar Venta",opcion_ventas)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
-         
+        elif opcion == "1":
+            while True:
+                prod = input("Ingrese el nombre o ID del producto que quiere vender(0 para terminar venta):")
+                if prod == "0":
+                    print(f"Debe abonar: {costo}") #cuando se termina de registar la venta.
+                    guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
+                    ventas = {
+                                "id"   : str(datos_ventas["prox_id"]),
+                                "venta": costo,
+                                "fecha_venta": str(datetime.now().date())
+                                
+                                }
+                    datos_inventario["prox_id"] += 1
+                    datos_ventas["ventas"].append(ventas)
+                    guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
+                    datos_ventas["prox_id"] += 1
+                    input("Enter para continuar...")
+
+                    break
+                
+                for producto in datos_inventario["productos"]:
+                    if producto["nombre"] == prod or producto["id"] == prod:
+                        
+                        while True:
+                            cantidad = input("Ingrese cuantas unidades desea vender:")
+                            try:
+                                cantidad = int(cantidad)
+                            except Exception as e:
+                                input("Debe ingresar un numero entero.")
+                    
+                            
+                            else:
+                                if cantidad > 0:
+                                        costo += producto["costo"] * cantidad
+                                        producto["stock"] -= cantidad
+                                        break
+                                else:
+                                    print("Ingresar un numero positivo.")
+                        break
+                    else:
+                        print("Producto no encontrado.")
+                        input("Enter para continuar.")
+                        break
+
+      
     
 def elegir_descuento_o_promocion(): 
     

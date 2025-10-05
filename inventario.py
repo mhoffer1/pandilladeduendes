@@ -53,6 +53,11 @@ def agregar_producto():
 
                 if precio > costo and precio > 50 and stock > 0: #el precio tiene que ser mayor al costo y mayor a 50
                     alta_rotacion = input("Es un producto de alta rotacion? (1 si, 0 u otra tecla no.)")
+                    if alta_rotacion == "1":
+                        alta_rotacion = "si"
+                    else:
+                        alta_rotacion = "no"
+
                     producto = {
                                 "id"   : str(datos_inventario["prox_id"]),
                                 "nombre": nombre.lower(),
@@ -196,7 +201,7 @@ def actualizar_producto():
             except Exception as e:
                 nuevo_precio = float(nuevo_precio)
             producto_a_editar["precio"] = nuevo_precio #se modifica la linea, en caso de no existir python crearia este key y value.
-            
+
         elif opcion == "2":
             nuevo_nombre = input("Ingrese el nombre que desea modificar:") 
             producto_a_editar["nombre"] = nuevo_nombre
