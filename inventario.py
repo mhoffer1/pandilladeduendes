@@ -190,26 +190,45 @@ def actualizar_producto():
 
         opcion = input("Ingrese que desea actualizar:")
         if opcion == "1":
-            nuevo_precio = int(input("Ingrese un nuevo precio:"))
+            nuevo_precio = input("Ingrese un nuevo precio:")
+            try:
+                nuevo_precio = int(nuevo_precio)
+            except Exception as e:
+                nuevo_precio = float(nuevo_precio)
             producto_a_editar["precio"] = nuevo_precio #se modifica la linea, en caso de no existir python crearia este key y value.
+            
         elif opcion == "2":
             nuevo_nombre = input("Ingrese el nombre que desea modificar:") 
             producto_a_editar["nombre"] = nuevo_nombre
+
         elif opcion == "3":
-            nuevo_costo = int(input("Ingrese el nuevo costo:"))
+            nuevo_costo = input("Ingrese el nuevo costo:")
+            try:
+                nuevo_costo = int(nuevo_costo)
+            except Exception as e:
+                nuevo_costo = float(nuevo_costo)
+
             producto_a_editar["costo"] = nuevo_costo
+
         elif opcion == "4":
-            nuevo_stock = int(input("Ingrese el nuevo stock:"))
+            nuevo_stock = input("Ingrese el nuevo stock:")
+            try:
+                nuevo_stock = int(nuevo_stock)
+            except Exception as e:
+                print("Debe ingresar un numero entero.")
             producto_a_editar["stock"] = nuevo_stock
+
         elif opcion == "5":
             nueva_categoria = input("Ingrese la nueva categoria:")
             producto_a_editar["categoria"] = nueva_categoria
+
         elif opcion == "6":
             alta_rotacion = input("Ingrese 1 si es de alta rotacion, 0 u otra cosa sino.")
             if alta_rotacion == "1":
                 producto_a_editar["alta_rotacion"] = "si"
             else:
                 producto_a_editar["alta rotacion"] = "no"
+
         elif opcion == "0":
             break
         else:  
