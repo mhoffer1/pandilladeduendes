@@ -6,15 +6,13 @@ def menu_ventas():
     "Muestra el menu de Ventas"
     while True:
         limpiar_pantalla()
-        opciones_ventas = ("Registrar Venta", "Aplicar Descuento/Promoción", "Mostrar Historial de Ventas", "Volver al Menú Principal")
+        opciones_ventas = ("Registrar Venta", "Mostrar Historial de Ventas", "Volver al Menú Principal")
         opciones("VENTAS", opciones_ventas)
 
         opcion = input("Ingrese una opcion: ")
         if opcion == "1":
             registrar_ventas()
         elif opcion == "2":
-            elegir_descuento_o_promocion()
-        elif opcion == "3":
             elegir_historial_ventas()
         elif opcion == "0":
             break
@@ -37,25 +35,47 @@ def registrar_ventas():
             while True:
                 prod = input("Ingrese el nombre o ID del producto que quiere vender(0 para terminar venta):")
                 if prod == "0":
-                    print(f"Debe abonar: {costo}") #cuando se termina de registar la venta.
-                    guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
-                    ventas = {
-                                "id"   : str(datos_ventas["prox_id"]),
-                                "venta": costo,
-                                "fecha_venta": str(datetime.now().date())
-                                }
-                    datos_ventas["ventas"].append(ventas)
-                    guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
-                    datos_ventas["prox_id"] += 1
-                    input("Enter para continuar...")
-                    return
-                
-                encontrado = False 
-                
+                    descuento = input("Desea aplicar descuento? 1.si 0.no")
+                    if descuento == "0":
+                        print(f"Debe abonar: {costo}") #cuando se termina de registar la venta.
+                        guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
+                        ventas = {
+                                    "id"   : str(datos_ventas["prox_id"]),
+                                    "venta": costo,
+                                    "fecha_venta": str(datetime.now().date())
+                                    }
+                        datos_ventas["ventas"].append(ventas)
+                        guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
+                        datos_ventas["prox_id"] += 1
+                        input("Enter para continuar...")
+                        return
+                    elif descuento == "1":
+                        descuento_a_realizar = input("Ingrese el descuento que desea realizar:")
+                        try:
+                            descuento_a_realizar = int(descuento_a_realizar)
+                        except Exception as e:
+                            descuento_a_realizar = float(descuento_a_realizar)
+                        costo = aplicar_descuento(costo,descuento_a_realizar)
+                        print(f"Debe abonar: {costo}") #cuando se termina de registar la venta.
+                        guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
+                        ventas = {
+                                    "id"   : str(datos_ventas["prox_id"]),
+                                    "venta": costo,
+                                    "fecha_venta": str(datetime.now().date())
+                                    }
+                        datos_ventas["ventas"].append(ventas)
+                        guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
+                        datos_ventas["prox_id"] += 1
+                        input("Enter para continuar...")
+                        return
+
+                    
+                    encontrado = False 
+                    
                 for producto in datos_inventario["productos"]:
                     if producto["nombre"].strip().lower() == prod.strip().lower() or producto["id"].strip().lower() == prod.strip().lower():
                         encontrado = True
-                        
+                            
                         while True:
                             cantidad = input("Ingrese cuantas unidades desea vender:")
                             try:
@@ -71,14 +91,14 @@ def registrar_ventas():
                                         input("Enter para continuar...")
                                         break
                                     else:
-                                        
+                                            
                                         print("No hay suficiente stock.")
                                         input("Enter para continuar...")
                                 else:
                                     print("Ingresar un numero positivo.")
                                     input("Enter para continuar...")
                         break
-            
+                
                     else:
                         print("Producto no encontrado.")
                         input("Enter para continuar.")
@@ -86,57 +106,21 @@ def registrar_ventas():
 
       
     
-def elegir_descuento_o_promocion(): 
-    
-    while True:
-        limpiar_pantalla()
-        opciones_desc_o_prom = ("Aplicar Descuento", "Aplicar Promoción", "Volver Atrás")
-        opciones("APLICAR DESCUENTO O PROMOCIÓN", opciones_desc_o_prom)
-        opcion = input("Ingrese una opción: ")
-        if opcion == "1":
-            aplicar_descuento()
-        elif opcion == "2":
-            aplicar_promocion()
-        elif opcion == "0":
-            break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
 
-def aplicar_descuento():
+
+def aplicar_descuento(valor,descuento):
     while True:
         limpiar_pantalla()
-        valor = registrar_ventas()
-        descuento = input("Ingrese el porcentaje de descuento que desea realizar:")
-        try:
-            descuento = int(descuento)
-        except Exception as e:
-            descuento = float(descuento)
-        if descuento > 1 and descuento < 90:
-            valor_neto = valor * (1 - descuento / 100)
-            print(f"Usted debera abonar {valor_neto}")
+        valor_neto = valor * (1 - descuento / 100)
+        return valor_neto
             
-            guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
-            ventas = {
-                        "id"   : str(datos_ventas["prox_id"]),
-                        "venta": valor_neto,
-                        "fecha_venta": str(datetime.now().date())
-                                
-                                }
-            datos_inventario["prox_id"] += 1
-            datos_ventas["ventas"].append(ventas)
-            guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
-            datos_ventas["prox_id"] += 1
-            input("Enter para continuar...")
+            
+            
 
-            break
+            
 
         
-        
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
-
+       
 def aplicar_promocion():
     while True:
         limpiar_pantalla()

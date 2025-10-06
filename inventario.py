@@ -261,7 +261,7 @@ def actualizar_producto():
             if alta_rotacion == "1":
                 producto_a_editar["alta_rotacion"] = "si"
             else:
-                producto_a_editar["alta rotacion"] = "no"
+                producto_a_editar["alta_rotacion"] = "no"
 
         elif opcion == "0":
             break
