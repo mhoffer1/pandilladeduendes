@@ -357,8 +357,8 @@ def buscar_producto():
                     guiones()
                     print("A continuación ingrese el rango de precios que desea buscar...\n")
 
-                    precio_min = pedir_entero("precio mínimo")
-                    precio_max = pedir_entero("precio máximo", precio_min)
+                    precio_min = pedir_float("precio mínimo")
+                    precio_max = pedir_float("precio máximo", precio_min)
                     coincidencias = [producto for producto in datos_inventario["productos"] if producto["precio"] >= precio_min and producto["precio"] <= precio_max]
                 
                 elif op == "4":

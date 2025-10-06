@@ -58,8 +58,8 @@ if __name__ == "__main__":
     
         # Inicializa los .json(utilidades.py) 
         incializar_datos() #primer uso, sino main_menu
-        
         main_menu()
+
         limpiar_pantalla()
         guiones()
         print("Saliendo del programa...\nGracias por usar ERP - Pandilla de Duendes!")

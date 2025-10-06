@@ -119,3 +119,24 @@ def pedir_entero(nombre: str, min: int=1, max: int=1_000_000):
             continue
         else:
             return entero
+
+def pedir_float(nombre: str, min: float=1.0, max: float=1000000.0):
+    """
+    Pide un número flotante, maneja posibles errores de casteo y valida que esté en el rango ingresado.
+
+    Pre: Recibe como parámetros el nombre del objeto, el mínimo y el máximo posible a ingresar.
+    Post: Retorna el flotante ingresado por el usuario, validado previamente.
+    """
+    while True:
+        flotante = input(f"Ingrese el valor de {nombre.lower()}: ")
+        try: # Valida que lo ingresado sea un número y que se pueda castear a float
+            flotante = float(flotante)
+        except ValueError:
+            print(f"ERROR - {nombre.capitalize()} debe ser un número.")
+            continue
+
+        if flotante < min or flotante > max: # Valida que se encuentre en el rango establecido
+            print("ERROR - Rango inválido")
+            continue
+        else:
+            return flotante
