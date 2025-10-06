@@ -12,7 +12,7 @@ def menu_inventario():
         
         opcion = input("Seleccione una opcion: ")
         
-        if opcion == "1":
+        if opcion == "1":   
             agregar_producto()
         elif opcion == "2":
              ver_todos_los_productos()
@@ -34,6 +34,11 @@ def menu_inventario():
 
 def agregar_producto():
     #validar_precio = lambda x: x > 50 # el producto mas barato puede costar 100.
+    if "productos" not in datos_inventario:
+        datos_inventario["productos"] = []
+    if "prox_id" not in datos_inventario:
+        datos_inventario["prox_id"] = 1
+
     while True:
         limpiar_pantalla()
         opciones_prod = ["Agregar Producto","Salir"] #damos la oportunidad de salir por que es mucho quilombo si te metiste y no queres agregar nada.
@@ -42,20 +47,27 @@ def agregar_producto():
         opcion = input("Ingrese 1 opcion: ")
         if opcion == "0":
             break
-
+            
         if opcion == "1":
             while True: #hasta que ingresen toda la data bien.
                 nombre = input("Ingrese el nombre del producto: ")
+                
                 costo = input("Ingrese el costo:$ ")
                 try:
-                    costo = int(costo)
-                except Exception as e:
                     costo = float(costo)
+                except:
+                    print("Costo invalido.")
+                    input("Enter para continuar...")
+                    continue
+
                 precio = input("Ingrese el precio de venta:$ ")
                 try:
-                    precio = int(precio)
-                except Exception as e:
                     precio = float(precio)
+                except:
+                    print("Precio invalido.")
+                    input("Enter para continuar...")
+                    continue
+
                 while True:
                     stock = input("Ingrese el stock:")
                     try:
@@ -84,8 +96,8 @@ def agregar_producto():
                                 "fecha_alta": str(datetime.now().date()),
                                 "ultima_modificacion": str(datetime.now().date())
                                 }
-                    datos_inventario["prox_id"] += 1
                     datos_inventario["productos"].append(producto)
+                    datos_inventario["prox_id"] += 1
                     guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
                     print("Se agrego el producto correctamente.")
                     input("Presione Enter para continuar...")
@@ -95,6 +107,7 @@ def agregar_producto():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
+
 
 def ver_todos_los_productos():
     productos = datos_inventario["productos"]
@@ -190,7 +203,7 @@ def detalles_producto():
         if not encontrado:
             print("Producto no encontrado.")
         
-        input("Presione Enter para continuar...")
+            input("Presione Enter para continuar...")
 
 def actualizar_producto():
     opciones_prod = ["precio","nombre","costo","stock","categoria","alta rotacion","salir"]
@@ -203,7 +216,7 @@ def actualizar_producto():
             if producto["nombre"] == producto_a_editar:
                 producto_a_editar = producto
                 break
-        else:
+        else:   
             print("El producto no existe.")
             input("enter para continuar")
             break

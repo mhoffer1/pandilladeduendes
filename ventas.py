@@ -43,39 +43,46 @@ def registrar_ventas():
                                 "id"   : str(datos_ventas["prox_id"]),
                                 "venta": costo,
                                 "fecha_venta": str(datetime.now().date())
-                                
                                 }
-                    datos_inventario["prox_id"] += 1
                     datos_ventas["ventas"].append(ventas)
                     guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
                     datos_ventas["prox_id"] += 1
                     input("Enter para continuar...")
-
-                    break
+                    return
+                
+                encontrado = False 
                 
                 for producto in datos_inventario["productos"]:
-                    if producto["nombre"] == prod or producto["id"] == prod:
+                    if producto["nombre"].strip().lower() == prod.strip().lower() or producto["id"].strip().lower() == prod.strip().lower():
+                        encontrado = True
                         
                         while True:
                             cantidad = input("Ingrese cuantas unidades desea vender:")
                             try:
                                 cantidad = int(cantidad)
-                            except Exception as e:
+                            except:
                                 input("Debe ingresar un numero entero.")
-                    
-                            
                             else:
                                 if cantidad > 0:
+                                    if producto["stock"] >= cantidad:
                                         costo += producto["costo"] * cantidad
                                         producto["stock"] -= cantidad
+                                        print(f"{cantidad} unidad(es) de {producto['nombre']} vendidas.")
+                                        input("Enter para continuar...")
                                         break
+                                    else:
+                                        
+                                        print("No hay suficiente stock.")
+                                        input("Enter para continuar...")
                                 else:
                                     print("Ingresar un numero positivo.")
+                                    input("Enter para continuar...")
                         break
+            
                     else:
                         print("Producto no encontrado.")
                         input("Enter para continuar.")
-                        break
+
 
       
     
@@ -99,12 +106,33 @@ def elegir_descuento_o_promocion():
 def aplicar_descuento():
     while True:
         limpiar_pantalla()
-        guiones()
-        print("APLICAR DESCUENTO")
-        guiones()
-        opcion =  input("Presiona 0 para retroceder: ")
-        if opcion == "0":
+        valor = registrar_ventas()
+        descuento = input("Ingrese el porcentaje de descuento que desea realizar:")
+        try:
+            descuento = int(descuento)
+        except Exception as e:
+            descuento = float(descuento)
+        if descuento > 1 and descuento < 90:
+            valor_neto = valor * (1 - descuento / 100)
+            print(f"Usted debera abonar {valor_neto}")
+            
+            guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
+            ventas = {
+                        "id"   : str(datos_ventas["prox_id"]),
+                        "venta": valor_neto,
+                        "fecha_venta": str(datetime.now().date())
+                                
+                                }
+            datos_inventario["prox_id"] += 1
+            datos_ventas["ventas"].append(ventas)
+            guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
+            datos_ventas["prox_id"] += 1
+            input("Enter para continuar...")
+
             break
+
+        
+        
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")

@@ -45,7 +45,7 @@ def registrar_empleados():
                 try:
                     sueldo = int(input("Sueldo: "))
                 except ValueError:
-                    print("El sueldo debe ser un numero.")
+                    print("El sueldo debe ser un numero entero.")
                     input("Presione enter para continuar...")
                     continue
                 if sueldo > 0: 
