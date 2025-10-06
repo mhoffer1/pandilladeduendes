@@ -60,4 +60,7 @@ if __name__ == "__main__":
         incializar_datos() #primer uso, sino main_menu
         
         main_menu()
-        print("\nGracias por usar ERP - Pandilla de Duendes!")
+        limpiar_pantalla()
+        guiones()
+        print("Saliendo del programa...\nGracias por usar ERP - Pandilla de Duendes!")
+        guiones()

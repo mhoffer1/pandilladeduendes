@@ -143,7 +143,7 @@ def ver_todos_los_productos():
                 producto["costo"],
                 producto["stock"],
                 producto["categoria"].capitalize(),
-                "Si" if producto["alta_rotacion"] == "1" else "No",
+                "Si" if producto["alta_rotacion"] == "si" else "No",
                 producto["fecha_alta"],
                 producto["ultima_modificacion"],
             ]
@@ -275,59 +275,166 @@ def actualizar_producto():
         break
 
 
-
-
-        
-
 def borrar_producto():
-    pass
     """Borrar un producto del inventario"""
-   # while True:
-        #limpiar_pantalla()
-        #guiones()
-        #print("BORRAR PRODUCTO")
-        #guiones()
-       # prod = input("Ingrese el nombre del producto que desea eliminar:")
-        #for producto in datos_inventario["productos"]:
-            #if producto["nombre"] == prod:
-               # datos_inventario.pop(producto["nombre"])
-                
-                
+    while True:
+        limpiar_pantalla()
+        opciones_borrar = ("borrar un producto", "volver atrás")
+        opciones("borrar producto", opciones_borrar)
+        op = input("Ingrese una opción: ")
         
+        if op == "0":
+            break
 
+        elif op == "1":
+            limpiar_pantalla()
+            guiones()
+            print("BORRAR PRODUCTO")
+            guiones()
 
+            a_borrar = input("Ingrese el nombre del producto que desea eliminar: ").lower().strip()
+            for producto in datos_inventario["productos"]:
+                if producto["nombre"] == a_borrar:
+                    confirmacion = input(f"\n¿Está usted seguro de querer borrar el producto '{producto["nombre"]}'? (1- Sí, 0 u otra cosa- No): ")
+                    if confirmacion == "1":
+                        datos_inventario["productos"].remove(producto)
+
+                        guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
+                        datos_inventario["prox_id"] -= 1
+                        print("\nProducto eliminado con éxito.")
+                        input("Presione Enter para continuar...")
+                        break
+                    break
+            
+            else:
+                print("Producto no encontrado.")
+                input("Presione Enter para continuar...")
+                
+                
 def buscar_producto():
-    """Buscar productos por nombre o categoria"""
+    """Buscar productos por nombre, categoría, precio, stock o alta rotación"""
     opciones_prod = ["buscar producto","salir"]
     while True:
         limpiar_pantalla()
-        opciones("Actualizar producto",opciones_prod)
+        opciones("buscar producto",opciones_prod)
         opcion = input("Ingrese una opcion:")
         if opcion == "0":
             break
         elif opcion == "1":
-            producto_buscar = input("Ingrese el nombre del producto a buscar:").lower()
-            for producto in datos_inventario["productos"]:
-                if producto["nombre"] == producto_buscar:
-                    producto_buscar = producto 
-                    break
-                else:
-                    print("Producto no encontrado.")
-                    input("ingrese enter para continuar")
-                    return #para cortar la funcion.
-            print(
-                f"""
-                Producto encontrado:
-                - Id: {producto_buscar["id"]}
-                - Stock: {producto_buscar["stock"]}
-                - Costo: {producto_buscar["costo"]}
-                - Precio de venta: {producto_buscar["precio"]}
-                -Categoria: {producto_buscar["categoria"]}
-                - Ultima modificacion: {producto_buscar["ultima_modificacion"]}
-                - Fecha de alta: {producto_buscar["fecha_alta"]}
-                        """)
+            limpiar_pantalla()
+            if not datos_inventario["productos"]:
+                print("No se encontraron productos cargados.")
+                input("Presione Enter para continuar...")
+                break
 
-            input("enter para continuar.")
+            while True:
+                limpiar_pantalla()
+                opciones_de_busqueda = ("Nombre", "Categoría", "Precio", "Stock", "Alta Rotación", "Volver Atrás")
+                opciones("buscar producto", opciones_de_busqueda)
+
+                op = input("Ingrese por cuál característica desea buscar: ")
+                if op == "0":
+                    break
+
+                limpiar_pantalla()
+                if op == "1":
+                    guiones()
+                    print("BÚSQUEDA POR NOMBRE")
+                    guiones()
+                    a_buscar = input("Ingrese el nombre a buscar: ").lower().strip()
+                    coincidencias = [producto for producto in datos_inventario["productos"] if a_buscar in producto["nombre"]]
+                
+                elif op == "2":
+                    guiones()
+                    print("BÚSQUEDA POR CATEGORÍA")
+                    guiones()
+                    a_buscar = input("Ingrese la categoría a buscar: ").lower().strip()
+                    coincidencias = [producto for producto in datos_inventario["productos"] if a_buscar in producto["categoria"]]
+                
+                elif op == "3":
+                    guiones()
+                    print("BÚSQUEDA POR PRECIO")
+                    guiones()
+                    print("A continuación ingrese el rango de precios que desea buscar...\n")
+
+                    precio_min = pedir_entero("precio mínimo")
+                    precio_max = pedir_entero("precio máximo", precio_min)
+                    coincidencias = [producto for producto in datos_inventario["productos"] if producto["precio"] >= precio_min and producto["precio"] <= precio_max]
+                
+                elif op == "4":
+                    guiones()
+                    print("BÚSQUEDA POR STOCK")
+                    guiones()
+                    print("A continuación ingrese el rango de valores de stock que desea buscar...\n")
+
+                    stock_min = pedir_entero("stock mínimo")
+                    stock_max = pedir_entero("stock máximo", stock_min)
+                    coincidencias = [producto for producto in datos_inventario["productos"] if producto["stock"] >= stock_min and producto["stock"] <= stock_max]
+                
+                elif op == "5":
+                    guiones()
+                    print("BÚSQUEDA POR ROTACIÓN")
+                    guiones()
+                    a_buscar = input("Ingrese el valor de rotación del producto (1- Alta Rotación, 0 u otra cosa- Baja Rotación): ").strip()
+                    a_buscar = "si" if a_buscar == "1" else "no"
+                    coincidencias = [producto for producto in datos_inventario["productos"] if producto["alta_rotacion"] == a_buscar]
+                
+                if not coincidencias:
+                        print("No se encontraron productos con esas características.")
+                        input("Presione Enter para continuar...")
+                        continue
+                
+                por_pagina = 10
+                total = len(coincidencias)
+                total_paginas = (total + por_pagina - 1) // por_pagina
+                pagina = 0
+
+                while True:
+                    limpiar_pantalla()
+                    guiones()
+                    print(f"Resultados de Búsqueda (Pagina {pagina + 1} de {total_paginas})")
+                    guiones()
+
+                    inicio = pagina * por_pagina
+                    fin = min(inicio + por_pagina, total)
+
+                    headers = ["ID", "Nombre", "Precio", "Costo", "Stock", "Categoria", "Alta Rotacion", "Fecha Alta", "Ultima Modificacion"]
+                    data = [
+                        [
+                            coincide["id"],
+                            coincide["nombre"].capitalize(),
+                            coincide["precio"],
+                            coincide["costo"],
+                            coincide["stock"],
+                            coincide["categoria"].capitalize(),
+                            "Si" if coincide["alta_rotacion"] == "si" else "No",
+                            coincide["fecha_alta"],
+                            coincide["ultima_modificacion"],
+                        ]
+                        for coincide in coincidencias[inicio:fin]
+                    ]
+
+                    imprimir_tabla(headers, data)
+                    
+                    print("\nOpciones: [N] siguiente, [P] anterior, [0] volver")
+                    opcion = input("Seleccione una opcion: ").strip().lower()
+
+                    if opcion == "0":
+                        break
+                    if opcion == "n":
+                        if pagina < total_paginas - 1:
+                            pagina += 1
+                        else:
+                            input("Es la ultima pagina. Presione Enter para continuar...")
+                    elif opcion == "p":
+                        if pagina > 0:
+                            pagina -= 1
+                        else:
+                            input("Es la primera pagina. Presione Enter para continuar...")
+                    else:
+                        input("Opcion invalida. Presione Enter para continuar...")
+                        continue
+                         
 
 def alerta_stock_bajo():
     """Mostrar productos con stock por debajo del nivel minimo"""

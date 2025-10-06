@@ -74,12 +74,12 @@ def opciones(titulo: str, tupla_opciones: tuple[str]) -> None:
     Post: No retorna nada, imprime el título y el listado de opciones.
     """
     guiones()
-    print(f"    {titulo}")
+    print(f"    {titulo.upper()}")
     guiones()
     for i, op in enumerate(tupla_opciones):
         if i == len(tupla_opciones)-1: # Si es la última opción va a ser la de salir del programa y lo imprime con un 0
             i = -1
-        print(f"{i+1}- {op}")
+        print(f"{i+1}- {op.title()}")
     guiones()
 
 def imprimir_tabla(headers: list[str], data: list[list[str]]) -> None:
@@ -98,3 +98,24 @@ def imprimir_tabla(headers: list[str], data: list[list[str]]) -> None:
         print("-" * (len(headers) * 10))
         for row in data:
             print(" | ".join(map(str, row)))
+
+def pedir_entero(nombre: str, min: int=1, max: int=1_000_000):
+    """
+    Pide un número entero, maneja posibles errores de casteo y valida que esté en el rango ingresado.
+
+    Pre: Recibe como parámetros el nombre del objeto, el mínimo y el máximo posible a ingresar.
+    Post: Retorna el entero ingresado por el usuario, validado previamente.
+    """
+    while True:
+        entero = input(f"Ingrese el valor de {nombre.lower()}: ")
+        try: # Valida que lo ingresado sea un número y que se pueda castear a int
+            entero = int(entero)
+        except ValueError:
+            print(f"ERROR - {nombre.capitalize()} debe ser un número.")
+            continue
+
+        if entero < min or entero > max: # Valida que se encuentre en el rango establecido
+            print("ERROR - Rango inválido")
+            continue
+        else:
+            return entero
