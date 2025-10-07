@@ -207,62 +207,83 @@ def detalles_producto():
         
 
 def actualizar_producto():
-    opciones_prod = ["precio","nombre","costo","stock","categoria","alta rotacion","salir"]
     while True:
         limpiar_pantalla()
-        producto_a_editar = input("Ingrese el nombre del producto:").lower()
-        opciones("Actualizar producto",opciones_prod)
-    
-        for producto in datos_inventario["productos"]:
-            if producto["nombre"] == producto_a_editar:
-                producto_a_editar = producto
-                break
-        else:   
+        producto_a_editar = input("Ingrese el ID / nombre del producto o 0 para salir: ")
+        producto_a_editar = producto_a_editar.strip().lower()
+        if producto_a_editar == "0":
+            break
+        
+        producto_encontrado = next(
+            (
+                producto
+                for producto in datos_inventario["productos"]
+                if producto["id"] == producto_a_editar or producto["nombre"] == producto_a_editar
+            ),
+            None,
+        )
+        if not producto_encontrado:
             print("El producto no existe.")
             input("enter para continuar")
-            break
+            continue
 
-        opcion = input("Ingrese que desea actualizar:")
+        limpiar_pantalla()
+        
+        # menu personalizado con valores actuales del producto
+        guiones()
+        print(f"    ACTUALIZANDO PRODUCTO ID:{producto_encontrado['id']} / {producto_encontrado['nombre'].upper()}")
+        guiones()
+        print(f"1- Precio: ${producto_encontrado['precio']}")
+        print(f"2- Nombre: {producto_encontrado['nombre'].capitalize()}")
+        print(f"3- Costo: ${producto_encontrado['costo']}")
+        print(f"4- Stock: {producto_encontrado['stock']}")
+        print(f"5- Categoria: {producto_encontrado['categoria'].capitalize()}")
+        alta_rot_texto = "Si" if producto_encontrado['alta_rotacion'] == "si" else "No"
+        print(f"6- Alta Rotacion: {alta_rot_texto}")
+        print("0- Salir")
+        guiones()
+
+        opcion = input("Ingrese que desea actualizar: ")
         if opcion == "1":
-            nuevo_precio = input("Ingrese un nuevo precio:")
+            nuevo_precio = input("Ingrese un nuevo precio: ")
             try:
                 nuevo_precio = int(nuevo_precio)
             except Exception as e:
                 nuevo_precio = float(nuevo_precio)
-            producto_a_editar["precio"] = nuevo_precio #se modifica la linea, en caso de no existir python crearia este key y value.
+            producto_encontrado["precio"] = nuevo_precio
 
         elif opcion == "2":
-            nuevo_nombre = input("Ingrese el nombre que desea modificar:") 
-            producto_a_editar["nombre"] = nuevo_nombre
+            nuevo_nombre = input("Ingrese el nombre que desea modificar: ") 
+            producto_encontrado["nombre"] = nuevo_nombre.lower()
 
         elif opcion == "3":
-            nuevo_costo = input("Ingrese el nuevo costo:")
+            nuevo_costo = input("Ingrese el nuevo costo: ")
             try:
                 nuevo_costo = int(nuevo_costo)
             except Exception as e:
                 nuevo_costo = float(nuevo_costo)
 
-            producto_a_editar["costo"] = nuevo_costo
+            producto_encontrado["costo"] = nuevo_costo
 
         elif opcion == "4":
-            nuevo_stock = input("Ingrese el nuevo stock:")
+            nuevo_stock = input("Ingrese el nuevo stock: ")
             try:
                 nuevo_stock = int(nuevo_stock)
             except Exception as e:
                 print("Debe ingresar un numero entero.")
                 break
-            producto_a_editar["stock"] = nuevo_stock
+            producto_encontrado["stock"] = nuevo_stock
 
         elif opcion == "5":
-            nueva_categoria = input("Ingrese la nueva categoria:")
-            producto_a_editar["categoria"] = nueva_categoria
+            nueva_categoria = input("Ingrese la nueva categoria: ")
+            producto_encontrado["categoria"] = nueva_categoria.lower()
 
         elif opcion == "6":
             alta_rotacion = input("Ingrese 1 si es de alta rotacion, 0 u otra cosa sino.")
             if alta_rotacion == "1":
-                producto_a_editar["alta_rotacion"] = "si"
+                producto_encontrado["alta_rotacion"] = "si"
             else:
-                producto_a_editar["alta_rotacion"] = "no"
+                producto_encontrado["alta_rotacion"] = "no"
 
         elif opcion == "0":
             break
@@ -270,11 +291,13 @@ def actualizar_producto():
             print("Opcion invalida.")
             break
 
-        guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario) #modificamos datos inventario!
-        print("Precio actualizado y guardado correctamente.")
+        # actualiza la fecha de modificacion del producto
+        producto_encontrado["ultima_modificacion"] = str(datetime.now().date())
+        
+        guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
+        print("Producto actualizado y guardado correctamente.")
         input("Presione enter.")
         break
-
 
 def borrar_producto():
     """Borrar un producto del inventario"""
