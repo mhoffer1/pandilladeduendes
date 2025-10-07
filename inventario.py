@@ -200,10 +200,11 @@ def detalles_producto():
                 encontrado = True
                 break
         
+        input("Presione Enter para continuar...")
+        
         if not encontrado:
             print("Producto no encontrado.")
         
-            input("Presione Enter para continuar...")
 
 def actualizar_producto():
     opciones_prod = ["precio","nombre","costo","stock","categoria","alta rotacion","salir"]
