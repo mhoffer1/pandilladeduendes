@@ -6,7 +6,7 @@ def menu_ventas():
     "Muestra el menu de Ventas"
     while True:
         limpiar_pantalla()
-        opciones_ventas = ("Registrar Venta", "Mostrar Historial de Ventas", "Volver al Menú Principal")
+        opciones_ventas = ("Registrar Venta", "Mostrar Historial de Ventas","Promociones" ,"Volver al Menú Principal")
         opciones("VENTAS", opciones_ventas)
 
         opcion = input("Ingrese una opcion: ")
@@ -14,6 +14,8 @@ def menu_ventas():
             registrar_ventas()
         elif opcion == "2":
             elegir_historial_ventas()
+        elif opcion == "3":
+            aplicar_promocion()
         elif opcion == "0":
             break
         else:
@@ -69,8 +71,7 @@ def registrar_ventas():
                         input("Enter para continuar...")
                         return
 
-                    
-                    encontrado = False 
+                encontrado = False
                     
                 for producto in datos_inventario["productos"]:
                     if producto["nombre"].strip().lower() == prod.strip().lower() or producto["id"].strip().lower() == prod.strip().lower():
@@ -85,23 +86,29 @@ def registrar_ventas():
                             else:
                                 if cantidad > 0:
                                     if producto["stock"] >= cantidad:
-                                        costo += producto["costo"] * cantidad
+                                        # SI existe usa el precio de promocion y tiene valor, sino el normal
+                                        if "promocion" in producto and producto["promocion"]:
+                                            precio_unitario = producto["promocion"] 
+                                        else: 
+                                            precio_unitario = producto["precio"]
+                                        
+                                        costo += precio_unitario * cantidad
                                         producto["stock"] -= cantidad
                                         print(f"{cantidad} unidad(es) de {producto['nombre']} vendidas.")
                                         input("Enter para continuar...")
                                         break
                                     else:
-                                            
                                         print("No hay suficiente stock.")
                                         input("Enter para continuar...")
                                 else:
                                     print("Ingresar un numero positivo.")
                                     input("Enter para continuar...")
-                        break
-                
-                    else:
-                        print("Producto no encontrado.")
-                        input("Enter para continuar.")
+                        break  
+
+                if not encontrado:
+                    print("Producto no encontrado.")
+                    input("Enter para continuar...")
+
 
 
       
@@ -111,6 +118,9 @@ def registrar_ventas():
 def aplicar_descuento(valor,descuento):
     while True:
         limpiar_pantalla()
+        if descuento > 98:
+            print("Descuento invalido.")
+            break
         valor_neto = valor * (1 - descuento / 100)
         return valor_neto
             
@@ -124,12 +134,54 @@ def aplicar_descuento(valor,descuento):
 def aplicar_promocion():
     while True:
         limpiar_pantalla()
-        guiones()
-        print("APLICAR PROMOCIÓN")
-        guiones()
-        opcion =  input("Presiona 0 para retroceder: ")
+        opciones_prod = ("agregar promocion", "ver promocion", "eliminar promocion", "salir")
+        opciones("PROMOCIONES",opciones_prod)
+        opcion =  input("Ingrese una opcion: ")
         if opcion == "0":
             break
+        elif opcion == "1":
+            clase = input("Ingrese a que categoria desea hacerle una promocion:")
+            encontrado = False
+            for producto in datos_inventario["productos"]:
+                    if producto["categoria"].strip().lower() == clase.strip().lower():
+                        encontrado = True
+                        descuento_a_aplicar = input("Ingrese el descuento que desea realizar(en %):")
+                        try:    
+                            descuento_a_aplicar = int(descuento_a_aplicar)
+                        except Exception as e:
+                            print("descuento invalido.") 
+                            break
+                        else:             
+                            descuento = aplicar_descuento(producto["precio"],descuento_a_aplicar)
+                            producto["promocion"] = descuento
+                            print("Promocion registrada con exito.")
+                            guardar_datos_json(ARCHIVO_INVENTARIO,datos_inventario)
+                            input("Enter para continuar...")
+                            break
+            if encontrado == False:
+                    print("Producto no encontrado.")
+                    input("Enter para continuar...")
+        elif opcion == "2":
+           
+            for producto in datos_inventario["productos"]:
+                #for clave, valor in producto.items():
+                    if "promocion" in producto and producto["promocion"]: #para que no tome los Null
+                        print(f"Hay una promocion en el producto {producto['nombre']} esta a un valor {producto['promocion']} que pertenece a la categoria  {producto['categoria']}")
+            input("Enter para continuar...")
+            break
+        elif opcion == "3":
+            a_eliminar = input("Ingrese a que categoria quiere eliminarle su promocion:").strip().lower()
+            for producto in datos_inventario["productos"]:
+                    if producto["categoria"].strip().lower() == a_eliminar.strip().lower():
+                        producto["promocion"] = None
+                        guardar_datos_json(ARCHIVO_INVENTARIO,datos_inventario)
+                        print("Promocion eliminada con exito.")
+                        input("Ingrese enter para continuar.")
+                        
+                    
+
+        
+        
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
