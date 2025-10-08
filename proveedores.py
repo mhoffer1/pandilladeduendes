@@ -1,13 +1,13 @@
-from utilidades import limpiar_pantalla, guiones, opciones
+import utilidades as util
 
 def menu_proveedores():
     """"
     menu de proveedores, te permite hacer todas las acciones.
     """
     while True:
-        limpiar_pantalla()
+        util.limpiar_pantalla()
         opciones_prov = ("Registrar Proveedor", "Solicitar Productos a Proveedor", "Ver Pagos Pendientes", "Ver Historial de Compras", "Buscar Proveedores", "Volver al Menú Principal")
-        opciones("PROVEEDORES", opciones_prov)
+        util.opciones("PROVEEDORES", opciones_prov)
         opcion = input("Ingrese una opcion: ")
     
         if opcion == "1":
@@ -33,10 +33,10 @@ def registrar_provedores():
     """
 
     while True:
-        limpiar_pantalla()
-        guiones()
+        util.limpiar_pantalla()
+        util.guiones()
         print("REGISTRAR PROVEEDORES")
-        guiones()
+        util.guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -49,10 +49,10 @@ def solicitar_productos():
     y cantidad.
     """
     while True:
-        limpiar_pantalla()
-        guiones()
+        util.limpiar_pantalla()
+        util.guiones()
         print("SOLICITAR A PROVEEDORES")
-        guiones()
+        util.guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -64,10 +64,10 @@ def pagos_pendientes():
     Podes ver pagos pendientes a proveedores
     """
     while True:
-        limpiar_pantalla()
-        guiones()
+        util.limpiar_pantalla()
+        util.guiones()
         print("PAGOS PENDIENTES")
-        guiones()
+        util.guiones()
         opcion = input("Ingrese 0 para retroceder:")
         if opcion == "0":
             break
@@ -80,10 +80,10 @@ def historial_de_compras():
         """
         Podes ver el historial de compras a cada proveedor
         """
-        limpiar_pantalla()
-        guiones()
+        util.limpiar_pantalla()
+        util.guiones()
         print("HISTORIAL DE COMPRAS")
-        guiones()
+        util.guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
@@ -96,10 +96,10 @@ def buscar_proveedor():
     Podes buscar proveedores por nombre y apellido.
     """
     while True:
-        limpiar_pantalla()
-        guiones()
+        util.limpiar_pantalla()
+        util.guiones()
         print("BUSCAR PROVEEDOR")
-        guiones()
+        util.guiones()
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break

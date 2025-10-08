@@ -1,6 +1,6 @@
 # Importar modulos
 from inventario import menu_inventario
-from utilidades import *
+import utilidades as util
 from reportes import *
 from ventas import menu_ventas
 from proveedores import menu_proveedores
@@ -9,9 +9,9 @@ from empleados import menu_empleados
 def main_menu():
     """Muestra el menu principal una vez que elegiste sucursal."""
     while True:
-        limpiar_pantalla()
+        util.limpiar_pantalla()
         opciones_main = ("Inventario", "Ventas", "Empleados", "Proveedores", "Reportes", "Salir del programa")
-        opciones("ERP - Pandilla de Duendes", opciones_main)
+        util.opciones("ERP - Pandilla de Duendes", opciones_main)
         
         opcion = input("Seleccione una opcion: ").strip()
         
@@ -35,9 +35,9 @@ def main_menu():
 def menu_reportes():
     """Muestra el menu de reportes"""
     while True:
-        limpiar_pantalla()
+        util.limpiar_pantalla()
         opciones_report = ("Reporte de Inventario", "Reporte de Ventas", "Reporte de Empleados", "Volver al menú principal")
-        opciones("REPORTES", opciones_report) 
+        util.opciones("REPORTES", opciones_report) 
         
         opcion = input("Seleccione una opcion: ").strip()
         
@@ -57,10 +57,10 @@ def menu_reportes():
 if __name__ == "__main__":
     
         # Inicializa los .json(utilidades.py) 
-        incializar_datos() #primer uso, sino main_menu
+        util.incializar_datos() # primer uso, sino main_menu
         main_menu()
 
-        limpiar_pantalla()
-        guiones()
+        util.limpiar_pantalla()
+        util.guiones()
         print("Saliendo del programa...\nGracias por usar ERP - Pandilla de Duendes!")
-        guiones()
+        util.guiones()

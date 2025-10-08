@@ -8,3 +8,4 @@ __pycache__/ventas.cpython-312.pyc
 *.json
 *.pyc
 .ipynb_checkpoints
+__pycache__/proveedores.cpython-312.pyc
