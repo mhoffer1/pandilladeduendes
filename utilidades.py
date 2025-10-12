@@ -1,6 +1,7 @@
 import json
 import os
 from tabulate import tabulate
+
 # from datetime import datetime
 
 # Rutas de los archivos de datos, si existen se devuelven y si no se crea mas abajo!!!
@@ -8,7 +9,7 @@ DATA_DIR = "data" #carpeta
 ARCHIVO_INVENTARIO = f"{DATA_DIR}/inventario.json" #carpeta, archivo.
 ARCHIVO_VENTAS = f"{DATA_DIR}/ventas.json"
 ARCHIVO_EMPLEADOS = f"{DATA_DIR}/empleados.json"
-
+ARCHIVO_PROVEEDORES= f"{DATA_DIR}/proveedores.json"
 
 
 def cargar_datos_json(file_path:str) -> dict: #para mostrar SOLO sucursales(por ahora.).
@@ -43,7 +44,7 @@ def incializar_datos()->None:
 
     # Incializa el archivo de inventario
     if not os.path.exists(ARCHIVO_INVENTARIO): #si no esta en el path, se crea 
-        guardar_datos_json(ARCHIVO_INVENTARIO, {"productos": [], "prox_id": 1,})
+        guardar_datos_json(ARCHIVO_INVENTARIO, {"productos": [], "prox_id": 1,}) #crea listas que adentro van a tener diccionarios.
 
     # Inicializa el archivo de ventas
     if not os.path.exists(ARCHIVO_VENTAS): #se usa como file path.
@@ -52,6 +53,9 @@ def incializar_datos()->None:
     # Inicializa el archivo de empleados
     if not os.path.exists(ARCHIVO_EMPLEADOS): #se usa como file path
         guardar_datos_json(ARCHIVO_EMPLEADOS, {"empleados": [], "prox_id": 1})
+    #Inicializa el archivo de proveedores
+    if not os.path.exists(ARCHIVO_PROVEEDORES): #se usa como file path
+        guardar_datos_json(ARCHIVO_PROVEEDORES, {"proveedores": [], "prox_id": 1})
     
 def limpiar_pantalla()-> None:
     os.system('cls' if os.name == 'nt' else 'clear')
