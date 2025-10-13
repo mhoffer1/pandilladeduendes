@@ -78,30 +78,34 @@ def editar_datos_de_empleados():
         guiones()
         print("Desea cambiar:")
         if datos_empleados["empleados"]:
-            for empleado in datos_empleados["empleados"]:
-                print(f"-{empleado['nombre']}")
+            for i,empleado in enumerate(datos_empleados["empleados"]):
+                print(f"{i+1}-{empleado['nombre']}")
             cual = input("Ingrese el empleado que desea modificar: ")
-            encontrado = False
-            for empleado1 in datos_empleados["empleados"]:
-                if cual == empleado1["nombre"]:
+            encontrado = False 
+            for j, empleado1 in enumerate(datos_empleados["empleados"]):
+                if cual.lower() == empleado1["nombre"].lower():
                     encontrado = True
+                elif int(cual)-1 == j:
+                    encontrado = True
+                if encontrado:
                     print("Qué dato desea cambiar:")
                     for clave, valor in empleado1.items():
-                        print(f"El {clave} por ahora es {valor}")
+                        print(f" El {clave} por ahora es {valor}")
                     dato = input("Ingrese el dato que desea cambiar: ")
-                    if dato in empleado1:
+                    if dato.lower() in empleado1:
                         nuevo_dato = input(f"Ingrese el nuevo {dato}: ")
-                        if dato == "sueldo":
-                            empleado1[dato] = int(nuevo_dato)
-                        else:
-                            empleado1[dato] = nuevo_dato
-                        print(f"{dato} modificado correctamente.")
+                        for k, v in empleado1.items():
+                            if dato == k: 
+                                v = nuevo_dato       
+                            else:
+                                empleado1[dato] = nuevo_dato
+                            print(f"{dato} modificado correctamente.")
                     else:
                         print("No se pudo modificar. No existe ese dato.")
                     break
             
             if not encontrado:
-                print("No existe ese nombre en los datos.")
+                print("No existe esa persona en los datos.")
         else:
             print("Los datos están vacíos.")
             break
@@ -184,27 +188,33 @@ def mostrar_empleados():
         guiones()
         print("Los empleados son los siguientes.")
         guiones()
-        
-        for i, empleado in enumerate(datos_empleados["empleados"]):
-            print(f"{i+1}-{empleado['nombre']}")
-        
-        empleado_cual = input("Ingrese el nombre del empleado del cual desea ver los datos: ")
-        encontrado = False
-        
-        for empleado1 in datos_empleados["empleados"]:
-            if empleado_cual.lower() == empleado1["nombre"].lower():
-                encontrado = True
-                print("\nDatos del empleado:")
-                for clave, valor in empleado1.items():
-                    print(f"{clave} tiene un valor de {valor}")
-                break
-        
-        if not encontrado:
-            print("No se encontró ese empleado.")
-        
-        opcion = input("\nIngrese 0 para retroceder: ")
-        if opcion == "0":
+
+        if not datos_empleados["empleados"]:
+            print("No hay empleados registrados.")
+            input("Presione Enter para volver...")
             break
+
+        for i, empleado in enumerate(datos_empleados["empleados"]):
+            print(f"{i + 1} - {empleado['nombre']}")
+        empleado_cual = input("\nIngrese el nombre o número del empleado (o 0 para volver): ")
+        if empleado_cual == "0":
+            break
+        encontrado = False
+        if empleado_cual.isdigit():
+            indice = int(empleado_cual) - 1
+            if 0 <= indice < len(datos_empleados["empleados"]):
+                empleado1 = datos_empleados["empleados"][indice]
+                encontrado = True
         else:
-            print("Opción inválida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+            for empleado1 in datos_empleados["empleados"]:
+                if empleado_cual.lower() == empleado1["nombre"].lower():
+                    encontrado = True
+                    break
+        if encontrado:
+            print("\nDatos del empleado:")
+            for clave, valor in empleado1.items():
+                print(f"{clave}: {valor}")
+            input("\nPresione Enter para continuar...")
+        else:
+            print("No se encontró ese empleado.")
+            input("Presione Enter para intentarlo de nuevo...")

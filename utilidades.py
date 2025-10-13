@@ -144,3 +144,77 @@ def pedir_float(nombre: str, min: float=1.0, max: float=1000000.0):
             continue
         else:
             return flotante
+
+# def editar_dato_json(file_path: str, nombre_seccion: str):
+#     if not os.path.exists(file_path):
+#         print(f"El archivo '{file_path}' no existe.")
+#         return
+#     try:
+#         with open(file_path, 'r', encoding='utf-8') as file:
+#             data = json.load(file)
+#     except json.JSONDecodeError:
+#         print("Error: el archivo JSON está dañado o malformado.")
+#     except Exception as e:
+#         print(f"Error inesperado: {e}")
+#     else:
+#         if type(data) != dict or not data:
+#             print("El archivo JSON no tiene un formato válido (debe ser un diccionario con listas).")
+#         print("Claves disponibles en el JSON:")
+#         for i, secciones in enumerate(data[next(iter(data))], start=1):
+#             print(f"{i}. Cambiar el {nombre_seccion} con el id {secciones["id"]}.")
+#         while True:
+#             seccion = input(f"Ingrese el {nombre_seccion} que desea modificar: ").strip()
+#             if int(seccion) > data[nombre_seccion]["id"]:
+#                 print(f"La seccion '{seccion}' no existe en el archivo.") 
+#             else:
+#                 for k,v in secciones.items():
+#                     if seccion == v:
+#                         print(f"{secciones}")
+#                 input("Presione enter.")
+
+    #     for i,elem in enumerate(seccion):
+    #         print(f"{i+1} - {elem["id"]}")
+    #     dato = input(f"Ingrese el {elem} que desea modificar: ")
+    #     if dato not in elem:
+    #         print(f"{dato} no esta en {elem}") 
+    #     lista = data[seccion]
+    #     if type(lista) != list or not lista:
+    #         print(f"'{seccion}' no contiene una lista válida o está vacía.")
+    #         return
+    #     print(f"\nElementos dentro de '{seccion}':")
+    #     for i, elemento in enumerate(lista, start=1):
+    #         nombre = elemento.get("nombre", f"Elemento {i}")
+    #         print(f"{i}. {nombre}")
+    #     eleccion = input("\nIngrese el número o el nombre del elemento que desea modificar: ").strip()
+    #     seleccionado = None
+    #     if eleccion.isdigit():
+    #         indice = int(eleccion) - 1
+    #         if 0 <= indice < len(lista):
+    #             seleccionado = lista[indice]
+    #     else:
+    #         for elem in lista:
+    #             if elem.get("nombre", "").lower() == eleccion.lower():
+    #                 seleccionado = elem
+    #                 break
+    #     if not seleccionado:
+    #         print("No se encontró el elemento seleccionado.")
+    #         return
+    #     print("\nCampos disponibles para modificar:")
+    #     for clave, valor in seleccionado.items():
+    #         print(f" - {clave}: {valor}")
+    #     campo = input("\nIngrese el nombre del campo que desea modificar: ").strip()
+    #     if campo not in seleccionado:
+    #         print(f"El campo '{campo}' no existe.")
+    #         return
+    #     nuevo_valor = input(f"Ingrese el nuevo valor para '{campo}': ").strip()
+    #     if str(seleccionado[campo]).isdigit() and nuevo_valor.isdigit():
+    #         nuevo_valor = int(nuevo_valor)
+    #     print(f"\nConfirmar cambio de '{campo}' de '{seleccionado[campo]}' a '{nuevo_valor}'?")
+    #     confirmar = input("Escriba 's' para confirmar: ").lower()
+    #     if confirmar == 's':
+    #         seleccionado[campo] = nuevo_valor
+    #         with open(file_path, 'w', encoding='utf-8') as file:
+    #             json.dump(data, file, indent=2, ensure_ascii=False)
+    #         print("Cambio guardado correctamente.")
+    #     else:
+    #         print("Cambio cancelado.")
