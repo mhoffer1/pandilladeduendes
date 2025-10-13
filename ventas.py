@@ -2,7 +2,8 @@ from utilidades import *
 datos_ventas = cargar_datos_json(ARCHIVO_VENTAS)
 datos_inventario = cargar_datos_json(ARCHIVO_INVENTARIO)
 from datetime import datetime
-def menu_ventas():
+
+def menu_ventas()->None:
     "Muestra el menu de Ventas"
     while True:
         limpiar_pantalla()
@@ -23,7 +24,11 @@ def menu_ventas():
             input("Presione Enter para continuar...")
 
 
-def registrar_ventas():  
+def registrar_ventas()->None:
+    """
+    Regista ventas y las almacena en el .json de ventas. El precio de promocion
+    tiene prioridad ante el precio comun.
+    """  
       
     while True:
         limpiar_pantalla()
@@ -109,17 +114,32 @@ def registrar_ventas():
                     print("Producto no encontrado.")
                     input("Enter para continuar...")
 
-def aplicar_descuento(valor,descuento):
+def aplicar_descuento(valor:int,descuento:int)->int:
+    """
+    se invoca desde "registrar_ventas", realiza un descuento y se valida que sea valido.
+    pre:Recibe el valor de la venta y el descuento a realizar.
+    post: Retorna el valor neto a cobrar.
+    """
     while True:
         limpiar_pantalla()
-        if descuento > 98:
+        if descuento > 98 or descuento <= 0:
             print("Descuento invalido.")
-            break
-        valor_neto = valor * (1 - descuento / 100)
-        return valor_neto
+            
+            descuento = input("Ingrese un descuento valido:")
+            try:
+                int(descuento)
+            except Exception as e:
+                float(descuento)
+        else:
+            valor_neto = valor * (1 - descuento / 100)
+            return valor_neto
             
        
-def aplicar_promocion():
+def aplicar_promocion()->None:
+    """
+    Se aplica una promocion a ciertos productos, tiene prioridad en las ventas ante 
+    el precio de lista.
+    """
     while True:
         limpiar_pantalla()
         opciones_prod = ("agregar promocion", "ver promocion", "eliminar promocion", "salir")
@@ -169,7 +189,7 @@ def aplicar_promocion():
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def elegir_historial_ventas():
+def elegir_historial_ventas()->None:
     "podes ver el historial de ventas y filtrar por dia,mes y año."
 
     while True:
@@ -189,7 +209,7 @@ def elegir_historial_ventas():
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def historial_por_dia():
+def historial_por_dia()->None:
     "ves el historial de ventas diario."
     while True:
         limpiar_pantalla()
@@ -203,7 +223,7 @@ def historial_por_dia():
                 print("Opcion invalida. Intente de nuevo.")
                 input("Presione Enter para continuar...")
 
-def historial_por_semana():
+def historial_por_semana()->None:
     "ves el historial de ventas semanal."
     while True:
         limpiar_pantalla()

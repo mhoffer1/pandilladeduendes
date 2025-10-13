@@ -144,7 +144,7 @@ def buscar_proveedor():
             for proveedor in datos_proveedores["proveedores"]:
                 if proveedor["nombre"] == busqueda or proveedor["marca"] == busqueda or proveedor["tipo_de_producto"] == busqueda:
                     encontrado = True
-                    print(f"{enumerador}.{proveedor["nombre"]}     -{proveedor["marca"]}        -{proveedor["tipo_de_producto"]}")
+                    print(f"{enumerador}.{proveedor["nombre"].capitalize()}     -{proveedor["marca"].capitalize()}        -{proveedor["tipo_de_producto"].capitalize()}")
                     enumerador+= 1
             if not encontrado:
                 print("No hay informacion.")
