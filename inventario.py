@@ -487,11 +487,11 @@ def alerta_stock_bajo():
         
         elif opcion == "2":
             encontrados = False
-            contador = 1
+            enumerador = 1
             for producto in datos_inventario["productos"]:
                 if  producto["stock"] <= 20:
-                    print(f"{contador}.{producto['nombre'].capitalize()}")
-                    contador += 1
+                    print(f"{enumerador}.{producto['nombre'].capitalize()}")
+                    enumerador += 1
                     encontrados = True
             if encontrados :
                 input("enter para continuar...")

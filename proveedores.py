@@ -34,7 +34,7 @@ def registrar_provedores():
     """
 
     while True:
-        validacion = lambda x,y: x != "" or y != "" #para chequear datos en linea 48
+        validacion = lambda x,y: x != "" or y != "" #para chequear datos en linea 48!
         util.limpiar_pantalla()
         opciones_prov = ("Registrar Proveedor","Salir")
         util.opciones("REGISTAR PROVEEDORES", opciones_prov)
@@ -43,26 +43,28 @@ def registrar_provedores():
             break
         elif opcion == "1":
             nombre = input("Ingrese el nombre del proveedor.").strip().lower()
-            marca = input("Ingrese la marca con la que trabaja con el proveedor(si no trabaja con una marca en especico, presiona enter):")
-            tipo_de_productos = input("Ingres el tipo de productos con el que trabaja el proveedor(si no traba con un tipo de productos en especifico, presiona enter).")
+            marca = input("Ingrese la marca con la que trabaja con el proveedor(si no trabaja con una marca en especico, presiona enter):").lower().strip()
+            tipo_de_productos = input("Ingres el tipo de productos con el que trabaja el proveedor(si no traba con un tipo de productos en especifico, presiona enter).").lower().strip()
             if validacion(marca,tipo_de_productos):
                 if marca != "" and tipo_de_productos != "":
                     proveedor = {
                             "nombre": nombre,
                             "marca" : marca,
-                            "tipo_de_poducto": tipo_de_productos,
+                            "tipo_de_producto": tipo_de_productos,
                             "fecha_alta": str(datetime.now().date())
                                 }
                 elif marca != "" and tipo_de_productos == "":
                     proveedor = {
                             "nombre": nombre,
                             "marca" : marca,
+                            "tipo_de_producto" : "NO INFO.",
                             "fecha_alta": str(datetime.now().date()),
                             
                                 }
                 else:
                     proveedor = {
                             "nombre" :nombre,
+                            "marca" : "NO INFO",
                             "tipo_de_producto" : tipo_de_productos,
                             "fecha_alta": str(datetime.now().date())
                     }
@@ -76,7 +78,7 @@ def registrar_provedores():
                 print("Debe cargar por lo menos una marca o tipo de productos especifico.")
                 input("Enter para continuar.")
 
-def solicitar_productos():
+def solicitar_productos():  
     """
     Sirve para solicitar productos a un proveedor, debe ingresarse el provedor, producto/s
     y cantidad.
@@ -130,12 +132,24 @@ def buscar_proveedor():
     """
     while True:
         util.limpiar_pantalla()
-        util.guiones()
-        print("BUSCAR PROVEEDOR")
-        util.guiones()
-        opcion = input("Ingrese 0 para retroceder: ")
+        opciones_proveedor = ("Buscar Proveedor","Salir")
+        util.opciones("BUSCAR PROVEEDORES",opciones_proveedor)
+        opcion = input("Ingrese una opcion: ")
         if opcion == "0":
             break
+        elif opcion == "1":
+            enumerador = 1
+            busqueda = input("Ingrese un nombre,marca o producto para buscar proveedor:").strip().lower()
+            encontrado = False
+            for proveedor in datos_proveedores["proveedores"]:
+                if proveedor["nombre"] == busqueda or proveedor["marca"] == busqueda or proveedor["tipo_de_producto"] == busqueda:
+                    encontrado = True
+                    print(f"{enumerador}.{proveedor["nombre"]}     -{proveedor["marca"]}        -{proveedor["tipo_de_producto"]}")
+                    enumerador+= 1
+            if not encontrado:
+                print("No hay informacion.")
+            input("enter para continuar...")
+
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
