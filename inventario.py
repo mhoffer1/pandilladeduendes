@@ -34,7 +34,8 @@ def menu_inventario():
 
 def agregar_producto():
     #validar_precio = lambda x: x > 50 # el producto mas barato puede costar 100.
-    if "productos" not in datos_inventario:
+    #SIRVE PARA EVITAR UN BUG_ CON EL PRIMER PRODUCTO CARGADO.
+    if "productos" not in datos_inventario: 
         datos_inventario["productos"] = []
     if "prox_id" not in datos_inventario:
         datos_inventario["prox_id"] = 1
@@ -44,7 +45,7 @@ def agregar_producto():
         opciones_prod = ["Agregar Producto","Salir"] #damos la oportunidad de salir por que es mucho quilombo si te metiste y no queres agregar nada.
         util.opciones("Añadir productos",opciones_prod)
         
-        opcion = input("Ingrese 1 opcion: ")
+        opcion = input("Ingrese una opcion: ")
         if opcion == "0":
             break
             
@@ -96,7 +97,7 @@ def agregar_producto():
                                 "fecha_alta": str(datetime.now().date()),
                                 "ultima_modificacion": str(datetime.now().date())
                                 }
-                    datos_inventario["productos"].append(producto)
+                    datos_inventario["productos"].append(producto) #al value del key productos apendea producto
                     datos_inventario["prox_id"] += 1
                     util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
                     print("Se agrego el producto correctamente.")
@@ -464,12 +465,39 @@ def alerta_stock_bajo():
     """Mostrar productos con stock por debajo del nivel minimo"""
     while True:
         util.limpiar_pantalla()
-        util.guiones()
-        print("ALERTA STOCK BAJO PRODUCTOS")
-        util.guiones()
+        opciones_alertas = ["Ver alertas de Alta rotacion","Ver todas las alertas","salir"]
+        util.opciones("buscar producto",opciones_alertas)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
             break
+        elif opcion == "1":
+            encontrados = False
+            contador = 1
+            for producto in datos_inventario["productos"]:
+                if producto["alta_rotacion"] == "si" and producto["stock"] <= 20:
+                    
+                    print(f"{contador}.{producto['nombre'].capitalize()}")
+                    contador += 1
+                    encontrados = True
+            if encontrados :
+                input("enter para continuar...")
+            else:
+                print("No se encontraron productos.")
+                input("enter para continuar...")
+        
+        elif opcion == "2":
+            encontrados = False
+            contador = 1
+            for producto in datos_inventario["productos"]:
+                if  producto["stock"] <= 20:
+                    print(f"{contador}.{producto['nombre'].capitalize()}")
+                    contador += 1
+                    encontrados = True
+            if encontrados :
+                input("enter para continuar...")
+            else:
+                print("No se encontraron productos.")
+                input("enter para continuar...")
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
