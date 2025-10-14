@@ -79,7 +79,7 @@ def registrar_ventas()->None:
                 encontrado = False
                     
                 for producto in datos_inventario["productos"]:
-                    if producto["nombre"].strip().lower() == prod.strip().lower() or producto["id"].strip().lower() == prod.strip().lower():
+                    if producto["nombre"] == prod or producto["id"] == prod:
                         encontrado = True
                             
                         while True:

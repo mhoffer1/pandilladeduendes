@@ -42,7 +42,7 @@ def agregar_producto():
 
     while True:
         util.limpiar_pantalla()
-        opciones_prod = ["Agregar Producto","Salir"] #damos la oportunidad de salir por que es mucho quilombo si te metiste y no queres agregar nada.
+        opciones_prod = ("Agregar Producto","Salir") #damos la oportunidad de salir por que es mucho quilombo si te metiste y no queres agregar nada.
         util.opciones("Añadir productos",opciones_prod)
         
         opcion = input("Ingrese una opcion: ")

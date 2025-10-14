@@ -100,6 +100,7 @@ def editar_datos_de_empleados():
                             else:
                                 empleado1[dato] = nuevo_dato
                             print(f"{dato} modificado correctamente.")
+                            
                     else:
                         print("No se pudo modificar. No existe ese dato.")
                     break
