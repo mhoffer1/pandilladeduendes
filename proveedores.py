@@ -7,7 +7,7 @@ def menu_proveedores():
     """
     while True:
         util.limpiar_pantalla()
-        opciones_prov = ("Registrar Proveedor", "Solicitar Productos a Proveedor", "Ver Pagos Pendientes", "Ver Historial de Compras", "Buscar Proveedores", "Volver al Menú Principal")
+        opciones_prov = ("Registrar Proveedor", "Solicitar Productos a Proveedor", "Ver Pagos Pendientes", "Ver Historial de Compras", "Buscar Proveedores","Mostrar proveedores", "Volver al Menú Principal")
         util.opciones("PROVEEDORES", opciones_prov)
         opcion = input("Ingrese una opcion: ")
     
@@ -21,6 +21,8 @@ def menu_proveedores():
             historial_de_compras()
         elif opcion == "5":
             buscar_proveedor()
+        elif opcion == "6":
+            mostrar_proveedores()
         elif opcion == "0":
             break
         else:
@@ -210,4 +212,42 @@ def buscar_proveedor():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-        
+
+
+def mostrar_proveedores():
+    while True:
+        util.limpiar_pantalla()
+        util.guiones()
+        print("Los proveedores son los siguientes.")
+        util.guiones()
+
+        if not datos_proveedores["proveedores"]:
+            print("No hay proveedores registrados.")
+            input("Presione Enter para volver...")
+            break
+
+        for i, proveedor in enumerate(datos_proveedores["proveedores"]):
+            print(f"{i + 1} - {proveedor['marca']}")
+        proveedor_cual = input("\nIngrese la marca o número del proveedor (o 0 para volver): ")
+        util.limpiar_pantalla()
+        if proveedor_cual == "0":
+            break
+        encontrado = False
+        if proveedor_cual.isdigit():
+            indice = int(proveedor_cual) - 1
+            if 0 <= indice < len(datos_proveedores["proveedores"]):
+                proveedor1 = datos_proveedores["proveedores"][indice]
+                encontrado = True
+        else:
+            for proveedor1 in datos_proveedores["proveedores"]:
+                if proveedor_cual.lower() == proveedor1["marca"].lower():
+                    encontrado = True
+                    break
+        if encontrado:
+            print("\nDatos del proveedor:")
+            for clave, valor in proveedor1.items():
+                print(f"{clave}: {valor}")
+            input("\nPresione Enter para continuar...")
+        else:
+            print("No se encontró ese proveedor.")
+            input("Presione Enter para intentarlo de nuevo...")
