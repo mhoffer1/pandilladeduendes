@@ -32,9 +32,7 @@ def menu_empleados():
 def registrar_empleados():
     while True:
         limpiar_pantalla()
-        guiones()
-        print("REGISTRAR EMPLEADO")
-        guiones()
+        titulo("registrar empleados")
         opcion = input("Ingrese 0 para retroceder y 1 para registrar: ")
         if opcion == "0":
             break
@@ -71,9 +69,7 @@ def registrar_empleados():
 def editar_datos_de_empleados():
     while True:
         limpiar_pantalla()
-        guiones()
-        print("EDITAR EMPLEADO")
-        guiones()
+        titulo("EDITAR EMPLEADO")
         print("Desea cambiar:")
         op = input("Ingrese 1 para entrar 0 para salir: ")
         if op == "1":
@@ -105,7 +101,7 @@ def editar_datos_de_empleados():
                                 else:
                                     nuevo_dato = input(f"Ingrese el nuevo valor para '{clave}': ")
                                     empleado1[clave] = nuevo_dato
-                                    guardar_datos_json(ARCHIVO_INVENTARIO, datos_empleados) 
+                                    guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados) 
                                     print(f"{clave} modificado correctamente.")
                                     input("Ingrese enter para salir.")
                                     return
@@ -128,10 +124,7 @@ def editar_datos_de_empleados():
 def asignar_roles():
     while True:
         limpiar_pantalla()
-        guiones()
-        print("ASIGNAR ROLES")
-        
-        guiones()
+        titulo("ASIGNAR ROLES")
         opcion = input("Ingrese 0 para retroceder, 1 para continuar: ")
         if opcion == "0":
             break
@@ -152,7 +145,7 @@ def asignar_roles():
                     if encontrado:
                         empleado1["rol"] = rol
                 if encontrado:
-                    guardar_datos_json(ARCHIVO_INVENTARIO, datos_empleados)
+                    guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
                     print("Rol agregado correctamente.")
                 else:
                     print("No se encontro ese empleado.")
@@ -164,9 +157,7 @@ def asignar_roles():
 def registrar_asistencia():
     while True:
         limpiar_pantalla()
-        guiones()
-        print("REGISTRAR ASISTENCIA")
-        guiones()
+        titulo("registrar asistencia")
         opcion = input("Ingrese 0 para retroceder, 1 para continuar: ")
         if opcion == "0":
             break
@@ -186,7 +177,7 @@ def registrar_asistencia():
                     if encontrado:
                         empleado1["asistencias"].append(str(datetime.now().date()))
                 if encontrado:
-                    guardar_datos_json(ARCHIVO_INVENTARIO, datos_empleados)
+                    guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
                     print("Asistencia registrada correctamente")
                 if not encontrado:
                     print("No se encontro ese empleado.")
@@ -199,9 +190,7 @@ def registrar_asistencia():
 def dar_de_baja():
     while True:
         limpiar_pantalla()
-        guiones()
-        print("DAR DE BAJA")
-        guiones()
+        titulo("dar de baja")
         opcion = input("Ingrese 0 para retroceder, 1 para continuar: ")
         limpiar_pantalla()
         if opcion == "0":
@@ -222,7 +211,7 @@ def dar_de_baja():
                     if encontrado:
                         del datos_empleados["empleados"][j]#del = borra una key
                 if encontrado:
-                    guardar_datos_json(ARCHIVO_INVENTARIO, datos_empleados)
+                    guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
                     print("Empleado dado de baja correctamente.")
                 if not encontrado:
                     print("No se encontro ese empleado.")
@@ -236,9 +225,7 @@ def dar_de_baja():
 def mostrar_empleados():
     while True:
         limpiar_pantalla()
-        guiones()
-        print("Los empleados son los siguientes.")
-        guiones()
+        titulo("mostrar empleados")
 
         if not datos_empleados["empleados"]:
             print("No hay empleados registrados.")
@@ -270,8 +257,6 @@ def mostrar_empleados():
                 print("No se encontró ese empleado.")
                 input("Presione Enter para intentarlo de nuevo...")
 
-#id no se puede modificar
-
 def listar_empleados():
     for i, empleado in enumerate(datos_empleados["empleados"]):
-            print(f"{empleado["id"]} - {empleado['nombre']}")
+            print(f"{i+1} - {empleado['nombre']}")

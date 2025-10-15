@@ -144,6 +144,11 @@ def pedir_float(nombre: str, min: float=1.0, max: float=1000000.0):
             continue
         else:
             return flotante
+        
+def titulo(titulo):
+    guiones()
+    print(f"    {titulo.upper()}")
+    guiones()
 
 # def editar_dato_json(file_path: str, nombre_seccion: str):
 #     if not os.path.exists(file_path):
