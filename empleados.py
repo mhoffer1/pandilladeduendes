@@ -135,9 +135,31 @@ def asignar_roles():
         print("ASIGNAR ROLES")
         
         guiones()
-        opcion = input("Ingrese 0 para retroceder: ")
+        opcion = input("Ingrese 0 para retroceder, 1 para continuar: ")
         if opcion == "0":
             break
+        elif opcion == "1":
+            if not datos_empleados["empleados"]:
+                print("No hay empleados registrados.")
+                input("Presione Enter para volver...")
+                break
+            else:
+                for i, empleado in enumerate(datos_empleados["empleados"]):
+                    print(f"{i + 1} - {empleado['nombre']}")
+                persona = input("\nIngrese el nombre o número del empleado (o 0 para volver): ")
+                rol = input("Ingrese el rol: ")
+                encontrado = False
+                limpiar_pantalla()
+                for j, empleado1 in enumerate(datos_empleados["empleados"]):
+                    if persona.lower() == empleado1["nombre"].lower() or persona.isdigit() and int(persona)-1 == j:
+                        encontrado = True
+                    if encontrado:
+                        empleado1["rol"] = rol
+                if encontrado:
+                    print("Rol agregado correctamente.")
+                else:
+                    print("No se encontro ese empleado.")
+                input("Ingrese enter para salir.")
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
