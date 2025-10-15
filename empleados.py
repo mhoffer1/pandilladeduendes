@@ -90,13 +90,21 @@ def editar_datos_de_empleados():
                 if encontrado:
                     print("Qué dato desea cambiar:")
                     for clave, valor in empleado1.items():
-                        print(f" El {clave} por ahora es {valor}")
+                        if clave == "fecha_alta":
+                            print(f"La fecha de alta es {valor}")
+                        elif clave == "asistencias":
+                            if not valor:
+                                print("No hay asistencias registradas.")
+                            else:
+                                print(f"La lista de asistencias es: {valor}")
+                        else:
+                            print(f" El {clave} por ahora es {valor}")
                     dato = input("Ingrese el dato que desea cambiar: ")
                     if dato.lower() in empleado1:
                         nuevo_dato = input(f"Ingrese el nuevo {dato}: ")
                         for k, v in empleado1.items():
                             if dato == k: 
-                                v = nuevo_dato       
+                                v = nuevo_dato
                             else:
                                 empleado1[dato] = nuevo_dato
                             print(f"{dato} modificado correctamente.")
