@@ -121,56 +121,8 @@ def ver_todos_los_productos():
         input("Presione Enter para continuar...")
         return
 
-    por_pagina = 10
-    total = len(productos)
-    total_paginas = (total + por_pagina - 1) // por_pagina
-    pagina = 0
-
-    while True:
-        util.limpiar_pantalla()
-        util.guiones()
-        print(f"Productos en inventario (Pagina {pagina + 1} de {total_paginas})")
-        util.guiones()
-
-        inicio = pagina * por_pagina
-        fin = min(inicio + por_pagina, total)
-
-        headers = ["ID", "Nombre", "Precio", "Costo", "Stock", "Categoria", "Alta Rotacion", "Fecha Alta", "Ultima Modificacion"]
-        data = [
-            [
-                producto["id"],
-                producto["nombre"].capitalize(),
-                producto["precio"],
-                producto["costo"],
-                producto["stock"],
-                producto["categoria"].capitalize(),
-                "Si" if producto["alta_rotacion"] == "si" else "No",
-                producto["fecha_alta"],
-                producto["ultima_modificacion"],
-            ]
-            for producto in productos[inicio:fin]
-        ]
-
-        print(util.tabulate(data, headers, tablefmt="grid"))
-        
-        print("\nOpciones: [N] siguiente, [P] anterior, [0] volver")
-        opcion = input("Seleccione una opcion: ").strip().lower()
-
-        if opcion == "0":
-            return
-        if opcion == "n":
-            if pagina < total_paginas - 1:
-                pagina += 1
-            else:
-                input("Es la ultima pagina. Presione Enter para continuar...")
-        elif opcion == "p":
-            if pagina > 0:
-                pagina -= 1
-            else:
-                input("Es la primera pagina. Presione Enter para continuar...")
-        else:
-            input("Opcion invalida. Presione Enter para continuar...")
-        break
+    headers = ["ID", "Nombre", "Precio", "Costo", "Stock", "Categoria", "Alta Rotacion", "Fecha Alta", "Ultima Modificacion"]
+    util.imprimir_tabla_x_paginas(headers, productos, "Productos en Inventario")
 
 def detalles_producto():
     while True:
@@ -325,7 +277,6 @@ def borrar_producto():
                         datos_inventario["productos"].remove(producto)
 
                         util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
-                        datos_inventario["prox_id"] -= 1
                         print("\nProducto eliminado con éxito.")
                         input("Presione Enter para continuar...")
                         break
@@ -409,56 +360,8 @@ def buscar_producto():
                         input("Presione Enter para continuar...")
                         continue
                 
-                por_pagina = 10
-                total = len(coincidencias)
-                total_paginas = (total + por_pagina - 1) // por_pagina
-                pagina = 0
-
-                while True:
-                    util.limpiar_pantalla()
-                    util.guiones()
-                    print(f"Resultados de Búsqueda (Pagina {pagina + 1} de {total_paginas})")
-                    util.guiones()
-
-                    inicio = pagina * por_pagina
-                    fin = min(inicio + por_pagina, total)
-
-                    headers = ["ID", "Nombre", "Precio", "Costo", "Stock", "Categoria", "Alta Rotacion", "Fecha Alta", "Ultima Modificacion"]
-                    data = [
-                        [
-                            coincide["id"],
-                            coincide["nombre"].capitalize(),
-                            coincide["precio"],
-                            coincide["costo"],
-                            coincide["stock"],
-                            coincide["categoria"].capitalize(),
-                            "Si" if coincide["alta_rotacion"] == "si" else "No",
-                            coincide["fecha_alta"],
-                            coincide["ultima_modificacion"],
-                        ]
-                        for coincide in coincidencias[inicio:fin]
-                    ]
-
-                    util.imprimir_tabla(headers, data)
-                    
-                    print("\nOpciones: [N] siguiente, [P] anterior, [0] volver")
-                    opcion = input("Seleccione una opcion: ").strip().lower()
-
-                    if opcion == "0":
-                        break
-                    if opcion == "n":
-                        if pagina < total_paginas - 1:
-                            pagina += 1
-                        else:
-                            input("Es la ultima pagina. Presione Enter para continuar...")
-                    elif opcion == "p":
-                        if pagina > 0:
-                            pagina -= 1
-                        else:
-                            input("Es la primera pagina. Presione Enter para continuar...")
-                    else:
-                        input("Opcion invalida. Presione Enter para continuar...")
-                        continue
+                headers = ["ID", "Nombre", "Precio", "Costo", "Stock", "Categoria", "Alta Rotacion", "Fecha Alta", "Ultima Modificacion"]
+                util.imprimir_tabla_x_paginas(headers, coincidencias, "Resultados de Búsqueda")
                          
 
 def alerta_stock_bajo():

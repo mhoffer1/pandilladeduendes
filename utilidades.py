@@ -101,6 +101,53 @@ def imprimir_tabla(headers: list[str], data: list[list[str]]) -> None:
         for row in data:
             print(" | ".join(map(str, row)))
 
+def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo: str):
+    """
+    Imprime una tabla de máximo 10 datos, con un sistema de avanzar o retroceder en páginas.
+
+    Pre: Recibe como parámetro una lista de encabezados y una lista de diccionarios correspondientes a cada elemento cuyos datos deben mostrarse en la tabla
+    Post: No retorna nada, imprime la tabla con el sistema de páginas.
+    """
+    por_pagina = 10
+    total = len(lista_datos)
+    total_paginas = (total + por_pagina - 1) // por_pagina
+    pagina = 0
+
+    while True:
+        limpiar_pantalla()
+        guiones()
+        print(f"{titulo.title()} (Página {pagina + 1} de {total_paginas})")
+        guiones()
+
+        inicio = pagina * por_pagina
+        fin = min(inicio + por_pagina, total)
+
+        data = [
+            [x if not isinstance(x, str) and not isinstance(x, list) else x.title() if isinstance(x, str) else len(x) for x in dato.values()]
+            for dato in lista_datos[inicio:fin]
+        ]
+
+        print(tabulate(data, headers, tablefmt="grid"))
+        
+        print("\nOpciones: [N] siguiente, [P] anterior, [0] volver")
+        opcion = input("Seleccione una opcion: ").strip().lower()
+
+        if opcion == "0":
+            return
+        if opcion == "n":
+            if pagina < total_paginas - 1:
+                pagina += 1
+            else:
+                input("Es la ultima pagina. Presione Enter para continuar...")
+        elif opcion == "p":
+            if pagina > 0:
+                pagina -= 1
+            else:
+                input("Es la primera pagina. Presione Enter para continuar...")
+        else:
+            input("Opcion invalida. Presione Enter para continuar...")
+        continue
+
 def pedir_entero(nombre: str, min: int=1, max: int=1_000_000):
     """
     Pide un número entero, maneja posibles errores de casteo y valida que esté en el rango ingresado.
