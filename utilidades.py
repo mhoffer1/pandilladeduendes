@@ -70,16 +70,14 @@ def guiones(n=50) -> None:
     """
     print("="*n)
 
-def opciones(titulo: str, tupla_opciones: tuple[str]) -> None:
+def opciones(titulos: str, tupla_opciones: tuple[str]) -> None:
     """
     Lista y enumera las opciones recibidas como parámetro, imprimiendo el título del módulo por encima.
 
     Pre: Recibe el título del módulo y la tupla con las opciones a listar. La última opción debe ser la de Volver atrás o Salir del programa.
     Post: No retorna nada, imprime el título y el listado de opciones.
     """
-    guiones()
-    print(f"    {titulo.upper()}")
-    guiones()
+    titulo(titulos)
     for i, op in enumerate(tupla_opciones):
         if i == len(tupla_opciones)-1: # Si es la última opción va a ser la de salir del programa y lo imprime con un 0
             i = -1

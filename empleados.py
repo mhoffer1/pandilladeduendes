@@ -1,4 +1,3 @@
-from utilidades import limpiar_pantalla, guiones, opciones
 from utilidades import *
 from datetime import datetime
 
