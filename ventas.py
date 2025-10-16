@@ -7,15 +7,13 @@ def menu_ventas()->None:
     "Muestra el menu de Ventas"
     while True:
         limpiar_pantalla()
-        opciones_ventas = ("Registrar Venta", "Mostrar Historial de Ventas","Promociones" ,"Volver al Menú Principal")
+        opciones_ventas = ("Registrar Venta","Promociones" ,"Volver al Menú Principal")
         opciones("VENTAS", opciones_ventas)
 
         opcion = input("Ingrese una opcion: ")
         if opcion == "1":
             registrar_ventas()
         elif opcion == "2":
-            elegir_historial_ventas()
-        elif opcion == "3":
             aplicar_promocion()
         elif opcion == "0":
             break
@@ -189,66 +187,3 @@ def aplicar_promocion()->None:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-def elegir_historial_ventas()->None:
-    "podes ver el historial de ventas y filtrar por dia,mes y año."
-
-    while True:
-        limpiar_pantalla()
-        opciones_hist = ("Ver Historial del Día", "Ver Historial de la Semana", "Ver Historial del Mes", "Volver Atrás")
-        opciones("ELEGIR HISTORIAL DE VENTAS", opciones_hist)
-        opcion = input("Ingrese una opcion: ")
-        if opcion == "1":
-            historial_por_dia()
-        elif opcion == "2":
-            historial_por_semana()
-        elif opcion == "3":
-            historial_por_mes()
-        elif opcion == "0":
-            break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
-
-def historial_por_dia()->None:
-    "ves el historial de ventas diario."
-    while True:
-        limpiar_pantalla()
-        guiones()
-        print("HISTORIAL DE VENTAS POR DIA")
-        guiones()
-        opcion =  input("Presiona 0 para retroceder: ")
-        if opcion == "0":
-            break
-        else:
-                print("Opcion invalida. Intente de nuevo.")
-                input("Presione Enter para continuar...")
-
-def historial_por_semana()->None:
-    "ves el historial de ventas semanal."
-    while True:
-        limpiar_pantalla()
-        guiones()
-        print("HISTORIAL DE VENTAS POR SEMANA")
-        guiones()
-        opcion =  input("Presiona 0 para retroceder: ")
-        if opcion == "0":
-            break
-        else:
-                print("Opcion invalida. Intente de nuevo.")
-                input("Presione Enter para continuar...")
-        
-        
-def historial_por_mes():
-    "ves el historial de ventas mensual."
-    while True:
-        limpiar_pantalla()
-        guiones()
-        print("HISTORIAL DE VENTAS POR MES")
-        guiones()
-        opcion =  input("Presiona 0 para retroceder: ")
-        if opcion == "0":
-            break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
-            

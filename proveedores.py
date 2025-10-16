@@ -7,21 +7,17 @@ def menu_proveedores():
     """
     while True:
         util.limpiar_pantalla()
-        opciones_prov = ("Registrar Proveedor", "Solicitar Productos a Proveedor", "Ver Pagos Pendientes", "Ver Historial de Compras", "Buscar Proveedores","Mostrar proveedores", "Volver al Menú Principal")
+        opciones_prov = ("Registrar Proveedor", "Pedidos", "Buscar Proveedores","Mostrar proveedores", "Volver al Menú Principal")
         util.opciones("PROVEEDORES", opciones_prov)
         opcion = input("Ingrese una opcion: ")
     
         if opcion == "1":
             registrar_provedores()
         elif opcion == "2":
-            solicitar_productos()
+            pedidos()
         elif opcion == "3":
-            pagos_pendientes()
-        elif opcion == "4":
-            historial_de_compras()
-        elif opcion == "5":
             buscar_proveedor()
-        elif opcion == "6":
+        elif opcion == "4":
             mostrar_proveedores()
         elif opcion == "0":
             break
@@ -83,7 +79,7 @@ def registrar_provedores():
                 print("Debe cargar por lo menos una marca o tipo de productos especifico.")
                 input("Enter para continuar.")
 
-def solicitar_productos():  
+def pedidos():  
     """
     Sirve para solicitar productos a un proveedor, debe ingresarse el provedor, producto/s
     y cantidad.
@@ -140,50 +136,54 @@ def solicitar_productos():
 
 def ver_pedidos()->None:
     "se invoca desde solicitar_productos. Sirve para ver los pedidos hacia los proveedores."
-    acumulador = 1
+    listado = 1
     for proveedor in datos_proveedores["proveedores"]:
         if len(proveedor["pedido"]) > 0: #osea, si el pedido  existe(todos tienen el key de pedido para evitar errores.)
-            print(f"{acumulador}.{proveedor["nombre"]}")
-            acumulador += 1
+            print(f"{listado}.{proveedor["nombre"]}")
+            listado += 1
             for producto,cantidad in (proveedor["pedido"]):
                 print(f"-{producto}:{cantidad}")
     input("enter para continuar...")
                 
 def eliminar_pedidos()->None:
-    pass
-
-
-def pagos_pendientes():
-    """
-    Podes ver pagos pendientes a proveedores
-    """
+    ""
     while True:
         util.limpiar_pantalla()
-        util.guiones()
-        print("PAGOS PENDIENTES")
-        util.guiones()
-        opcion = input("Ingrese 0 para retroceder:")
+        opciones_ = ("eliminar pedido","salir")
+        util.opciones("PEDIDOS A PROVEEDORES",opciones_)
+        opcion = input("Ingrese una opcion: ").lower().strip()
+    
         if opcion == "0":
             break
+        elif opcion == "1":
+            nombre = input("Ingrese el nombre del proveedor:")
+            encontrado = False
+            for proveedor in datos_proveedores["proveedores"]:
+                if nombre == proveedor["nombre"]:
+                    encontrado = True
+                    if len(proveedor["pedido"]) > 0:
+                        proveedor["pedido"] = [] #vuelve a estar vacia, como de manera default
+                        print("Pedido eliminado correctamente!")
+                        util.guardar_datos_json(util.ARCHIVO_PROVEEDORES, datos_proveedores)
+                        input("Ingrese enter para continuar...")
+                        break
+                    else:
+                        print(f"el proveedor {proveedor["nombre"]} no tiene pedidos registrados.")
+                        input("Enter para continuar...")
+                        break
+            if not encontrado:
+                    print("Vendedor no encontrado.")
+                    input("Ingrese enter para continuar...")
+                    break
         else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+            print("Opcion invalida.")
+            input("Enter para continuar...")
 
-def historial_de_compras():
-    while True:
-        """
-        Podes ver el historial de compras a cada proveedor
-        """
-        util.limpiar_pantalla()
-        util.guiones()
-        print("HISTORIAL DE COMPRAS")
-        util.guiones()
-        opcion = input("Ingrese 0 para retroceder: ")
-        if opcion == "0":
-            break
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+
+
+#pagos pendientes eliminado.
+
+
 
 def buscar_proveedor():
     """
