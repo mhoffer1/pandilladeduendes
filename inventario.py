@@ -368,7 +368,7 @@ def alerta_stock_bajo():
     """Mostrar productos con stock por debajo del nivel minimo"""
     while True:
         util.limpiar_pantalla()
-        opciones_alertas = ["Ver alertas de Alta rotacion","Ver todas las alertas","salir"]
+        opciones_alertas = ("Ver alertas de Alta rotacion","Ver todas las alertas","salir")
         util.opciones("buscar producto",opciones_alertas)
         opcion = input("Ingrese 0 para salir: ")
         if opcion == "0":
