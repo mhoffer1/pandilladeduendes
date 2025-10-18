@@ -3,7 +3,7 @@ from datetime import datetime
 
 datos_ventas = util.cargar_datos_json(util.ARCHIVO_VENTAS)
 datos_inventario = util.cargar_datos_json(util.ARCHIVO_INVENTARIO)
-
+datos_empleados = util.cargar_datos_json(util.ARCHIVO_EMPLEADOS)
 
 def mostrar_reporte_inventario():
     """
@@ -66,20 +66,25 @@ def mostrar_reporte_por_periodo():
 def venta_diario():
     contador = 0
     hoy = datetime.now().date()
+    monto_total = 0
     for venta in reversed(datos_ventas["ventas"]): #se recorre al reves por que las ventas diarias estan al final.
         fecha_en_str = datetime.strptime(venta["fecha_venta"], "%Y-%m-%d")
         if hoy == fecha_en_str.date():
             contador += 1
             print(f"{contador}- id: {venta["id"]} monto: ${venta["venta"]}")
+            monto_total += venta["venta"]
         else:
             break
-    if contador == 0:
+    if contador > 0:
+        print(f"El monto total es de ${monto_total}")
+    else:
         print("No se registraron ventas hoy.")
     input("Enter para continuar...")
 
 
 def ventas_mes():
     contador = 0
+    monto_total = 0
     mes_y_ano_actual = datetime.now().strftime('%Y-%m')
     for venta in reversed(datos_ventas["ventas"]): #se recorre al reves por que las ventas diarias estan al final.
         fecha_en_str = datetime.strptime(venta["fecha_venta"], "%Y-%m-%d")
@@ -87,14 +92,18 @@ def ventas_mes():
         if mes_y_ano_actual == fecha_en_str.strftime("%Y-%m"): #de la fecha del json, no se evalua el dia.
             contador += 1
             print(f"{contador}- id: {venta["id"]} monto: ${venta["venta"]}")
+            monto_total += venta["venta"]
         else:
             break
-    if contador == 0:
+    if contador > 0:
+        print(f"El monto total es de : ${monto_total}")
+    else:
         print("No se registraron ventas hoy.")
     input("Enter para continuar...")
 
 
 def ventas_anio():
+    monto_total = 0
     contador = 0
     mes_y_ano_actual = datetime.now().strftime('%Y')
     for venta in reversed(datos_ventas["ventas"]): #se recorre al reves por que las ventas diarias estan al final.
@@ -103,9 +112,12 @@ def ventas_anio():
         if mes_y_ano_actual == fecha_en_str.strftime("%Y"): #de la fecha del json, no se evalua el dia.
             contador += 1
             print(f"{contador}- id: {venta["id"]} monto: ${venta["venta"]}")
+            monto_total += venta["venta"]
         else:
             break
-    if contador == 0:
+    if contador > 0:
+        print(f"El monto total es de ${monto_total}")
+    else:
         print("No se registraron ventas hoy.")
     input("Enter para continuar...")
 
@@ -117,13 +129,27 @@ def mostrar_reporte_empleados():
     Ver el reporte de los empleados.
     """
     while True:
-        limpiar_pantalla()
-        guiones()
-        print("    REPORTE DE EMPLEADOS")
-        guiones()
-        opcion = input("Ingrese 0 para salir: ")
+        util.limpiar_pantalla()
+        opciones_empleados = ("reporte asistencias","salir")
+           
+        util.opciones("REPORTES VENTA", opciones_empleados)
+        opcion = input("Ingrese  una opcion: ")
+        
         if opcion == "0":
             break
+        elif opcion == "1":
+            buscar = input("Ingrese un nombre o id de empleado para buscar:")
+            encontrado = False
+            for empleado in datos_empleados["empleados"]:
+                if buscar == empleado["nombre"] or buscar == empleado["id"]:
+                    encontrado = True
+                    break
+            if encontrado:
+                print(f"El empleado {empleado["nombre"]} fue registado el {empleado["fecha_alta"]} y registra un total de {len(empleado["asistencias"])} asistencia/s.")
+            else:
+                print("No encontrado.")
+            input("Enter para contiunar...")
         else:
+
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
