@@ -6,15 +6,23 @@ from ventas import menu_ventas
 from proveedores import menu_proveedores
 from empleados import menu_empleados
 
+
 def main_menu():
     """Muestra el menu principal una vez que elegiste sucursal."""
     while True:
         util.limpiar_pantalla()
-        opciones_main = ("Inventario", "Ventas", "Empleados", "Proveedores", "Reportes", "Salir del programa")
+        opciones_main = (
+            "Inventario",
+            "Ventas",
+            "Empleados",
+            "Proveedores",
+            "Reportes",
+            "Salir del programa",
+        )
         util.opciones("ERP - Pandilla de Duendes", opciones_main)
-        
+
         opcion = input("Seleccione una opcion: ").strip()
-        
+
         if opcion == "1":
             menu_inventario()
         elif opcion == "2":
@@ -30,17 +38,22 @@ def main_menu():
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
-    
+
 
 def menu_reportes():
     """Muestra el menu de reportes"""
     while True:
         util.limpiar_pantalla()
-        opciones_report = ("Reporte de Inventario", "Reporte de Ventas", "Reporte de Empleados", "Volver al menú principal")
-        util.opciones("REPORTES", opciones_report) 
-        
+        opciones_report = (
+            "Reporte de Inventario",
+            "Reporte de Ventas",
+            "Reporte de Empleados",
+            "Volver al menú principal",
+        )
+        util.opciones("REPORTES", opciones_report)
+
         opcion = input("Seleccione una opcion: ").strip()
-        
+
         if opcion == "1":
             mostrar_reporte_inventario()
         elif opcion == "2":
@@ -53,14 +66,14 @@ def menu_reportes():
             print("opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-   
-if __name__ == "__main__":
-    
-        # Inicializa los .json(utilidades.py) 
-        util.incializar_datos() # primer uso, sino main_menu
-        main_menu()
 
-        util.limpiar_pantalla()
-        util.guiones()
-        print("Saliendo del programa...\nGracias por usar ERP - Pandilla de Duendes!")
-        util.guiones()
+if __name__ == "__main__":
+
+    # Inicializa los .json(utilidades.py)
+    util.incializar_datos()  # primer uso, sino main_menu
+    main_menu()
+
+    util.limpiar_pantalla()
+    util.guiones()
+    print("Saliendo del programa...\nGracias por usar ERP - Pandilla de Duendes!")
+    util.guiones()
