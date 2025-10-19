@@ -7,7 +7,7 @@ def menu_inventario():
     """Muestra el menu de inventario"""
     while True:
         util.limpiar_pantalla()
-        opciones_inv = ("Agregar Producto", "Ver Todos los Productos", "Ver Detalles del Producto", "Actualizar Producto", "Borrar Producto", "Buscar Producto", "Mostrar Productos con Bajo Stock", "Volver al Menú Principal")
+        opciones_inv = ("Agregar Producto", "Ver Todos los Productos", "Ver Detalles del Producto", "Actualizar Producto", "Cambiar Estado Producto", "Buscar Producto", "Mostrar Productos con Bajo Stock", "Volver al Menú Principal")
         util.opciones("INVENTARIO", opciones_inv)
 
         opcion = input("Seleccione una opcion: ")
@@ -21,7 +21,7 @@ def menu_inventario():
         elif opcion == "4":
             actualizar_producto()
         elif opcion == "5":
-            borrar_producto()
+            estado_producto()
         elif opcion == "6":
             buscar_producto()
         elif opcion == "7":
@@ -95,7 +95,8 @@ def agregar_producto():
                                 "alta_rotacion": alta_rotacion,
                                 "categoria": categoria.lower(),
                                 "fecha_alta": str(datetime.now().date()),
-                                "ultima_modificacion": str(datetime.now().date())
+                                "ultima_modificacion": str(datetime.now().date()),
+                                "activo": True
                                 }
                     datos_inventario["productos"].append(producto) #al value del key productos apendea producto
                     datos_inventario["prox_id"] += 1
@@ -150,6 +151,10 @@ def detalles_producto():
                 print(f"Alta Rotacion: {'Si' if producto['alta_rotacion'] == '1' else 'No'}")
                 print(f"Fecha Alta: {producto['fecha_alta']}")
                 print(f"Ultima Modificacion: {producto['ultima_modificacion']}")
+                if producto["activo"] == True:
+                    print("El estado del producto es ACTIVO")
+                else:
+                    print("El estado del producto es INACTIVO.")
                 encontrado = True
                 break
         
@@ -252,11 +257,11 @@ def actualizar_producto():
         input("Presione enter.")
         break
 
-def borrar_producto():
-    """Borrar un producto del inventario"""
+def estado_producto():
+    """Cambia el estado del producto activo o no activo."""
     while True:
         util.limpiar_pantalla()
-        opciones_borrar = ("borrar un producto", "volver atrás")
+        opciones_borrar = ("Cambiar estado", "volver atrás")
         util.opciones("borrar producto", opciones_borrar)
         op = input("Ingrese una opción: ")
         
@@ -266,18 +271,27 @@ def borrar_producto():
         elif op == "1":
             util.limpiar_pantalla()
             util.guiones()
-            print("BORRAR PRODUCTO")
+            print("CAMBIAR ESTADO")
             util.guiones()
 
-            a_borrar = input("Ingrese el nombre del producto que desea eliminar: ").lower().strip()
+            a_borrar = input("Ingrese el nombre del producto que desea habilitar o deshabilitar: ").lower().strip()
             for producto in datos_inventario["productos"]:
                 if producto["nombre"] == a_borrar:
-                    confirmacion = input(f"\n¿Está usted seguro de querer borrar el producto '{producto["nombre"]}'? (1- Sí, 0 u otra cosa- No): ")
+                    if producto["activo"]:
+                        print("El estado actual del producto es ACTIVO")
+                    else:
+                        print("El estado actual del producto es INACTIVO.")
+                    confirmacion = input(f"\n¿Está usted seguro de querer cambiar el estado de  '{producto["nombre"]}'? (1- Sí, 0 u otra cosa- No): ")
                     if confirmacion == "1":
-                        datos_inventario["productos"].remove(producto)
+                        if producto["activo"] == True:
+                            producto["activo"] = False
+                        else:
+                            producto["activo"] = True
+                    else:
+                        input("enter para continuar...")
 
                         util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
-                        print("\nProducto eliminado con éxito.")
+                        print("\nEstado cambiado con exito.")
                         input("Presione Enter para continuar...")
                         break
                     break
@@ -377,7 +391,7 @@ def alerta_stock_bajo():
             encontrados = False
             contador = 1
             for producto in datos_inventario["productos"]:
-                if producto["alta_rotacion"] == "si" and producto["stock"] <= 20:
+                if producto["alta_rotacion"] == "si" and producto["stock"] <= 20 and producto["activo"] == True:
                     
                     print(f"{contador}.{producto['nombre'].capitalize()}")
                     contador += 1
@@ -392,7 +406,7 @@ def alerta_stock_bajo():
             encontrados = False
             enumerador = 1
             for producto in datos_inventario["productos"]:
-                if  producto["stock"] <= 20:
+                if  producto["stock"] <= 20 and producto["activo"] == True:
                     print(f"{enumerador}.{producto['nombre'].capitalize()}")
                     enumerador += 1
                     encontrados = True

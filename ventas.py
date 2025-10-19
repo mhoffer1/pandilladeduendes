@@ -77,7 +77,7 @@ def registrar_ventas()->None:
                 encontrado = False
                     
                 for producto in datos_inventario["productos"]:
-                    if producto["nombre"] == prod or producto["id"] == prod:
+                    if producto["nombre"] == prod or producto["id"] == prod and producto["activo"] == True:
                         encontrado = True
                             
                         while True:

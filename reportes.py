@@ -11,16 +11,24 @@ def mostrar_reporte_inventario():
     """
     while True:
         util.limpiar_pantalla()
-        opciones_alertas = ("ver alertas", "Ver todas las alertas", "salir")
+        opciones_alertas = ("ver productos inactivos ","salir")
         util.opciones("buscar producto", opciones_alertas)
-        opcion = input("Ingrese 0 para salir: ")
+        opcion = input("Ingrese una opcion : ")
         if opcion == "0":
             break
+        elif opcion == "1":
+            ver_inactivos()
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-
+def ver_inactivos():
+    contador = 0
+    for producto in datos_inventario["productos"]:
+        if producto["activo"] == False:
+            contador += 1
+            print(f"{contador}.producto:{producto["nombre"]}. ID:{producto["id"]}")
+    input("enter para continuar...")
 def mostrar_reporte_venta():
     """
     Ver el reporte de ventas.
