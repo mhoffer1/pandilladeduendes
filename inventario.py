@@ -96,7 +96,7 @@ def agregar_producto():
                                 "categoria": categoria.lower(),
                                 "fecha_alta": str(datetime.now().date()),
                                 "ultima_modificacion": str(datetime.now().date()),
-                                "activo": True
+                                "estado": "activo"
                                 }
                     datos_inventario["productos"].append(producto) #al value del key productos apendea producto
                     datos_inventario["prox_id"] += 1
@@ -266,26 +266,23 @@ def estado_producto():
             util.limpiar_pantalla()
             util.titulo("CAMBIAR ESTADO")
 
-            a_borrar = input("Ingrese el nombre del producto que desea habilitar o deshabilitar: ").lower().strip()
+            cambiar = input("Ingrese el nombre o ID del producto que desea habilitar o deshabilitar: ").lower().strip()
             for producto in datos_inventario["productos"]:
-                if producto["nombre"] == a_borrar:
-                    if producto["activo"]:
-                        print("El estado actual del producto es ACTIVO")
-                    else:
-                        print("El estado actual del producto es INACTIVO.")
+                if producto["nombre"] == cambiar or producto["id"] == cambiar:
+                    print(f"el estado actual del producto es {producto["estado"]}. ")
                     confirmacion = input(f"\n¿Está usted seguro de querer cambiar el estado de  '{producto["nombre"]}'? (1- Sí, 0 u otra cosa- No): ")
                     if confirmacion == "1":
-                        if producto["activo"] == True:
-                            producto["activo"] = False
+                        if producto["estado"] == "activo":
+                            producto["estado"] = "inactivo"
                         else:
-                            producto["activo"] = True
+                            producto["estado"] = "inactivo"
                     else:
                         input("enter para continuar...")
 
-                        util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
-                        print("\nEstado cambiado con exito.")
-                        input("Presione Enter para continuar...")
-                        break
+                    util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
+                    print("\nEstado cambiado con exito.")
+                    input("Presione Enter para continuar...")
+                        
                     break
             
             else:
@@ -373,7 +370,7 @@ def alerta_stock_bajo():
             encontrados = False
             contador = 1
             for producto in datos_inventario["productos"]:
-                if producto["alta_rotacion"] == "si" and producto["stock"] <= 20 and producto["activo"] == True:
+                if producto["alta_rotacion"] == "si" and producto["stock"] <= 20 and producto["estado"] == "activo":
                     
                     print(f"{contador}.{producto['nombre'].capitalize()}")
                     contador += 1
@@ -388,7 +385,7 @@ def alerta_stock_bajo():
             encontrados = False
             enumerador = 1
             for producto in datos_inventario["productos"]:
-                if  producto["stock"] <= 20 and producto["activo"] == True:
+                if  producto["stock"] <= 20 and producto["estado"] == "activo":
                     print(f"{enumerador}.{producto['nombre'].capitalize()}")
                     enumerador += 1
                     encontrados = True
