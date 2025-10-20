@@ -4,23 +4,39 @@ from datetime import datetime
 datos_ventas = util.cargar_datos_json(util.ARCHIVO_VENTAS)
 datos_inventario = util.cargar_datos_json(util.ARCHIVO_INVENTARIO)
 datos_empleados = util.cargar_datos_json(util.ARCHIVO_EMPLEADOS)
-
+#---------------------------------REPORTE INVENTARIO--------------------------
 def mostrar_reporte_inventario():
     """
     Podes ver el reporte de inventario.
     """
     while True:
         util.limpiar_pantalla()
-        opciones_alertas = ("ver productos inactivos ","salir")
+        opciones_alertas = ("ver productos inactivos","Ver valor total del inventario","salir")
         util.opciones("buscar producto", opciones_alertas)
         opcion = input("Ingrese una opcion : ")
         if opcion == "0":
             break
         elif opcion == "1":
             ver_inactivos()
+        elif opcion == "2":
+            ver_valor_del_inventario()
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
+def ver_valor_del_inventario():
+    print("NOTA: Para calcular el valor total de su inventario se considera el precio que usted pago, es decir, el COSTO de los productos.")
+    total_AR, total_NOAR = 0,0 #totales de alta rotacion y de no alta rotacion.
+    
+    for producto in datos_inventario["productos"]:
+        if producto["alta_rotacion"] == "si":
+            total_AR += producto["costo"] * producto["stock"]
+        else:
+            total_NOAR += producto["costo"] * producto["stock"]
+    print(f"El valor total de su inventario es de: ${total_AR + total_NOAR}")
+    print(f"${total_AR} son de productos de alta rotacion.")
+    print(f"${total_NOAR} son de productos que NO son de alta rotacion.")
+    input("Enter para continuar...")
+        
 
 def ver_inactivos():
     """
@@ -32,6 +48,10 @@ def ver_inactivos():
             contador += 1
             print(f"{contador}.producto:{producto["nombre"]}. ID:{producto["id"]}")
     input("enter para continuar...")
+
+
+
+#------------------------------REPORTE VENTAS----------------------------------
 def mostrar_reporte_venta():
     """
     Ver el reporte de ventas.
@@ -133,7 +153,7 @@ def ventas_anio():
     input("Enter para continuar...")
 
 
-
+#-----------------------------------REPORTES EMPLEADOS-------------------------
 def mostrar_reporte_empleados():
     pass
     """
@@ -154,6 +174,7 @@ def mostrar_reporte_empleados():
             reporte_sueldos()
 
 def reporte_asistencias():
+    
             buscar = input("Ingrese un nombre o id de empleado para buscar:")
             encontrado = False
             for empleado in datos_empleados["empleados"]:
