@@ -304,33 +304,34 @@ def mostrar_empleados():
             input("Presione Enter para volver...")
             break
         else:
-            listar_empleados()
-            titulo("mostrar empleados")
+            # listar_empleados()
+            # titulo("mostrar empleados")
             empleado_cual = input(
-                "\nIngrese el nombre o número del empleado (o 0 para volver): "
+                "\nIngrese 1 para continuar (o 0 para volver): "
             )
             limpiar_pantalla()
             if empleado_cual == "0":
                 break
-            encontrado = False
-            if empleado_cual.isdigit():
-                indice = int(empleado_cual) - 1
-                if 0 <= indice < len(datos_empleados["empleados"]):
-                    empleado1 = datos_empleados["empleados"][indice]
-                    encontrado = True
-            else:
-                for empleado1 in datos_empleados["empleados"]:
-                    if empleado_cual.lower() == empleado1["nombre"].lower():
-                        encontrado = True
-                        break
-            if encontrado:
-                print("\nDatos del empleado:")
-                for clave, valor in empleado1.items():
-                    print(f"{clave.replace("_", " ").capitalize()}: {valor}")
-                input("\nPresione Enter para continuar...")
-            else:
-                print("No se encontró ese empleado.")
-                input("Presione Enter para intentarlo de nuevo...")
+            # encontrado = False
+            # if empleado_cual.isdigit():
+            #     indice = int(empleado_cual) - 1
+            #     if 0 <= indice < len(datos_empleados["empleados"]):
+            #         empleado1 = datos_empleados["empleados"][indice]
+            #         encontrado = True
+            # else:
+            #     for empleado1 in datos_empleados["empleados"]:
+            #         if empleado_cual.lower() == empleado1["nombre"].lower():
+            #             encontrado = True
+            #             break
+            # if encontrado:
+            headers = []
+            for clave, valor in datos_empleados["empleados"][0].items():
+                headers.append(clave.capitalize())
+            imprimir_tabla_x_paginas(headers, datos_empleados["empleados"], "Datos del empleado")
+            input("\nPresione Enter para continuar...")
+            # else:
+            #     print("No se encontró ese empleado.")
+            #     input("Presione Enter para intentarlo de nuevo...")
 
 
 def listar_empleados():
