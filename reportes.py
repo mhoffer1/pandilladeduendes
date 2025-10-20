@@ -23,6 +23,9 @@ def mostrar_reporte_inventario():
             input("Presione Enter para continuar...")
 
 def ver_inactivos():
+    """
+    parte de reportes de inventario, se ven los productos inactivos.
+    """
     contador = 0
     for producto in datos_inventario["productos"]:
         if producto["activo"] == False:
@@ -138,7 +141,7 @@ def mostrar_reporte_empleados():
     """
     while True:
         util.limpiar_pantalla()
-        opciones_empleados = ("reporte asistencias","salir")
+        opciones_empleados = ("reporte asistencias","reporte sueldos.","salir")
            
         util.opciones("REPORTES VENTA", opciones_empleados)
         opcion = input("Ingrese  una opcion: ")
@@ -146,6 +149,11 @@ def mostrar_reporte_empleados():
         if opcion == "0":
             break
         elif opcion == "1":
+            reporte_asistencias()
+        elif opcion == "2":
+            reporte_sueldos()
+
+def reporte_asistencias():
             buscar = input("Ingrese un nombre o id de empleado para buscar:")
             encontrado = False
             for empleado in datos_empleados["empleados"]:
@@ -157,7 +165,24 @@ def mostrar_reporte_empleados():
             else:
                 print("No encontrado.")
             input("Enter para contiunar...")
-        else:
+def reporte_sueldos():
+    "Se visualizan todos los sueldos. Se hace enfasis en el mas bajo, mas alto y en el promedio"
+    mas_bajo = (float("inf"),"sin nombre") #tupla con sueldo y nombre.
+    mas_alto = (0,"sin nombre") #tupla con sueldo y nombre
+    total = 0 #total de sueldos
+    cant = 0 #cant empelados
+    for empleado in datos_empleados["empleados"]:
+        print(f"El empleado {empleado["nombre"]} ID: {empleado["id"]} cobra: ${empleado["sueldo"]}")
+        total += empleado["sueldo"]
+        cant += 1
+        if empleado["sueldo"] < mas_bajo[0]:
+            mas_bajo = (empleado["sueldo"], empleado["nombre"])
+        if empleado["sueldo"] > mas_alto[0]:
+            mas_alto = (empleado["sueldo"],empleado["nombre"])
+    promedio = total // cant #division entera para hacer un aprox, no es relevante los decimales.
+    print(f"El sueldo mas alto es: ${mas_alto[0]} y corresponde a {mas_alto[1]}.")
+    print(f"El sueldo mas bajo es: ${mas_bajo[0]} y corresponde a {mas_bajo[1]}")
+    print(f"El sueldo promedio es de: ${promedio}")
+    input("Enter para continuar...")
 
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+        

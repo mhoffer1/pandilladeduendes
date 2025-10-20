@@ -93,6 +93,20 @@ def pedidos():
         if opcion == "0":
             break
         elif opcion == "1":
+            registrar_pedidos()
+        
+        elif opcion == "2":
+            ver_pedidos()
+        
+        elif opcion == "3":
+            eliminar_pedidos()
+        else:
+            print("Opcion invalida. Intente de nuevo.")
+            input("Presione Enter para continuar...")
+
+            
+def registrar_pedidos() ->None:
+            pedido = list()
             busqueda = input("Ingrese el nombre del proveedor:").strip().lower()
             encontrado = False
             for proveedor in datos_proveedores["proveedores"]:
@@ -124,15 +138,8 @@ def pedidos():
             if not encontrado:
                 print("No encontrado.")
                 input("enter para continuar...")
-        
-        elif opcion == "2":
-            ver_pedidos()
-        
-        elif opcion == "3":
-            eliminar_pedidos()
-        else:
-            print("Opcion invalida. Intente de nuevo.")
-            input("Presione Enter para continuar...")
+
+
 
 def ver_pedidos()->None:
     "se invoca desde solicitar_productos. Sirve para ver los pedidos hacia los proveedores."
