@@ -104,7 +104,7 @@ def imprimir_tabla(headers: list[str], data: list[list[str]]) -> None:
 def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo: str):
     """
     Imprime una tabla de máximo 10 datos, con un sistema de avanzar o retroceder en páginas.
-
+    la lista de diccionarios tiene un diccionario por empleado.
     Pre: Recibe como parámetro una lista de encabezados y una lista de diccionarios correspondientes a cada elemento cuyos datos deben mostrarse en la tabla
     Post: No retorna nada, imprime la tabla con el sistema de páginas.
     """
