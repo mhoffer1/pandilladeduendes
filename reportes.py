@@ -73,7 +73,7 @@ def mostrar_reporte_venta():
         opcion = input("Ingrese una opcion: ")
         if opcion == "0":
             break
-        if opcion == "1":
+        elif opcion == "1":
             mostrar_reporte_por_periodo()
         else:
             print("Opcion invalida. Intente de nuevo.")
@@ -98,26 +98,35 @@ def mostrar_reporte_por_periodo():
             ventas_mes()
         elif opcion == "3":
             ventas_anio()
+        elif opcion == "0":
+            break
         else:
             print("Opcion invalida.")
             input("enter para continuar.")
 
 
 def venta_diario():
+    datos_para_la_tabla = []
     contador = 0
     hoy = datetime.now().date()
+    headers = ["id","venta","fecha_venta"]
     monto_total = 0
     for venta in reversed(
         datos_ventas["ventas"]
     ):  # se recorre al reves por que las ventas diarias estan al final.
         fecha_en_str = datetime.strptime(venta["fecha_venta"], "%Y-%m-%d")
         if hoy == fecha_en_str.date():
-            contador += 1
-            print(f"{contador}- id: {venta["id"]} monto: ${venta["venta"]}")
-            monto_total += venta["venta"]
+            datos_para_la_tabla.append(
+            {
+                "id": venta["id"],
+                "monto": venta["venta"],
+                "fecha_venta": venta["fecha_venta"]
+            }
+            )
         else:
             break
-    if contador > 0:
+    if datos_para_la_tabla:
+        util.imprimir_tabla_x_paginas(headers, datos_para_la_tabla, "VENTAS DIARIAS")
         print(f"El monto total es de ${monto_total}")
     else:
         print("No se registraron ventas hoy.")
@@ -125,50 +134,61 @@ def venta_diario():
 
 
 def ventas_mes():
-    contador = 0
+    
+    
     monto_total = 0
+    datos_para_la_tabla = []
+    headers = ["id","venta","fecha_venta"]
     mes_y_ano_actual = datetime.now().strftime("%Y-%m")
     for venta in reversed(
         datos_ventas["ventas"]
     ):  # se recorre al reves por que las ventas diarias estan al final.
         fecha_en_str = datetime.strptime(venta["fecha_venta"], "%Y-%m-%d")
 
-        if mes_y_ano_actual == fecha_en_str.strftime(
-            "%Y-%m"
-        ):  # de la fecha del json, no se evalua el dia.
-            contador += 1
-            print(f"{contador}- id: {venta["id"]} monto: ${venta["venta"]}")
-            monto_total += venta["venta"]
+        if mes_y_ano_actual == fecha_en_str.strftime("%Y-%m"):  # de la fecha del json, no se evalua el dia.
+            datos_para_la_tabla.append(
+            {
+                "id": venta["id"],
+                "monto": venta["venta"],
+                "fecha_venta": venta["fecha_venta"]
+            }
+            )
         else:
             break
-    if contador > 0:
+    if datos_para_la_tabla:
+        util.imprimir_tabla_x_paginas(headers, datos_para_la_tabla, "VENTAS MENSUALES")
         print(f"El monto total es de : ${monto_total}")
     else:
-        print("No se registraron ventas hoy.")
+        print("No se registraron ventas este mes.")
     input("Enter para continuar...")
 
 
 def ventas_anio():
+    datos_para_la_tabla = []
     monto_total = 0
-    contador = 0
-    mes_y_ano_actual = datetime.now().strftime("%Y")
+    headers = ["id","venta","fecha_venta"]
+    mes_y_anio_actual = datetime.now().strftime("%Y")
     for venta in reversed(
         datos_ventas["ventas"]
     ):  # se recorre al reves por que las ventas diarias estan al final.
         fecha_en_str = datetime.strptime(venta["fecha_venta"], "%Y-%m-%d")
 
-        if mes_y_ano_actual == fecha_en_str.strftime(
-            "%Y"
-        ):  # de la fecha del json, no se evalua el dia.
-            contador += 1
-            print(f"{contador}- id: {venta["id"]} monto: ${venta["venta"]}")
-            monto_total += venta["venta"]
+        if mes_y_anio_actual == fecha_en_str.strftime("%Y"):  # de la fecha del json, no se evalua el dia.
+            datos_para_la_tabla.append(
+            {
+                "id": venta["id"],
+                "monto": venta["venta"],
+                "fecha_venta": venta["fecha_venta"]
+            }
+            )
         else:
             break
-    if contador > 0:
+    if datos_para_la_tabla:
+        util.imprimir_tabla_x_paginas(headers, datos_para_la_tabla, "VENTAS ANUALES")
         print(f"El monto total es de ${monto_total}")
+
     else:
-        print("No se registraron ventas hoy.")
+        print("No se registraron ventas este año.")
     input("Enter para continuar...")
 
 
@@ -178,6 +198,7 @@ def mostrar_reporte_empleados() -> None:
     Ver el reporte de los empleados.
     """
     while True:
+        
         util.limpiar_pantalla()
         opciones_empleados = ("reporte asistencias", "reporte sueldos.", "salir")
 

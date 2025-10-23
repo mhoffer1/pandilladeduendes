@@ -56,7 +56,7 @@ def registrar_ventas()->None:
                         return
                     elif descuento == "1":
                         descuento_a_realizar = input("Ingrese el descuento que desea realizar: ")
-                        try:
+                        try:#USAR FLOAT.
                             descuento_a_realizar = int(descuento_a_realizar)
                         except Exception as e:
                             descuento_a_realizar = float(descuento_a_realizar)
@@ -77,7 +77,7 @@ def registrar_ventas()->None:
                 encontrado = False
                     
                 for producto in datos_inventario["productos"]:
-                    if producto["nombre"] == prod or producto["id"] == prod and producto["activo"] == True:
+                    if producto["nombre"] == prod or producto["id"] == prod and producto["estado"] == "activo":
                         encontrado = True
                             
                         while True:
