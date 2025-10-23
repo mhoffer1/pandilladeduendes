@@ -5,6 +5,7 @@ datos_empleados = cargar_datos_json(ARCHIVO_EMPLEADOS)
 
 
 def menu_empleados():
+    """Muestra el menu de empleados"""
     while True:
         limpiar_pantalla()
         opciones_empl = (
@@ -40,15 +41,11 @@ def menu_empleados():
 
 def registrar_empleados():
     while True:
-        limpiar_pantalla()
-        titulo("registrar empleados")
-        opcion = input("Ingrese 0 para retroceder y 1 para registrar: ")
+        opcion = ingresar("registrar empleados")
         if opcion == "0":
             break
         if opcion == "1":
             while True:
-                limpiar_pantalla()
-                titulo("registrar empleados")
                 nombre = input("Nombre completo: ")
                 puesto = input("Puesto: ")
                 try:
@@ -83,13 +80,8 @@ def registrar_empleados():
 
 def editar_datos_de_empleados():
     while True:
-        limpiar_pantalla()
-        titulo("EDITAR EMPLEADO")
-        print("Desea cambiar:")
-        op = input("Ingrese 1 para entrar 0 para salir: ")
+        op = ingresar("editar empleados")
         if op == "1":
-            limpiar_pantalla()
-            titulo("EDITAR EMPLEADO")
             if datos_empleados["empleados"]:
                 listar_empleados()
                 cual = input("Ingrese el empleado que desea modificar: ")
@@ -154,40 +146,19 @@ def editar_datos_de_empleados():
 
 def asignar_roles():
     while True:
-        limpiar_pantalla()
-        titulo("ASIGNAR ROLES")
-        opcion = input("Ingrese 0 para retroceder, 1 para continuar: ")
+        opcion = ingresar("asignar roles")
         if opcion == "0":
             break
         elif opcion == "1":
-            if not datos_empleados["empleados"]:
-                print("No hay empleados registrados.")
-                input("Presione Enter para volver...")
-                break
+            j, empleado = seleccionar_empleado("dar de baja o de alta")
+            if empleado:
+                rol = input(f"Ingrese el rol para el empleado {empleado["nombre"]}")
+                empleado["rol"] = rol
+                guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
+                print("Rol actualizado correctamente.")
             else:
-                listar_empleados()
-                persona = input(
-                    "\nIngrese el nombre o número del empleado (o 0 para volver): "
-                )
-                rol = input("Ingrese el rol: ")
-                encontrado = False
-                limpiar_pantalla()
-                titulo("ASIGNAR ROLES")
-                for j, empleado1 in enumerate(datos_empleados["empleados"]):
-                    if (
-                        persona.lower() == empleado1["nombre"].lower()
-                        or persona.isdigit()
-                        and int(persona) - 1 == j
-                    ):
-                        encontrado = True
-                    if encontrado:
-                        empleado1["rol"] = rol
-                if encontrado:
-                    guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
-                    print("Rol actualizado correctamente.")
-                else:
-                    print("No se encontro ese empleado.")
-                input("Ingrese enter para salir.")
+                print("No se encontro ese empleado.")
+            input("Ingrese enter para salir.")
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
@@ -195,40 +166,25 @@ def asignar_roles():
 
 def registrar_asistencia():
     while True:
-        limpiar_pantalla()
-        titulo("registrar asistencia")
-        opcion = input("Ingrese 0 para retroceder, 1 para continuar: ")
+        opcion = ingresar("registrar asistencia")
         if opcion == "0":
             break
         elif opcion == "1":
-            if not datos_empleados["empleados"]:
-                print("No hay empleados registrados.")
-                input("Presione Enter para volver...")
-                break
-            else:
-                listar_empleados()
-                asiste = input(
-                    "\nIngrese el nombre o número del empleado (o 0 para volver): "
-                )
-                encontrado = False
-                limpiar_pantalla()
-                titulo("registrar asistencia")
-                for j, empleado1 in enumerate(datos_empleados["empleados"]):
-                    if (
-                        asiste.lower() == empleado1["nombre"].lower()
-                        or asiste.isdigit()
-                        and int(asiste) - 1 == j
-                    ):
-                        encontrado = True
-                    if encontrado:
-                        empleado1["asistencias"].append(datetime.now().strftime("%Y-%m-%d %H:%M"))
-                if encontrado:
-                    guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
-                    print("Asistencia registrada correctamente")
-                if not encontrado:
-                    print("No se encontro ese empleado.")
-                input("Presione Enter para salir.")
-                return
+            j, empleado = seleccionar_empleado("registrar_asistencia")
+            if empleado:
+                if validar_estado(datos_empleados,j):
+                    empleado["asistencias"].append(datetime.now().strftime("%Y-%m-%d %H:%M"))
+                else:
+                    print("Este empleado esta inactivo.")
+                    input("Ingrese enter para salir.")
+                    return
+            if empleado:
+                guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
+                print("Asistencia registrada correctamente")
+            if not empleado:
+                print("No se encontro ese empleado.")
+            input("Presione Enter para salir.")
+            return
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para salir...")
@@ -236,58 +192,36 @@ def registrar_asistencia():
 
 def dar_de_baja_alta():
     while True:
-        limpiar_pantalla()
-        titulo("dar de baja o alta")
-        opcion = input("Ingrese 0 para retroceder, 1 para continuar: ")
-        limpiar_pantalla()
-        titulo("dar de baja o alta")
+        opcion = ingresar("dar de baja o de alta")
         if opcion == "0":
             break
         elif opcion == "1":
-            if not datos_empleados["empleados"]:
-                print("No hay empleados registrados.")
-                input("Presione Enter para volver...")
-                break
-            else:
-                listar_empleados()
-                de_baja = input(
-                    "\nIngrese el nombre o número del empleado (o 0 para volver): "
-                )
-                encontrado = False
-                limpiar_pantalla()
-                titulo("dar de baja o alta")
-                for j, empleado1 in enumerate(datos_empleados["empleados"]):
-                    if (
-                        de_baja.lower() == empleado1["nombre"].lower()
-                        or de_baja.isdigit()
-                        and int(de_baja) - 1 == j
-                    ):
-                        encontrado = True
-                    if encontrado:
-                        while True:
-                            op = input("Ingrese 1 para dar de baja, 2 para dar de alta: ")
-                            if op == "1":
-                                if datos_empleados["empleados"][j]["estado"] == "Activo":
-                                    datos_empleados["empleados"][j]["estado"] = "Inactivo"
-                                    break
-                                else:
-                                    print(f"El empleado {datos_empleados["empleados"][j]["nombre"]} ya está inactivo")
-                            elif op == "2":
-                                if datos_empleados["empleados"][j]["estado"] == "Inactivo":
-                                    datos_empleados["empleados"][j]["estado"] = "Activo"
-                                    break
-                                else:
-                                    print(f"El empleado {datos_empleados["empleados"][j]["nombre"]} ya está activo")
-                            else:
-                                print("Opcion incorrecta.")
-                                input("Ingrese enter para continuar...")
-                if encontrado:
-                    guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
-                    print("Estado de empleado modificado correctamente.")
-                if not encontrado:
-                    print("No se encontro ese empleado.")
-                input("Presione Enter para salir.")
-                return
+            j, empleado = seleccionar_empleado("dar de baja o de alta")
+            if empleado:
+                while True:
+                    op = input("Ingrese 1 para dar de baja, 2 para dar de alta: ")
+                    if op == "1":
+                        if validar_estado(datos_empleados,j):
+                            datos_empleados["empleados"][j]["estado"] = "Inactivo"
+                            break
+                        else:
+                            print(f"El empleado {datos_empleados["empleados"][j]["nombre"]} ya está inactivo")
+                    elif op == "2":
+                        if not validar_estado(datos_empleados,j):
+                            datos_empleados["empleados"][j]["estado"] = "Activo"
+                            break
+                        else:
+                            print(f"El empleado {datos_empleados["empleados"][j]["nombre"]} ya está activo")
+                    else:
+                        print("Opcion incorrecta.")
+                        input("Ingrese enter para continuar...")
+            if empleado:
+                guardar_datos_json(ARCHIVO_EMPLEADOS, datos_empleados)
+                print("Estado de empleado modificado correctamente.")
+            if not empleado:
+                print("No se encontro ese empleado.")
+            input("Presione Enter para salir.")
+            return
 
         else:
             print("Opcion invalida. Intente de nuevo.")
@@ -298,42 +232,50 @@ def mostrar_empleados():
     while True:
         limpiar_pantalla()
         titulo("mostrar empleados")
-
         if not datos_empleados["empleados"]:
             print("No hay empleados registrados.")
             input("Presione Enter para volver...")
             break
         else:
-            # listar_empleados()
-            # titulo("mostrar empleados")
             empleado_cual = input(
                 "\nIngrese 1 para continuar (o 0 para volver): "
             )
             limpiar_pantalla()
             if empleado_cual == "0":
                 break
-            # encontrado = False
-            # if empleado_cual.isdigit():
-            #     indice = int(empleado_cual) - 1
-            #     if 0 <= indice < len(datos_empleados["empleados"]):
-            #         empleado1 = datos_empleados["empleados"][indice]
-            #         encontrado = True
-            # else:
-            #     for empleado1 in datos_empleados["empleados"]:
-            #         if empleado_cual.lower() == empleado1["nombre"].lower():
-            #             encontrado = True
-            #             break
-            # if encontrado:
             headers = []
             for clave, valor in datos_empleados["empleados"][0].items():
                 headers.append(clave.capitalize())
             imprimir_tabla_x_paginas(headers, datos_empleados["empleados"], "Datos del empleado")
             input("\nPresione Enter para continuar...")
-            # else:
-            #     print("No se encontró ese empleado.")
-            #     input("Presione Enter para intentarlo de nuevo...")
-
 
 def listar_empleados():
     for i, empleado in enumerate(datos_empleados["empleados"]):
         print(f"{i+1} - {empleado['nombre']}")
+
+def validar_estado(data,i):
+    return data["empleados"][i]["estado"] == "Activo"
+
+def seleccionar_empleado(tarea:str):
+    if not datos_empleados["empleados"]:
+        print("No hay empleados registrados.")
+        input("Presione Enter para volver...")
+        return None, None
+    listar_empleados()
+    asiste = input(
+                    "\nIngrese el nombre o número del empleado (o 0 para volver): "
+                )
+    if asiste == "0":
+        return None, None
+    limpiar_pantalla()
+    titulo(tarea)
+    for j, empleado1 in enumerate(datos_empleados["empleados"]):
+        if (
+            asiste.lower() == empleado1["nombre"].lower()
+            or asiste.isdigit()
+            and int(asiste) - 1 == j
+        ):
+            return j,empleado1
+    print("No existe ese empleado.")
+    input("Ingrese enter para salir.")
+    return None, None
