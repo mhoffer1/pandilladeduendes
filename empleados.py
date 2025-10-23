@@ -116,6 +116,22 @@ def editar_datos_de_empleados():
                                     )
                                     input("Ingrese enter para salir.")
                                     return
+                                elif clave == "estado":
+                                    print(f"El estado actual es {empleado1[clave]}")
+                                    op = input("Ingrese 1 para cambiar,0 u otro para retroceder:")
+                                    if op == "1":
+                                        if empleado1[clave] == "activo":
+                                            empleado1[clave] = "inactivo"
+                                        else:
+                                            empleado1[clave] = "activo"
+                                        guardar_datos_json(
+                                        ARCHIVO_EMPLEADOS, datos_empleados
+                                    )
+                                        print("cambio realizado con exito.")
+                                        input("enter para continuar...")
+                                    else:
+                                        input("Enter para continuar...")
+                                        break
                                 else:
                                     nuevo_dato = input(
                                         f"Ingrese el nuevo valor para '{clave}': "
