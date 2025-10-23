@@ -225,8 +225,8 @@ def reporte_asistencias() -> None:
             {
                 "id": empleado["id"],
                 "nombre": empleado["nombre"],
-                "fecha_alta": empleado["fecha_alta"],
-                "asistencias": len(empleado["asistencias"]),
+                "fecha_alta": empleado["fecha_de_alta"],
+                "asistencias": len(empleado["asistencias"])
             }
         )
     util.imprimir_tabla_x_paginas(headers, datos_para_la_tabla, "ASISTENCIAS")

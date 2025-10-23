@@ -256,7 +256,7 @@ def estado_producto():
     while True:
         util.limpiar_pantalla()
         opciones_borrar = ("Cambiar estado", "volver atrás")
-        util.opciones("borrar producto", opciones_borrar)
+        util.opciones("CAMBIAR ESTADO", opciones_borrar)
         op = input("Ingrese una opción: ")
         
         if op == "0":
@@ -275,7 +275,7 @@ def estado_producto():
                         if producto["estado"] == "activo":
                             producto["estado"] = "inactivo"
                         else:
-                            producto["estado"] = "inactivo"
+                            producto["estado"] = "activo"
                     else:
                         input("enter para continuar...")
 

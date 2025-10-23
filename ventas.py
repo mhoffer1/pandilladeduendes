@@ -74,41 +74,39 @@ def registrar_ventas()->None:
                         input("Enter para continuar...")
                         return
 
-                encontrado = False
-                    
+                
                 for producto in datos_inventario["productos"]:
                     if producto["nombre"] == prod or producto["id"] == prod and producto["estado"] == "activo":
-                        encontrado = True
-                            
                         while True:
-                            cantidad = input("Ingrese cuantas unidades desea vender: ")
-                            try:
-                                cantidad = int(cantidad)
-                            except:
-                                input("Debe ingresar un numero entero.")
-                            else:
-                                if cantidad > 0:
-                                    if producto["stock"] >= cantidad:
-                                        # SI existe usa el precio de promocion y tiene valor, sino el normal
-                                        if "promocion" in producto and producto["promocion"]:
-                                            precio_unitario = producto["promocion"] 
-                                        else: 
-                                            precio_unitario = producto["precio"]
-                                        
-                                        costo += precio_unitario * cantidad
-                                        producto["stock"] -= cantidad
-                                        print(f"{cantidad} unidad(es) de {producto['nombre']} vendidas.")
-                                        input("Enter para continuar...")
-                                        break
-                                    else:
-                                        print("No hay suficiente stock.")
-                                        input("Enter para continuar...")
+                                cantidad = input("Ingrese cuantas unidades desea vender: ")
+                                try:
+                                    cantidad = int(cantidad)
+                                except:
+                                    input("Debe ingresar un numero entero.")
                                 else:
-                                    print("Ingresar un numero positivo.")
-                                    input("Enter para continuar...")
+                                    if cantidad > 0:
+                                        if producto["stock"] >= cantidad:
+                                            # SI existe usa el precio de promocion y tiene valor, sino el normal
+                                            if "promocion" in producto and producto["promocion"]:
+                                                precio_unitario = producto["promocion"] 
+                                            else: 
+                                                precio_unitario = producto["precio"]
+                                            
+                                            costo += precio_unitario * cantidad
+                                            producto["stock"] -= cantidad
+                                            print(f"{cantidad} unidad(es) de {producto['nombre']} vendidas.")
+                                          
+                                            input("Enter para continuar...")
+                                            break
+                                        else:
+                                            print("No hay suficiente stock.")
+                                            input("Enter para continuar...")
+                                    else:
+                                        print("Ingresar un numero positivo.")
+                                        input("Enter para continuar...")
                         break  
 
-                if not encontrado:
+                else:
                     print("Producto no encontrado.")
                     input("Enter para continuar...")
 

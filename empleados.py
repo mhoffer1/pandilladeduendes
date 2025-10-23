@@ -251,7 +251,8 @@ def mostrar_empleados():
 
 def listar_empleados():
     for i, empleado in enumerate(datos_empleados["empleados"]):
-        print(f"{i+1} - {empleado['nombre']}")
+        if empleado["estado"] == "activo":
+            print(f"{i+1} - {empleado['nombre']}")
 
 def validar_estado(data,i):
     return data["empleados"][i]["estado"] == "Activo"
