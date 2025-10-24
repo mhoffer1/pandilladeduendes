@@ -73,7 +73,7 @@ def registrar_empleados():
                 print("El sueldo debe ser mayor a 0.")
         else:
             limpiar_pantalla()
-            titulo("registrar empleados")
+            imprimir_titulo("registrar empleados")
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
@@ -86,7 +86,7 @@ def editar_datos_de_empleados():
                 listar_empleados()
                 cual = input("Ingrese el empleado que desea modificar: ")
                 limpiar_pantalla()
-                titulo("EDITAR EMPLEADO")
+                imprimir_titulo("EDITAR EMPLEADO")
                 encontrado = False
                 for j, empleado1 in enumerate(datos_empleados["empleados"]):
                     if (
@@ -101,7 +101,7 @@ def editar_datos_de_empleados():
                         dato = input("Ingrese el dato que desea cambiar: ")
                         encontrado2 = False
                         limpiar_pantalla()
-                        titulo("EDITAR EMPLEADO")
+                        imprimir_titulo("EDITAR EMPLEADO")
                         for i, clave in enumerate(empleado1):
                             if dato.lower() == clave.lower() or (
                                 dato.isdigit() and int(dato) - 1 == i
@@ -247,7 +247,7 @@ def dar_de_baja_alta():
 def mostrar_empleados():
     while True:
         limpiar_pantalla()
-        titulo("mostrar empleados")
+        imprimir_titulo("mostrar empleados")
         if not datos_empleados["empleados"]:
             print("No hay empleados registrados.")
             input("Presione Enter para volver...")
@@ -285,7 +285,7 @@ def seleccionar_empleado(tarea:str):
     if asiste == "0":
         return None, None
     limpiar_pantalla()
-    titulo(tarea)
+    imprimir_titulo(tarea)
     for j, empleado1 in enumerate(datos_empleados["empleados"]):
         if (
             asiste.lower() == empleado1["nombre"].lower()

@@ -22,6 +22,31 @@ def menu_ventas()->None:
             input("Presione Enter para continuar...")
 
 
+def impr_factura_venta(datos_venta: dict) -> None:
+    """
+    Imprime la factura de la venta correspondientes con los datos recibidos.
+
+    Pre: Recibe como parámetro el diccionario con cada elemento de la venta (id, costo, etc.).
+    Post: No retorna nada, imprime en formato apropiado la factura de la venta.
+    """
+    imprimir_titulo("factura de venta")
+    print(f"ID DE VENTA: {formatear_id(datos_venta["id"])}")
+    print(f"FECHA DE EMISIÓN: {datos_venta["fecha_venta"]}")
+    print()
+    for venta_producto in datos_venta["info_venta"]:
+        id_producto = formatear_id(venta_producto["id"])
+        nombre_producto = venta_producto["nombre"]
+        cant_producto = venta_producto["cantidad"]
+        costo_producto = venta_producto["costo"]
+
+        cant_nombre_id = f"x{cant_producto} {nombre_producto.title()} - ID:{id_producto}"
+        ancho = 45-len(cant_nombre_id)
+        print(f"{cant_nombre_id}{costo_producto:.>{ancho}.2f} $")
+    
+    mensaje_descuento = f"(DESCUENTO: {datos_venta["descuento"]: .2f} %)" if datos_venta["descuento"] else ""
+    imprimir_titulo(f"COSTO TOTAL: {datos_venta["venta"]: .2f} $ {mensaje_descuento}")
+
+
 def registrar_ventas()->None:
     """
     Regista ventas y las almacena en el .json de ventas. El precio de promocion
@@ -30,80 +55,80 @@ def registrar_ventas()->None:
       
     while True:
         limpiar_pantalla()
-        costo = 0
-        opcion_ventas = ("registar venta","salir")
+        costo_total = 0
+        opcion_ventas = ("registrar venta","salir")
         opciones("Registrar Venta",opcion_ventas)
         opcion = input("Ingrese 0 para retroceder: ")
         if opcion == "0":
             break
         elif opcion == "1":
+            info_venta = [] # Se va llenando a medida que se ingresan los productos y cantidades a vender
+
             while True:
-                prod = input("Ingrese el nombre o ID del producto que quiere vender(0 para terminar venta): ")
+                prod = input("Ingrese el nombre o ID del producto que quiere vender(0 para terminar venta): ").lower().strip()
                 if prod == "0":
-                    descuento = input("Desea aplicar descuento? (1.si 0.no): ")
-                    if descuento == "0":
-                        print(f"Debe abonar: {costo}") #cuando se termina de registar la venta.
-                        guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
-                        ventas = {
-                                    "id"   : str(datos_ventas["prox_id"]),
-                                    "venta": costo,
-                                    "fecha_venta": str(datetime.now().date())
-                                    }
-                        datos_ventas["ventas"].append(ventas)
-                        guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
-                        datos_ventas["prox_id"] += 1
-                        input("Enter para continuar...")
-                        return
-                    elif descuento == "1":
-                        descuento_a_realizar = input("Ingrese el descuento que desea realizar: ")
-                        try:#USAR FLOAT.
-                            descuento_a_realizar = int(descuento_a_realizar)
-                        except Exception as e:
-                            descuento_a_realizar = float(descuento_a_realizar)
-                        costo = aplicar_descuento(costo,descuento_a_realizar)
-                        print(f"Debe abonar: {costo}") #cuando se termina de registar la venta.
-                        guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
-                        ventas = {
-                                    "id"   : str(datos_ventas["prox_id"]),
-                                    "venta": costo,
-                                    "fecha_venta": str(datetime.now().date())
-                                    }
-                        datos_ventas["ventas"].append(ventas)
-                        guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
-                        datos_ventas["prox_id"] += 1
-                        input("Enter para continuar...")
-                        return
+                    descuento_a_realizar = 0.0
+                    hay_descuento = input("Desea aplicar descuento? (1.si 0.no): ")
+                    if hay_descuento == "1":
+                        descuento_a_realizar = pedir_float("el descuento que desea realizar", 98.0) # Máximo 98 % de descuento
+                        costo_total = aplicar_descuento(costo_total,descuento_a_realizar)
+                    
+                    guardar_datos_json(ARCHIVO_INVENTARIO, datos_inventario)
+                    informacion_venta = {
+                                "id"   : str(datos_ventas["prox_id"]),
+                                "venta": costo_total,
+                                "fecha_venta": str(datetime.now().date()),
+                                "info_venta": info_venta,
+                                "descuento": descuento_a_realizar
+                                }
+                    datos_ventas["ventas"].append(informacion_venta)
+                    datos_ventas["prox_id"] += 1
+                    guardar_datos_json(ARCHIVO_VENTAS,datos_ventas)
+
+                    impr_factura_venta(informacion_venta)
+                    input("Enter para continuar...")
+                    return
 
                 
                 for producto in datos_inventario["productos"]:
                     if producto["nombre"] == prod or producto["id"] == prod and producto["estado"] == "activo":
                         while True:
-                                cantidad = input("Ingrese cuantas unidades desea vender: ")
-                                try:
-                                    cantidad = int(cantidad)
-                                except:
-                                    input("Debe ingresar un numero entero.")
+                            cantidad = pedir_entero(f"cuántas unidades de {producto["nombre"].title()} desea vender")
+                            if cantidad > 0:
+                                if producto["stock"] >= cantidad:
+                                    # SI existe usa el precio de promocion y tiene valor, sino el normal
+                                    if "promocion" in producto and producto["promocion"]:
+                                        precio_unitario = producto["promocion"] 
+                                    else: 
+                                        precio_unitario = producto["precio"]
+                                    
+                                    costo_producto = precio_unitario * cantidad
+                                    costo_total += costo_producto
+                                    producto["stock"] -= cantidad
+                                    print(f"{cantidad} unidad(es) de {producto['nombre'].title()} vendidas.")
+                                    
+                                    coincidencias = [venta["id"] for venta in info_venta]
+                            
+                                    if producto["id"] not in coincidencias: # Si es la primera vez que se carga una venta de este producto, se hace un diccionario nuevo con la info
+                                        venta_producto = {"id": producto["id"],
+                                                        "nombre": producto["nombre"],
+                                                        "cantidad": cantidad,
+                                                        "costo": costo_producto}
+                                        
+                                        info_venta.append(venta_producto)
+                                    else: # Si ya está cargado en info_ventas, no se hace un nuevo diccionario. Se suma más cantidad y más costo al producto ya registrado
+                                        i_coincidencia = coincidencias.index(producto["id"])
+                                        info_venta[i_coincidencia]["cantidad"] += cantidad
+                                        info_venta[i_coincidencia]["costo"] += costo_producto
+                                    
+                                    input("Enter para continuar...")
+                                    break
                                 else:
-                                    if cantidad > 0:
-                                        if producto["stock"] >= cantidad:
-                                            # SI existe usa el precio de promocion y tiene valor, sino el normal
-                                            if "promocion" in producto and producto["promocion"]:
-                                                precio_unitario = producto["promocion"] 
-                                            else: 
-                                                precio_unitario = producto["precio"]
-                                            
-                                            costo += precio_unitario * cantidad
-                                            producto["stock"] -= cantidad
-                                            print(f"{cantidad} unidad(es) de {producto['nombre']} vendidas.")
-                                          
-                                            input("Enter para continuar...")
-                                            break
-                                        else:
-                                            print("No hay suficiente stock.")
-                                            input("Enter para continuar...")
-                                    else:
-                                        print("Ingresar un numero positivo.")
-                                        input("Enter para continuar...")
+                                    print("No hay suficiente stock.")
+                                    input("Enter para continuar...")
+                            else:
+                                print("Ingresar un numero positivo.")
+                                input("Enter para continuar...")
                         break  
 
                 else:
@@ -116,19 +141,8 @@ def aplicar_descuento(valor:int,descuento:int)->int:
     pre:Recibe el valor de la venta y el descuento a realizar.
     post: Retorna el valor neto a cobrar.
     """
-    while True:
-        limpiar_pantalla()
-        if descuento > 98 or descuento <= 0:
-            print("Descuento invalido.")
-            
-            descuento = input("Ingrese un descuento valido:")
-            try:
-                int(descuento)
-            except Exception as e:
-                float(descuento)
-        else:
-            valor_neto = valor * (1 - descuento / 100)
-            return valor_neto
+    valor_neto = valor * (1 - descuento / 100)
+    return valor_neto
             
        
 def aplicar_promocion()->None:

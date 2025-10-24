@@ -77,7 +77,7 @@ def opciones(titulos: str, tupla_opciones: tuple[str]) -> None:
     Pre: Recibe el título del módulo y la tupla con las opciones a listar. La última opción debe ser la de Volver atrás o Salir del programa.
     Post: No retorna nada, imprime el título y el listado de opciones.
     """
-    titulo(titulos)
+    imprimir_titulo(titulos)
     for i, op in enumerate(tupla_opciones):
         if i == len(tupla_opciones)-1: # Si es la última opción va a ser la de salir del programa y lo imprime con un 0
             i = -1
@@ -123,11 +123,12 @@ def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo
         fin = min(inicio + por_pagina, total)
 
         data = [
-            [x if not isinstance(x, str) and not isinstance(x, list) else x.title() if isinstance(x, str) else len(x) for x in dato.values()]
+            [valor if not isinstance(valor, str) and not isinstance(valor, list) and not isinstance(valor, dict) else valor.title() if isinstance(valor, str) and clave != "id" 
+             else formatear_id(valor) if clave == "id" else len(valor) for clave, valor in dato.items()] # Si es int o float lo imprime tal como está, si es string lo imprime con .title(), si representa la ID lo formatea y si es lista o diccionario imprime el len()
             for dato in lista_datos[inicio:fin]
         ]
 
-        print(tabulate(data, headers, tablefmt="grid"))
+        imprimir_tabla(headers, data)
         
         print("\nOpciones: [N] siguiente, [P] anterior, [0] volver")
         opcion = input("Seleccione una opcion: ").strip().lower()
@@ -148,15 +149,15 @@ def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo
             input("Opcion invalida. Presione Enter para continuar...")
         continue
 
-def pedir_entero(nombre: str, min: int=1, max: int=1_000_000):
+def pedir_entero(nombre: str, max: int=1000000.0, min: int=1):
     """
     Pide un número entero, maneja posibles errores de casteo y valida que esté en el rango ingresado.
 
-    Pre: Recibe como parámetros el nombre del objeto, el mínimo y el máximo posible a ingresar.
+    Pre: Recibe como parámetros el nombre del objeto, el máximo y el mínimo posible a ingresar.
     Post: Retorna el entero ingresado por el usuario, validado previamente.
     """
     while True:
-        entero = input(f"Ingrese el valor de {nombre.lower()}: ")
+        entero = input(f"Ingrese {nombre.lower()}: ")
         try: # Valida que lo ingresado sea un número y que se pueda castear a int
             entero = int(entero)
         except ValueError:
@@ -169,7 +170,7 @@ def pedir_entero(nombre: str, min: int=1, max: int=1_000_000):
         else:
             return entero
 
-def pedir_float(nombre: str, min: float=1.0, max: float=1000000.0):
+def pedir_float(nombre: str, max: int=1_000_000.0, min: int=1.0):
     """
     Pide un número flotante, maneja posibles errores de casteo y valida que esté en el rango ingresado.
 
@@ -177,7 +178,7 @@ def pedir_float(nombre: str, min: float=1.0, max: float=1000000.0):
     Post: Retorna el flotante ingresado por el usuario, validado previamente.
     """
     while True:
-        flotante = input(f"Ingrese el valor de {nombre.lower()}: ")
+        flotante = input(f"Ingrese {nombre.lower()}: ")
         try: # Valida que lo ingresado sea un número y que se pueda castear a float
             flotante = float(flotante)
         except ValueError:
@@ -189,16 +190,31 @@ def pedir_float(nombre: str, min: float=1.0, max: float=1000000.0):
             continue
         else:
             return flotante
-        
-def titulo(titulo):
+
+def formatear_id(id: str) -> str:
+    """
+    Convierte el dato de ID en formato de cinco dígitos (ej: '00199').
+
+    Pre: Recibe como parámetro un string correspondiente a la ID.
+    Post: Retorna una string con la ID en formato apropiado.
+    """
+    return f"{"0"*(5-len(id))+id}"
+
+def imprimir_titulo(titulo: str) -> None:
+    """
+    Imprime el título entre guiones.
+
+    Pre: Recibe como parámetros una string con el título a imprimir.
+    Post: No retorna nada, imprime el título en formato apropiado.
+    """
     guiones()
     print(f"    {titulo.upper()}")
     guiones()
 
 def ingresar(tarea:str):
     limpiar_pantalla()
-    titulo(tarea)
+    imprimir_titulo(tarea)
     opcion = input("Ingrese 0 para retroceder y 1 para continuar: ")
     limpiar_pantalla()
-    titulo(tarea)
+    imprimir_titulo(tarea)
     return opcion
