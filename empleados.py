@@ -40,6 +40,12 @@ def menu_empleados():
 
 
 def registrar_empleados():
+    """
+    Permite registrar empleados al usuario.
+
+    Pre: No recibe nada como parámetro
+    Post: No retorna nada, agrega un diccionario al JSON
+    """
     while True:
         opcion = ingresar("registrar empleados")
         if opcion == "0":
@@ -79,6 +85,12 @@ def registrar_empleados():
 
 
 def editar_datos_de_empleados():
+    """
+    Permite editar un atributo de un empleado al usuario.
+
+    Pre: No recibe nada como parámetro.
+    Post: No retorna nada, modifica un atributo del JSON.
+    """
     while True:
         op = ingresar("editar empleados")
         if op == "1":
@@ -97,7 +109,7 @@ def editar_datos_de_empleados():
                         encontrado = True
                         print("Qué dato desea cambiar:")
                         for i, clave in enumerate(empleado1):
-                            print(f"{i+1}- {clave}")
+                            print(f"{i+1}- {clave.capitalize().replace("_", " ")}")
                         dato = input("Ingrese el dato que desea cambiar: ")
                         encontrado2 = False
                         limpiar_pantalla()
@@ -114,8 +126,8 @@ def editar_datos_de_empleados():
                                     print(
                                         "Para eso entrar al módulo registrar asistencias."
                                     )
-                                    input("Ingrese enter para salir.")
-                                    return
+                                    registrar_asistencia()
+                                    break
                                 elif clave == "estado":
                                     print(f"El estado actual es {empleado1[clave]}")
                                     op = input("Ingrese 1 para cambiar,0 u otro para retroceder:")
@@ -161,6 +173,12 @@ def editar_datos_de_empleados():
 
 
 def asignar_roles():
+    """
+    Permite al usuario asignarle un rol a un empleado.
+
+    Pre: No recibe nada como parámetro.
+    Post: No retorna nada, agrega un rol de atributo.
+    """
     while True:
         opcion = ingresar("asignar roles")
         if opcion == "0":
@@ -181,6 +199,12 @@ def asignar_roles():
 
 
 def registrar_asistencia():
+    """
+    Permite al usuario registrar asistencias de los empleados.
+
+    Pre: No recibe nada como parámetro.
+    Post: No retorna nada, registra una fecha con horario en una lista.
+    """
     while True:
         opcion = ingresar("registrar asistencia")
         if opcion == "0":
@@ -207,6 +231,12 @@ def registrar_asistencia():
 
 
 def dar_de_baja_alta():
+    """
+    Permite al usuario dar de baja o de alta a un empleado.
+
+    Pre: No recibe nada como parámetro.
+    Post: No retorna nada, cambia el estado de un empleado.
+    """
     while True:
         opcion = ingresar("dar de baja o de alta")
         if opcion == "0":
@@ -245,6 +275,12 @@ def dar_de_baja_alta():
 
 
 def mostrar_empleados():
+    """
+    Permite al usuario visualizar los empleados.
+
+    Pre: No recibe nada como parámetro.
+    Post: No retorna nada, imprime una tabla con lo empleados.
+    """
     while True:
         limpiar_pantalla()
         imprimir_titulo("mostrar empleados")
@@ -266,14 +302,31 @@ def mostrar_empleados():
             input("\nPresione Enter para continuar...")
 
 def listar_empleados():
+    """
+    Lista los empleados.
+
+    Pre: No recibe nada como parámetro.
+    Post: No retorna nada, imprime los empleados enlistados.
+    """
     for i, empleado in enumerate(datos_empleados["empleados"]):
-        if empleado["estado"] == "activo":
-            print(f"{i+1} - {empleado['nombre']}")
+        print(f"{i+1} - {empleado['nombre']}")
 
 def validar_estado(data,i):
+    """
+    Valida el estado.
+
+    Pre: Recibe un diccionario y un entero.
+    Post: Retorna un booleano.
+    """
     return data["empleados"][i]["estado"] == "Activo"
 
 def seleccionar_empleado(tarea:str):
+    """
+    Permite al usuario seleccionar un empleado.
+
+    Pre: Recibe un string de parámetro.
+    Post: Retorna una tupla de un entero y un diccionario o dos None.
+    """
     if not datos_empleados["empleados"]:
         print("No hay empleados registrados.")
         input("Presione Enter para volver...")
