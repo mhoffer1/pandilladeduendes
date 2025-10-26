@@ -60,14 +60,14 @@ def ver_inactivos():
     input("enter para continuar...")
 
 
-# ------------------------------REPORTE VENTAS----------------------------------
+# ------------------------------REPORTE VENTAS------------------------------------------------------------------------
 def mostrar_reporte_venta():
     """
     Ver el reporte de ventas.
     """
     while True:
         util.limpiar_pantalla()
-        opciones_venta = ("mostrar ventas por periodo de tiempo", "salir")
+        opciones_venta = ("mostrar ventas por periodo de tiempo","ticket promedio","Productos Mas Vendidos","salir")
 
         util.opciones("REPORTES VENTA", opciones_venta)
         opcion = input("Ingrese una opcion: ")
@@ -75,10 +75,96 @@ def mostrar_reporte_venta():
             break
         elif opcion == "1":
             mostrar_reporte_por_periodo()
+        elif opcion == "2":
+            ticket_promedio()
+        elif opcion == "3":
+            periodos_prod_mas_vendidos()
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
+def periodos_prod_mas_vendidos():
+    while True:
+        util.limpiar_pantalla()
+        periodo = ("historico","anual","mensual","salir")
+        util.opciones("REPORTES VENTA", periodo)
+        opcion = input("Ingrese una opcion: ")
+        if opcion == "0":
+            break
+        elif opcion == "1":
+            prod_mas_vendido_historico()
+        elif opcion == "2":
+            prod_mas_vendido_anual()
+        elif opcion == "3":
+            prod_mas_vendido_mensual()
 
+        else:
+            print("Opcion invalida")
+            input("enter para continuar...")
+
+def prod_mas_vendido_historico():
+    util.limpiar_pantalla()
+    datos_para_la_tabla = []
+    headers = ["ID","NOMBRE","CANTIDAD","CANTIDAD VENDIDA"]
+    print("Aguarde,generando reporte...") #por si el historico es muy largo.
+    util.limpiar_pantalla()
+    info = dict() #aca va a ir la info del reporte
+    for venta in datos_ventas["ventas"]:
+        for producto_info in venta["info_venta"]:
+            id_prod = producto_info["id"]
+            nombre = producto_info["nombre"]
+            cantidad = producto_info["cantidad"]
+
+
+            if id_prod in info: #osea si ya esta en el diccionario!
+                info[id_prod]["cantidad_vendida"] += cantidad #es el unico dato a modificar
+            else: #si no, se agrega.
+                info[id_prod] = {
+                    "id": id_prod,
+                    "nombre": nombre,
+                    "cantidad_vendida": cantidad
+                }
+    
+
+    for id, prod in info.items():  
+        datos_para_la_tabla.append({
+            "ID": id,
+            "NOMBRE": prod["nombre"],
+            "CANTIDAD VENDIDA": prod["cantidad_vendida"]
+        })
+
+    
+    if datos_para_la_tabla:
+        util.imprimir_tabla_x_paginas(headers, datos_para_la_tabla, "PRODUCTOS MAS VENDIDOS HISTORICAMENRTE")
+    else:
+        print("No hay ventas registradas.") 
+
+    input("Enter para continuar...")
+
+
+
+
+    
+
+
+def prod_mas_vendido_anual():
+    pass
+
+def prod_mas_vendido_mensual():
+        pass
+
+def ticket_promedio():
+    "ves el ticket promedio de venta de este año."
+    cant = 0
+    monto = 0
+    mes_y_anio_actual = datetime.now().strftime("%Y")
+    for venta in reversed(datos_ventas["ventas"]):  # se recorre al reves por que las ventas diarias estan al final.
+        fecha_en_str = datetime.strptime(venta["fecha_venta"], "%Y-%m-%d")
+        if mes_y_anio_actual == fecha_en_str.strftime("%Y"):
+            cant += 1
+            monto += venta["venta"]
+    promedio = monto / cant
+    print(f"El importe promedio de este año es: ${promedio}")
+    input("Enter para continuar...")
 
 def mostrar_reporte_por_periodo():
     while True:
