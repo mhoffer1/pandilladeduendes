@@ -102,13 +102,15 @@ def periodos_prod_mas_vendidos():
             input("enter para continuar...")
 
 def prod_mas_vendido_historico():
+    "Tabla con la cantidad de productos historica vendida."
     util.limpiar_pantalla()
     datos_para_la_tabla = []
-    headers = ["ID","NOMBRE","CANTIDAD","CANTIDAD VENDIDA"]
+    headers = ["ID","NOMBRE","CANTIDAD VENDIDA"]
     print("Aguarde,generando reporte...") #por si el historico es muy largo.
     util.limpiar_pantalla()
     info = dict() #aca va a ir la info del reporte
     for venta in datos_ventas["ventas"]:
+        
         for producto_info in venta["info_venta"]:
             id_prod = producto_info["id"]
             nombre = producto_info["nombre"]
@@ -123,7 +125,7 @@ def prod_mas_vendido_historico():
                     "nombre": nombre,
                     "cantidad_vendida": cantidad
                 }
-    
+
 
     for id, prod in info.items():  
         datos_para_la_tabla.append({
@@ -142,15 +144,93 @@ def prod_mas_vendido_historico():
 
 
 
-
-    
-
-
 def prod_mas_vendido_anual():
-    pass
+    util.limpiar_pantalla()
+    datos_para_la_tabla = []
+    headers = ["ID","NOMBRE","CANTIDAD VENDIDA"]
+    print("Aguarde, generando reporte...") 
+    util.limpiar_pantalla()
+
+    info = dict()
+    anio = datetime.now().strftime("%Y")
+
+    for venta in reversed(datos_ventas["ventas"]):
+        fecha_en_str = datetime.strptime(venta["fecha_venta"], "%Y-%m-%d")
+
+        if anio == fecha_en_str.strftime("%Y"):
+            for producto_info in venta["info_venta"]:
+                id_prod = producto_info["id"]
+                nombre = producto_info["nombre"]
+                cantidad = producto_info["cantidad"]
+
+                if id_prod in info:
+                    info[id_prod]["cantidad_vendida"] += cantidad
+                else:
+                    info[id_prod] = {
+                        "id": id_prod,
+                        "nombre": nombre,
+                        "cantidad_vendida": cantidad
+                    }
+        else:
+            break
+
+    for id_prod, prod in info.items():
+        datos_para_la_tabla.append({
+            "ID": id_prod,
+            "NOMBRE": prod["nombre"],
+            "CANTIDAD VENDIDA": prod["cantidad_vendida"]
+        })
+
+    if datos_para_la_tabla:
+        util.imprimir_tabla_x_paginas(headers, datos_para_la_tabla, "PRODUCTOS MAS VENDIDOS ANUALMENTE")
+    else:
+        print("No hay ventas registradas este año.")
+
+    input("Enter para continuar...")
 
 def prod_mas_vendido_mensual():
-        pass
+        util.limpiar_pantalla()
+        datos_para_la_tabla = []
+        headers = ["ID","NOMBRE","CANTIDAD VENDIDA"]
+        print("Aguarde, generando reporte...") 
+        util.limpiar_pantalla()
+
+        info = dict()
+        anio = datetime.now().strftime("%Y-%m")
+
+        for venta in reversed(datos_ventas["ventas"]):
+            fecha_en_str = datetime.strptime(venta["fecha_venta"], "%Y-%m-%d")
+
+            if anio == fecha_en_str.strftime("%Y-%m"):
+                for producto_info in venta["info_venta"]:
+                    id_prod = producto_info["id"]
+                    nombre = producto_info["nombre"]
+                    cantidad = producto_info["cantidad"]
+
+                    if id_prod in info:
+                        info[id_prod]["cantidad_vendida"] += cantidad
+                    else:
+                        info[id_prod] = {
+                            "id": id_prod,
+                            "nombre": nombre,
+                            "cantidad_vendida": cantidad
+                        }
+            else:
+                break
+
+        for id_prod, prod in info.items():
+            datos_para_la_tabla.append({
+                "ID": id_prod,
+                "NOMBRE": prod["nombre"],
+                "CANTIDAD VENDIDA": prod["cantidad_vendida"]
+            })
+
+        if datos_para_la_tabla:
+            util.imprimir_tabla_x_paginas(headers, datos_para_la_tabla, "PRODUCTOS MAS VENDIDOS DE ESTE MES")
+        else:
+            print("No hay ventas registradas este mes.")
+
+        input("Enter para continuar...")
 
 def ticket_promedio():
     "ves el ticket promedio de venta de este año."
