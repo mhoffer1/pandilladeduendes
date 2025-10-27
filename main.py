@@ -1,13 +1,22 @@
 # Importar modulos
 from inventario import menu_inventario
 import utilidades as util
-from reportes import *
+from reportes import (
+    mostrar_reporte_empleados,
+    mostrar_reporte_inventario,
+    mostrar_reporte_venta,
+)
 from ventas import menu_ventas
 from proveedores import menu_proveedores
 from empleados import menu_empleados
 
 
-def main_menu():
+def main_menu(
+    datos_inventario,
+    datos_ventas,
+    datos_empleados,
+    datos_proveedores,
+):
     """Muestra el menu principal una vez que elegiste sucursal."""
     while True:
         util.limpiar_pantalla()
@@ -24,15 +33,15 @@ def main_menu():
         opcion = input("Seleccione una opcion: ").strip()
 
         if opcion == "1":
-            menu_inventario()
+            menu_ventas(datos_ventas, datos_inventario, datos_empleados)
         elif opcion == "2":
-            menu_ventas()
+            menu_inventario(datos_inventario, datos_ventas)
         elif opcion == "3":
-            menu_empleados()
+            menu_empleados(datos_empleados)
         elif opcion == "4":
-            menu_proveedores()
+            menu_proveedores(datos_proveedores)
         elif opcion == "5":
-            menu_reportes()
+            menu_reportes(datos_inventario, datos_ventas, datos_empleados)
         elif opcion == "0":
             return False
         else:
@@ -40,7 +49,7 @@ def main_menu():
             input("Presione Enter para continuar...")
 
 
-def menu_reportes():
+def menu_reportes(datos_inventario, datos_ventas, datos_empleados):
     """Muestra el menu de reportes"""
     while True:
         util.limpiar_pantalla()
@@ -48,18 +57,18 @@ def menu_reportes():
             "Reporte de Inventario",
             "Reporte de Ventas",
             "Reporte de Empleados",
-            "Volver al menú principal",
+            "Volver al menu principal",
         )
         util.opciones("REPORTES", opciones_report)
 
         opcion = input("Seleccione una opcion: ").strip()
 
         if opcion == "1":
-            mostrar_reporte_inventario()
+            mostrar_reporte_inventario(datos_inventario)
         elif opcion == "2":
-            mostrar_reporte_venta()
+            mostrar_reporte_venta(datos_ventas, datos_inventario, datos_empleados)
         elif opcion == "3":
-            mostrar_reporte_empleados()
+            mostrar_reporte_empleados(datos_empleados)
         elif opcion == "0":
             break
         else:
@@ -71,7 +80,13 @@ if __name__ == "__main__":
 
     # Inicializa los .json(utilidades.py)
     util.incializar_datos()  # primer uso, sino main_menu
-    main_menu()
+
+    datos_inventario = util.cargar_datos_json(util.ARCHIVO_INVENTARIO)
+    datos_ventas = util.cargar_datos_json(util.ARCHIVO_VENTAS)
+    datos_empleados = util.cargar_datos_json(util.ARCHIVO_EMPLEADOS)
+    datos_proveedores = util.cargar_datos_json(util.ARCHIVO_PROVEEDORES)
+
+    main_menu(datos_inventario, datos_ventas, datos_empleados, datos_proveedores)
 
     util.limpiar_pantalla()
     util.guiones()

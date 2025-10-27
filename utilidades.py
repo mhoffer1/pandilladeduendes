@@ -63,23 +63,23 @@ def limpiar_pantalla()-> None:
 
 def guiones(n=50) -> None:
     """
-    Imprime una línea de "=", cuya cantidad es la cantidad que indique el usuario, o 50 si no se especifica.
+    Imprime una linea de "=", cuya cantidad es la cantidad que indique el usuario, o 50 si no se especifica.
 
-    Pre: No recibe parámetros.
-    Post: Imprime la línea de "=". No retorna nada
+    Pre: No recibe parametros.
+    Post: Imprime la linea de "=". No retorna nada
     """
     print("="*n)
 
 def opciones(titulos: str, tupla_opciones: tuple[str]) -> None:
     """
-    Lista y enumera las opciones recibidas como parámetro, imprimiendo el título del módulo por encima.
+    Lista y enumera las opciones recibidas como parametro, imprimiendo el titulo del modulo por encima.
 
-    Pre: Recibe el título del módulo y la tupla con las opciones a listar. La última opción debe ser la de Volver atrás o Salir del programa.
-    Post: No retorna nada, imprime el título y el listado de opciones.
+    Pre: Recibe el titulo del modulo y la tupla con las opciones a listar. La ultima opcion debe ser la de Volver atras o Salir del programa.
+    Post: No retorna nada, imprime el titulo y el listado de opciones.
     """
     imprimir_titulo(titulos)
     for i, op in enumerate(tupla_opciones):
-        if i == len(tupla_opciones)-1: # Si es la última opción va a ser la de salir del programa y lo imprime con un 0
+        if i == len(tupla_opciones)-1: # Si es la ultima opcion va a ser la de salir del programa y lo imprime con un 0
             i = -1
         print(f"{i+1}- {op.title()}")
     guiones()
@@ -94,8 +94,8 @@ def imprimir_tabla(headers: list[str], data: list[list[str]]) -> None:
     try:
         print(tabulate(data, headers=headers, tablefmt="grid"))
     except ImportError:
-        print("La librería 'tabulate' no está instalada. Instálala para ver tablas formateadas.")
-        # Imprime de forma básica si tabulate no está disponible
+        print("La libreria 'tabulate' no esta instalada. Instalala para ver tablas formateadas.")
+        # Imprime de forma basica si tabulate no esta disponible
         print(" | ".join(headers))
         print("-" * (len(headers) * 10))
         for row in data:
@@ -103,10 +103,10 @@ def imprimir_tabla(headers: list[str], data: list[list[str]]) -> None:
 
 def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo: str):
     """
-    Imprime una tabla de máximo 10 datos, con un sistema de avanzar o retroceder en páginas.
+    Imprime una tabla de maximo 10 datos, con un sistema de avanzar o retroceder en paginas.
     la lista de diccionarios tiene un diccionario por empleado.
-    Pre: Recibe como parámetro una lista de encabezados y una lista de diccionarios correspondientes a cada elemento cuyos datos deben mostrarse en la tabla
-    Post: No retorna nada, imprime la tabla con el sistema de páginas.
+    Pre: Recibe como parametro una lista de encabezados y una lista de diccionarios correspondientes a cada elemento cuyos datos deben mostrarse en la tabla
+    Post: No retorna nada, imprime la tabla con el sistema de paginas.
     """
     por_pagina = 10
     total = len(lista_datos)
@@ -116,7 +116,7 @@ def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo
     while True:
         limpiar_pantalla()
         guiones()
-        print(f"{titulo.title()} (Página {pagina + 1} de {total_paginas})")
+        print(f"{titulo.title()} (Pagina {pagina + 1} de {total_paginas})")
         guiones()
 
         inicio = pagina * por_pagina
@@ -124,7 +124,7 @@ def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo
 
         data = [
             [valor if not isinstance(valor, str) and not isinstance(valor, list) and not isinstance(valor, dict) else valor.title() if isinstance(valor, str) and clave != "id" 
-             else formatear_id(valor) if clave == "id" else len(valor) for clave, valor in dato.items()] # Si es int o float lo imprime tal como está, si es string lo imprime con .title(), si representa la ID lo formatea y si es lista o diccionario imprime el len()
+             else formatear_id(valor) if clave == "id" else len(valor) for clave, valor in dato.items()] # Si es int o float lo imprime tal como esta, si es string lo imprime con .title(), si representa la ID lo formatea y si es lista o diccionario imprime el len()
             for dato in lista_datos[inicio:fin]
         ]
 
@@ -151,61 +151,95 @@ def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo
 
 def pedir_entero(nombre: str, max: int=1000000.0, min: int=1):
     """
-    Pide un número entero, maneja posibles errores de casteo y valida que esté en el rango ingresado.
+    Pide un numero entero, maneja posibles errores de casteo y valida que este en el rango ingresado.
 
-    Pre: Recibe como parámetros el nombre del objeto, el máximo y el mínimo posible a ingresar.
+    Pre: Recibe como parametros el nombre del objeto, el maximo y el minimo posible a ingresar.
     Post: Retorna el entero ingresado por el usuario, validado previamente.
     """
     while True:
         entero = input(f"Ingrese {nombre.lower()}: ")
-        try: # Valida que lo ingresado sea un número y que se pueda castear a int
+        try: # Valida que lo ingresado sea un numero y que se pueda castear a int
             entero = int(entero)
         except ValueError:
-            print(f"ERROR - {nombre.capitalize()} debe ser un número.")
+            print(f"ERROR - {nombre.capitalize()} debe ser un numero.")
             continue
 
         if entero < min or entero > max: # Valida que se encuentre en el rango establecido
-            print("ERROR - Rango inválido")
+            print("ERROR - Rango invalido")
             continue
         else:
             return entero
 
 def pedir_float(nombre: str, max: int=1_000_000.0, min: int=1.0):
     """
-    Pide un número flotante, maneja posibles errores de casteo y valida que esté en el rango ingresado.
+    Pide un numero flotante, maneja posibles errores de casteo y valida que este en el rango ingresado.
 
-    Pre: Recibe como parámetros el nombre del objeto, el mínimo y el máximo posible a ingresar.
+    Pre: Recibe como parametros el nombre del objeto, el minimo y el maximo posible a ingresar.
     Post: Retorna el flotante ingresado por el usuario, validado previamente.
     """
     while True:
         flotante = input(f"Ingrese {nombre.lower()}: ")
-        try: # Valida que lo ingresado sea un número y que se pueda castear a float
+        try: # Valida que lo ingresado sea un numero y que se pueda castear a float
             flotante = float(flotante)
         except ValueError:
-            print(f"ERROR - {nombre.capitalize()} debe ser un número.")
+            print(f"ERROR - {nombre.capitalize()} debe ser un numero.")
             continue
 
         if flotante < min or flotante > max: # Valida que se encuentre en el rango establecido
-            print("ERROR - Rango inválido")
+            print("ERROR - Rango invalido")
             continue
         else:
             return flotante
 
+## Se agrega esta funcion
+def seleccionar_item(lista_datos: list[dict], nombre_item: str, tarea: str):
+    """Permite seleccionar un elemento por indice o nombre."""
+    if not lista_datos:
+        print(f"No hay {nombre_item.lower()} registrados.")
+        input("Presione Enter para volver...")
+        return None, None
+
+    while True:
+        limpiar_pantalla()
+        imprimir_titulo(tarea)
+        for i, item in enumerate(lista_datos, start=1):
+            nombre = item.get("nombre", f"{nombre_item} {i}")
+            texto = nombre.title() if isinstance(nombre, str) else nombre
+            print(f"{i} - {texto}")
+
+        seleccion = input(
+            f"\nIngrese el nombre o numero del {nombre_item.lower()} (o 0 para volver): "
+        ).strip()
+
+        if seleccion == "0":
+            return None, None
+
+        for indice, item in enumerate(lista_datos):
+            nombre = item.get("nombre", "")
+            if seleccion.isdigit() and int(seleccion) - 1 == indice:
+                return indice, item
+            if isinstance(nombre, str) and seleccion.lower() == nombre.lower():
+                return indice, item
+
+        print(f"No se encontro ese {nombre_item.lower()}.")
+        input("Presione Enter para intentarlo nuevamente...")
+
+
 def formatear_id(id: str) -> str:
     """
-    Convierte el dato de ID en formato de cinco dígitos (ej: '00199').
+    Convierte el dato de ID en formato de cinco digitos (ej: '00199').
 
-    Pre: Recibe como parámetro un string correspondiente a la ID.
+    Pre: Recibe como parametro un string correspondiente a la ID.
     Post: Retorna una string con la ID en formato apropiado.
     """
-    return f"{"0"*(5-len(id))+id}"
+    return f"{'0' * (5 - len(id))}{id}"
 
 def imprimir_titulo(titulo: str) -> None:
     """
-    Imprime el título entre guiones.
+    Imprime el titulo entre guiones.
 
-    Pre: Recibe como parámetros una string con el título a imprimir.
-    Post: No retorna nada, imprime el título en formato apropiado.
+    Pre: Recibe como parametros una string con el titulo a imprimir.
+    Post: No retorna nada, imprime el titulo en formato apropiado.
     """
     guiones()
     print(f"    {titulo.upper()}")
