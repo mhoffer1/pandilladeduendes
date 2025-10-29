@@ -135,18 +135,9 @@ def detalles_producto(datos_inventario: dict):
 
         util.limpiar_pantalla()
         util.imprimir_titulo("DETALLES DE PRODUCTO")
-        print(f"ID: {producto['id']}")
-        print(f"Nombre: {producto['nombre'].title()}")
-        print(f"Precio: {producto['precio']}")
-        print(f"Costo: {producto['costo']}")
-        print(f"Stock: {producto['stock']}")
-        print(f"Categoria: {producto['categoria'].title()}")
-        print(f"Alta Rotacion: {'Si' if producto['alta_rotacion'] == 'si' else 'No'}")
-        print(f"Fecha Alta: {producto['fecha_alta']}")
-        print(f"Ultima Modificacion: {producto['ultima_modificacion']}")
-        estado = producto.get("estado", "inactivo").upper()
-        print(f"Estado: {estado}")
-        input("Presione Enter para continuar...")
+        util.listar_datos(producto)
+
+        input("\nPresione Enter para continuar...")
 
 
 def actualizar_producto(datos_inventario: dict):
@@ -163,15 +154,12 @@ def actualizar_producto(datos_inventario: dict):
         util.imprimir_titulo(
             f"ACTUALIZANDO PRODUCTO ID:{producto['id']} / {producto['nombre']}"
         )
-        print(f"1- Precio: ${producto['precio']}")
-        print(f"2- Nombre: {producto['nombre'].title()}")
-        print(f"3- Costo: ${producto['costo']}")
-        print(f"4- Stock: {producto['stock']}")
-        print(f"5- Categoria: {producto['categoria'].title()}")
-        alta_rot_texto = "Si" if producto['alta_rotacion'] == "si" else "No"
-        print(f"6- Alta Rotacion: {alta_rot_texto}")
-        print("0- Salir")
-        util.guiones()
+        datos = (producto['precio'], producto['nombre'].title(), producto['costo'], producto['stock'], producto['categoria'].title(), producto['alta_rotacion'].title())
+        titulos = ("Precio", "Nombre", "Costo", "Stock", "Categoría", "Alta Rotación")
+
+        for dato, titulo in zip(datos, titulos):
+            simbolo = "$" if isinstance(dato, float) else ""
+            print(f"{titulo}: {simbolo}{dato}")
 
         opcion = input("Ingrese que desea actualizar: ").strip()
         if opcion == "1":
@@ -263,8 +251,131 @@ def eliminar_producto(datos_inventario: dict, datos_ventas: dict):
         input("Presione Enter para continuar...")
 
 
+def buscar_por_nombre(productos: list[dict]) -> list[dict]:
+    """
+    Busca el nombre ingresado en la base de datos de productos.
+
+    Pre: Recibe como parametro la lista de diccionarios correspondientes a los productos almacenados.
+    Post: Retorna una lista con los diccionarios correspondientes a los productos que coinciden con la búsqueda.
+    """
+    util.imprimir_titulo("BUSQUEDA POR NOMBRE")
+    a_buscar = input("Ingrese el nombre a buscar: ").lower().strip()
+    coincidencias = [
+        producto
+        for producto in productos
+        if a_buscar in producto["nombre"]
+    ]
+
+    return coincidencias
+
+
+def buscar_por_categ(productos: list[dict]) -> list[dict]:
+    """
+    Busca la categoría ingresada en la base de datos de productos.
+
+    Pre: Recibe como parametro la lista de diccionarios correspondientes a los productos almacenados.
+    Post: Retorna una lista con los diccionarios correspondientes a los productos que coinciden con la búsqueda.
+    """
+    util.imprimir_titulo("BUSQUEDA POR CATEGORÍA")
+    a_buscar = input("Ingrese la categoria a buscar: ").lower().strip()
+    coincidencias = [
+        producto
+        for producto in productos
+        if a_buscar in producto["categoria"]
+    ]
+
+    return coincidencias
+
+
+def buscar_por_precios(productos: list[dict]) -> list[dict]:
+    """
+    Busca el rango de precios ingresado en la base de datos de productos.
+
+    Pre: Recibe como parametro la lista de diccionarios correspondientes a los productos almacenados.
+    Post: Retorna una lista con los diccionarios correspondientes a los productos que coinciden con la búsqueda.
+    """
+    util.imprimir_titulo("BUSQUEDA POR PRECIO")
+    print("A continuacion ingrese el rango de precios que desea buscar...\n")
+
+    precio_min = util.pedir_float("precio minimo")
+    precio_max = util.pedir_float("precio maximo", min=precio_min)
+    coincidencias = [
+        producto
+        for producto in productos
+        if producto["precio"] >= precio_min
+        and producto["precio"] <= precio_max
+    ]
+
+    return coincidencias
+
+def buscar_por_stock(productos: list[dict]) -> list[dict]:
+    """
+    Busca el rango de stock ingresado en la base de datos de productos.
+
+    Pre: Recibe como parametro la lista de diccionarios correspondientes a los productos almacenados.
+    Post: Retorna una lista con los diccionarios correspondientes a los productos que coinciden con la búsqueda.
+    """
+    util.imprimir_titulo("BUSQUEDA POR STOCK")
+    print("A continuacion ingrese el rango de valores de stock que desea buscar...\n")
+
+    stock_min = util.pedir_entero("stock minimo")
+    stock_max = util.pedir_entero("stock maximo", min=stock_min)
+    coincidencias = [
+        producto
+        for producto in productos
+        if producto["stock"] >= stock_min
+        and producto["stock"] <= stock_max
+    ]
+
+    return coincidencias
+
+
+def buscar_por_rotacion(productos: list[dict]) -> list[dict]:
+    """
+    Busca el tipo de rotación ingresado en la base de datos de productos.
+
+    Pre: Recibe como parametro la lista de diccionarios correspondientes a los productos almacenados.
+    Post: Retorna una lista con los diccionarios correspondientes a los productos que coinciden con la búsqueda.
+    """
+    util.imprimir_titulo("BUSQUEDA POR ROTACIÓN")
+    a_buscar = input(
+        "Ingrese el valor de rotacion del producto (1- Alta Rotacion, 0 u otra cosa- Baja Rotacion): "
+    ).strip()
+
+    a_buscar = "si" if a_buscar == "1" else "no"
+    coincidencias = [
+        producto
+        for producto in productos
+        if producto["alta_rotacion"] == a_buscar
+    ]
+
+    return coincidencias
+
+
+def buscar_por_estado(productos: list[dict]) -> list[dict]:
+    """
+    Busca el estado (activo o inactivo) ingresado en la base de datos de productos.
+
+    Pre: Recibe como parametro la lista de diccionarios correspondientes a los productos almacenados.
+    Post: Retorna una lista con los diccionarios correspondientes a los productos que coinciden con la búsqueda.
+    """
+    util.imprimir_titulo("BUSQUEDA POR ESTADO")
+    a_buscar = input(
+        "Ingrese el estado del producto (1- Activo, 0 u otra cosa- Inactivo): "
+    ).strip()
+
+    a_buscar = "activo" if a_buscar == "1" else "inactivo"
+    coincidencias = [
+        producto
+        for producto in productos
+        if producto["estado"] == a_buscar
+    ]
+
+    return coincidencias
+
+
 def buscar_producto(datos_inventario: dict):
-    opciones_prod = ["buscar producto", "salir"]
+    opciones_prod = ("buscar producto", "salir")
     while True:
         util.limpiar_pantalla()
         util.opciones("buscar producto", opciones_prod)
@@ -286,6 +397,7 @@ def buscar_producto(datos_inventario: dict):
                     "Precio",
                     "Stock",
                     "Alta Rotacion",
+                    "Estado",
                     "Volver Atras",
                 )
                 util.opciones("buscar producto", opciones_de_busqueda)
@@ -295,64 +407,25 @@ def buscar_producto(datos_inventario: dict):
                     break
 
                 util.limpiar_pantalla()
+                lista_productos = datos_inventario.get("productos", [])
+                coincidencias = []
+
                 if op == "1":
-                    util.imprimir_titulo("BUSQUEDA POR NOMBRE")
-                    a_buscar = input("Ingrese el nombre a buscar: ").lower().strip()
-                    coincidencias = [
-                        producto
-                        for producto in datos_inventario["productos"]
-                        if a_buscar in producto["nombre"]
-                    ]
-
+                    coincidencias = buscar_por_nombre(lista_productos)
                 elif op == "2":
-                    util.imprimir_titulo("BUSQUEDA POR CATEGORÍA")
-                    a_buscar = input("Ingrese la categoria a buscar: ").lower().strip()
-                    coincidencias = [
-                        producto
-                        for producto in datos_inventario["productos"]
-                        if a_buscar in producto["categoria"]
-                    ]
-
+                    coincidencias = buscar_por_categ(lista_productos)
                 elif op == "3":
-                    util.imprimir_titulo("BUSQUEDA POR PRECIO")
-                    print("A continuacion ingrese el rango de precios que desea buscar...\n")
-
-                    precio_min = util.pedir_float("precio minimo")
-                    precio_max = util.pedir_float("precio maximo", min=precio_min)
-                    coincidencias = [
-                        producto
-                        for producto in datos_inventario["productos"]
-                        if producto["precio"] >= precio_min
-                        and producto["precio"] <= precio_max
-                    ]
-
+                    coincidencias = buscar_por_precios(lista_productos)
                 elif op == "4":
-                    util.imprimir_titulo("BUSQUEDA POR STOCK")
-                    print("A continuacion ingrese el rango de valores de stock que desea buscar...\n")
-
-                    stock_min = util.pedir_entero("stock minimo")
-                    stock_max = util.pedir_entero("stock maximo", min=stock_min)
-                    coincidencias = [
-                        producto
-                        for producto in datos_inventario["productos"]
-                        if producto["stock"] >= stock_min
-                        and producto["stock"] <= stock_max
-                    ]
-
+                    coincidencias = buscar_por_stock(lista_productos)
                 elif op == "5":
-                    util.imprimir_titulo("BUSQUEDA POR ROTACIÓN")
-                    a_buscar = input(
-                        "Ingrese el valor de rotacion del producto (1- Alta Rotacion, 0 u otra cosa- Baja Rotacion): "
-                    ).strip()
-                    a_buscar = "si" if a_buscar == "1" else "no"
-                    coincidencias = [
-                        producto
-                        for producto in datos_inventario["productos"]
-                        if producto["alta_rotacion"] == a_buscar
-                    ]
-
+                    coincidencias = buscar_por_rotacion(lista_productos)
+                elif op == "6":
+                    coincidencias = buscar_por_estado(lista_productos)
                 else:
-                    coincidencias = []
+                    print("Opción inválida. Intente nuevamente.")
+                    input("Presione Enter para continuar...")
+                    continue
 
                 if not coincidencias:
                     print("No se encontraron productos con esas caracteristicas.")
@@ -369,12 +442,13 @@ def buscar_producto(datos_inventario: dict):
                     "Alta Rotacion",
                     "Fecha Alta",
                     "Ultima Modificacion",
+                    "Estado"
                 ]
                 util.imprimir_tabla_x_paginas(
                     headers, coincidencias, "Resultados de Busqueda"
                 )
         else:
-            print("Opcion invalida. Intente de nuevo.")
+            print("Opcion invalida. Intente nuevamente.")
             input("Presione Enter para continuar...")
 
 

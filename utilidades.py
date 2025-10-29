@@ -101,7 +101,7 @@ def imprimir_tabla(headers: list[str], data: list[list[str]]) -> None:
         for row in data:
             print(" | ".join(map(str, row)))
 
-def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo: str):
+def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo: str) -> None:
     """
     Imprime una tabla de maximo 10 datos, con un sistema de avanzar o retroceder en paginas.
     la lista de diccionarios tiene un diccionario por empleado.
@@ -149,7 +149,7 @@ def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo
             input("Opcion invalida. Presione Enter para continuar...")
         continue
 
-def pedir_entero(nombre: str, max: int=1000000.0, min: int=1):
+def pedir_entero(nombre: str, max: int=1000000, min: int=1) -> int:
     """
     Pide un numero entero, maneja posibles errores de casteo y valida que este en el rango ingresado.
 
@@ -170,11 +170,11 @@ def pedir_entero(nombre: str, max: int=1000000.0, min: int=1):
         else:
             return entero
 
-def pedir_float(nombre: str, max: int=1_000_000.0, min: int=1.0):
+def pedir_float(nombre: str, max: int=1000000.0, min: int=1.0) -> float:
     """
     Pide un numero flotante, maneja posibles errores de casteo y valida que este en el rango ingresado.
 
-    Pre: Recibe como parametros el nombre del objeto, el minimo y el maximo posible a ingresar.
+    Pre: Recibe como parametros el nombre del objeto, el maximo y el minimo posible a ingresar.
     Post: Retorna el flotante ingresado por el usuario, validado previamente.
     """
     while True:
@@ -191,8 +191,29 @@ def pedir_float(nombre: str, max: int=1_000_000.0, min: int=1.0):
         else:
             return flotante
 
+
+def listar_datos(elemento: dict) -> None:
+    """
+    Lista los datos del diccionario en formato apropiado.
+
+    Pre: Recibe como parametro el diccionario cuyos datos deben listarse.
+    Post: No retorna nada, se imprime un listado con cada clave y su respectivo valor, dependiendo su formato en tipo de dato que sea.
+    """
+    for titulo, dato in elemento.items():
+        simbolo = "$" if isinstance(dato, float) else ""
+        titulo = titulo.replace("_", " ").title() if isinstance(titulo, str) else titulo # Si es string reemplaza los guiones bajos por espacios y aplica el .title()
+        dato = f"{dato:.2f}" if isinstance(dato, float) else dato.title() if isinstance(dato, str) else dato # Si es un flotante lo formatea con dos decimales y si es string le aplica el title()
+
+        if titulo == "Id":
+            titulo, dato = titulo.upper(), formatear_id(dato) # Si es la ID la formatea
+        elif titulo == "Estado":
+            dato = dato.upper() # Si es el estado lo imprime en mayusculas
+        
+        print(f"{titulo}: {dato} {simbolo}")
+
+
 ## Se agrega esta funcion
-def seleccionar_item(lista_datos: list[dict], nombre_item: str, tarea: str):
+def seleccionar_item(lista_datos: list[dict], nombre_item: str, tarea: str) -> tuple[int, dict]:
     """Permite seleccionar un elemento por indice o nombre."""
     if not lista_datos:
         print(f"No hay {nombre_item.lower()} registrados.")

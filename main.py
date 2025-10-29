@@ -21,8 +21,8 @@ def main_menu(
     while True:
         util.limpiar_pantalla()
         opciones_main = (
-            "Inventario",
             "Ventas",
+            "Inventario",
             "Empleados",
             "Proveedores",
             "Reportes",

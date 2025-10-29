@@ -48,33 +48,16 @@ def registrar_provedores(datos_proveedores: dict):
         elif opcion == "1":
             nombre = input("Ingrese el nombre del proveedor.").strip().lower()
             marca = input(
-                "Ingrese la marca con la que trabaja con el proveedor(si no trabaja con una marca en especico, presiona enter):"
+                "Ingrese la marca con la que trabaja el proveedor (De no haber presionar Enter): "
             ).lower().strip()
             tipo_de_productos = input(
-                "Ingrese el tipo de productos con el que trabaja el proveedor(si no trabaja con un tipo de productos en especifico, presiona enter)."
+                "Ingrese el tipo de productos con la que trabaja el proveedor (De no haber presionar Enter): "
             ).lower().strip()
             if validacion(marca, tipo_de_productos):
-                if marca != "" and tipo_de_productos != "":
-                    proveedor = {
+                proveedor = {
                         "nombre": nombre,
-                        "marca": marca,
-                        "tipo_de_producto": tipo_de_productos,
-                        "fecha_alta": str(datetime.now().date()),
-                        "pedido": [],
-                    }
-                elif marca != "" and tipo_de_productos == "":
-                    proveedor = {
-                        "nombre": nombre,
-                        "marca": marca,
-                        "tipo_de_producto": "NO INFO.",
-                        "fecha_alta": str(datetime.now().date()),
-                        "pedido": [],
-                    }
-                else:
-                    proveedor = {
-                        "nombre": nombre,
-                        "marca": "NO INFO",
-                        "tipo_de_producto": tipo_de_productos,
+                        "marca": marca if marca else "NO INFO",
+                        "tipo_de_producto": tipo_de_productos if tipo_de_productos else "NO INFO",
                         "fecha_alta": str(datetime.now().date()),
                         "pedido": [],
                     }
