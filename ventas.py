@@ -397,14 +397,15 @@ def registrar_ventas(
         util.guiones()
         _mostrar_resumen_venta(items_venta, descuento)
         util.guiones()
-        print("Opciones:")
-        print("1- Agregar producto")
-        print("2- Modificar cantidad")
-        print("3- Quitar producto")
-        print("4- Aplicar/Quitar descuento")
-        print("5- Confirmar venta")
-        print("0- Cancelar venta")
-
+        opciones_venta = (
+    " Agregar producto",
+    " Modificar cantidad",
+    " Quitar producto",
+    " Aplicar/Quitar descuento",
+    " Confirmar venta",
+    " Cancelar venta"
+)
+        util.opciones("PROMOCIONES", opciones_venta)
         opcion = input("Seleccione una opcion: ").strip()
 
         if opcion == "1":
@@ -426,6 +427,7 @@ def registrar_ventas(
             if input("¿Desea cancelar la venta actual? (s/n): ").strip().lower() == "s":
                 print("Venta cancelada.")
                 input("Presione Enter para continuar...")
+
                 return
         else:
             print("Opcion invalida. Intente de nuevo.")
@@ -447,6 +449,7 @@ def aplicar_promocion(datos_inventario: dict) -> None:
             "eliminar promocion",
             "salir",
         )
+        
         util.opciones("PROMOCIONES", opciones_prod)
         opcion = input("Ingrese una opcion: ").strip()
         if opcion == "0":
