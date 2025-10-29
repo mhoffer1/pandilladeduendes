@@ -56,8 +56,8 @@ def registrar_provedores(datos_proveedores: dict):
             if validacion(marca, tipo_de_productos):
                 proveedor = {
                         "nombre": nombre,
-                        "marca": marca if marca else "NO INFO",
-                        "tipo_de_producto": tipo_de_productos if tipo_de_productos else "NO INFO",
+                        "marca": marca if marca else "no info",
+                        "tipo_de_producto": tipo_de_productos if tipo_de_productos else "no info",
                         "fecha_alta": str(datetime.now().date()),
                         "pedido": [],
                     }
@@ -172,35 +172,76 @@ def eliminar_pedidos(datos_proveedores: dict) -> None:
             input("Enter para continuar...")
 
 
+def busqueda_proveedor(proveedores: list[dict], a_buscar: str) -> list[dict]:
+    """
+    Busca el dato a buscar recibido en la base de datos de proveedores.
+
+    Pre: Recibe como parametro la lista de diccionarios correspondientes a los proveedores almacenados y el dato a buscar en dicha lista.
+    Post: Retorna una lista con los diccionarios correspondientes a los productos que coinciden con la búsqueda.
+    """
+    busqueda = input(f"Ingrese un/a {a_buscar.replace("_", " ")} para realizar la búsqueda: ").lower().strip()
+    coincidencias = [
+                proveedor for proveedor in proveedores
+                if busqueda in proveedor.get(a_buscar, [])
+                ]
+    
+    return coincidencias
+
+
 def buscar_proveedor(datos_proveedores: dict):
     """Permite buscar proveedores por diferentes criterios."""
+    opciones_buscar = ("Buscar Proveedor", "Salir")
     while True:
         util.limpiar_pantalla()
-        opcion = input(
-            "Ingrese 1 para buscar proveedores o 0 para salir: "
-        ).strip()
+        util.opciones("Buscar Proveedores", opciones_buscar)
+        opcion = input("\nIngrese una opción: ")
         if opcion == "0":
             break
+
         elif opcion == "1":
-            enumerador = 1
-            busqueda = input(
-                "Ingrese un nombre,marca o producto para buscar proveedor:"
-            ).strip().lower()
-            encontrado = False
-            for proveedor in datos_proveedores.get("proveedores", []):
-                if (
-                    proveedor["nombre"] == busqueda
-                    or proveedor["marca"] == busqueda
-                    or proveedor["tipo_de_producto"] == busqueda
-                ):
-                    encontrado = True
-                    print(
-                        f"{enumerador}.{proveedor['nombre'].capitalize()}     -{proveedor['marca'].capitalize()}        -{proveedor['tipo_de_producto'].capitalize()}"
+            lista_proveedores = datos_proveedores.get("proveedores", [])
+
+            while True:
+                util.limpiar_pantalla()
+                if not lista_proveedores:
+                    print("No hay información cargada de proveedores.")
+                    input("Presione Enter para continuar...")
+                    break
+
+                opciones_de_busqueda = (
+                    "Nombre", 
+                    "Marca", 
+                    "Tipo de Producto",
+                    "Volver Atrás"
                     )
-                    enumerador += 1
-            if not encontrado:
-                print("No hay informacion.")
-            input("enter para continuar...")
+                util.opciones("Buscar Proveedor", opciones_de_busqueda)
+                opcion = input("\nIngrese una opción: ")
+
+                if opcion == "0":
+                    break
+
+                if opcion.isdigit() and int(opcion) > len(opciones_de_busqueda) - 1 or int(opcion) < 0:
+                    print("Opción inválida. Intente nuevamente.")
+                    input("Presione Enter para continuar...")
+                    continue
+                
+                a_buscar = opciones_de_busqueda[int(opcion)-1].replace(" ", "_").lower()
+                coincidencias = busqueda_proveedor(lista_proveedores, a_buscar)
+                
+                if not coincidencias:
+                    print("No se encontraron proveedores con las características que usted ingresó.")
+                    input("Presione Enter para continuar...")
+                    continue
+
+                headers = [
+                    "Nombre", 
+                    "Marca", 
+                    "Tipo de Producto", 
+                    "Fecha Alta", 
+                    "Pedidos"
+                    ]
+                util.imprimir_tabla_x_paginas(headers, coincidencias, "Resultados de Búsqueda")
+
         else:
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
@@ -210,39 +251,41 @@ def mostrar_proveedores(datos_proveedores: dict):
     """Muestra los proveedores y sus datos."""
     while True:
         util.limpiar_pantalla()
-        util.guiones()
-        print("Los proveedores son los siguientes.")
-        util.guiones()
+        util.imprimir_titulo("mostrar proveedores")
 
         if not datos_proveedores.get("proveedores"):
             print("No hay proveedores registrados.")
             input("Presione Enter para volver...")
             break
 
-        for i, proveedor in enumerate(datos_proveedores["proveedores"]):
-            print(f"{i + 1} - {proveedor['marca']}")
+        lista_proveedores = list(set(proveedor["marca"] for proveedor in datos_proveedores["proveedores"] if proveedor["marca"] != "no info"))
+        lista_proveedores.append("Otros")
+        for i, proveedor in enumerate(lista_proveedores, start=1):
+            print(f"{i}- {proveedor.title()}")
         proveedor_cual = input(
             "\nIngrese la marca o numero del proveedor (o 0 para volver): "
         )
         util.limpiar_pantalla()
         if proveedor_cual == "0":
             break
-        encontrado = False
-        if proveedor_cual.isdigit():
-            indice = int(proveedor_cual) - 1
-            if 0 <= indice < len(datos_proveedores["proveedores"]):
-                proveedor1 = datos_proveedores["proveedores"][indice]
-                encontrado = True
-        else:
-            for proveedor1 in datos_proveedores["proveedores"]:
-                if proveedor_cual.lower() == proveedor1["marca"].lower():
-                    encontrado = True
-                    break
-        if encontrado:
-            print("\nDatos del proveedor:")
-            for clave, valor in proveedor1.items():
-                print(f"{clave}: {valor}")
-            input("\nPresione Enter para continuar...")
-        else:
-            print("No se encontro ese proveedor.")
-            input("Presione Enter para intentarlo de nuevo...")
+        elif proveedor_cual.isdigit() and int(proveedor_cual) > len(lista_proveedores) or int(proveedor_cual) < 0:
+            print("Opción inválida. Intente nuevamente.")
+            input("Presione Enter para continuar...")
+            continue
+
+        a_mostrar = lista_proveedores[int(proveedor_cual) - 1] if proveedor_cual.isdigit() else lista_proveedores.index(proveedor_cual)
+        if a_mostrar == "Otros":
+            a_mostrar = "no info"
+        proveedores_marca = [proveedor for proveedor in datos_proveedores["proveedores"] if proveedor["marca"] == a_mostrar]
+
+        headers = [
+            "Nombre", 
+            "Marca", 
+            "Tipo de Producto", 
+            "Fecha Alta", 
+            "Pedidos"
+        ]
+        titulo = f"Proveedores de {a_mostrar}" if a_mostrar != "no info" else "Proveedores de otras marcas"
+        util.imprimir_tabla_x_paginas(headers, proveedores_marca, titulo)
+        
+        input("Presione Enter para continuar...")

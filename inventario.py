@@ -408,7 +408,6 @@ def buscar_producto(datos_inventario: dict):
 
                 util.limpiar_pantalla()
                 lista_productos = datos_inventario.get("productos", [])
-                coincidencias = []
 
                 if op == "1":
                     coincidencias = buscar_por_nombre(lista_productos)

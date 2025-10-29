@@ -202,12 +202,12 @@ def listar_datos(elemento: dict) -> None:
     for titulo, dato in elemento.items():
         simbolo = "$" if isinstance(dato, float) else ""
         titulo = titulo.replace("_", " ").title() if isinstance(titulo, str) else titulo # Si es string reemplaza los guiones bajos por espacios y aplica el .title()
-        dato = f"{dato:.2f}" if isinstance(dato, float) else dato.title() if isinstance(dato, str) else dato # Si es un flotante lo formatea con dos decimales y si es string le aplica el title()
+        dato = f"{dato:.2f}" if isinstance(dato, float) else dato.title() if isinstance(dato, str) else len(dato) if isinstance(dato, list) else dato # Si es un flotante lo formatea con dos decimales, si es string le aplica el title() y si es una lista imprime el len()
 
         if titulo == "Id":
             titulo, dato = titulo.upper(), formatear_id(dato) # Si es la ID la formatea
-        elif titulo == "Estado":
-            dato = dato.upper() # Si es el estado lo imprime en mayusculas
+        elif titulo == "Estado" or dato == "no info":
+            dato = dato.upper() # Si es el estado o si es 'NO INFO' lo imprime en mayusculas
         
         print(f"{titulo}: {dato} {simbolo}")
 
