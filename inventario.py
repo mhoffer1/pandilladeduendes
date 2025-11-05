@@ -364,7 +364,7 @@ def buscar_por_estado(productos: list[dict]) -> list[dict]:
         "Ingrese el estado del producto (1- Activo, 0 u otra cosa- Inactivo): "
     ).strip()
 
-    a_buscar = "activo" if a_buscar == "1" else "inactivo"
+    a_buscar = "activo" if a_buscar == "1" else "inactivo" #si a buscar es 1 se filtran los activos, caso contrario los inactivos.
     coincidencias = [
         producto
         for producto in productos

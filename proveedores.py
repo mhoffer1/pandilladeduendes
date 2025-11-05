@@ -114,7 +114,7 @@ def registrar_pedidos(datos_proveedores: dict) -> None:
         if prod == "0":
             break
         while True:
-            cantidad = util.pedir_entero("la cantidad de productos")
+            cantidad = util.pedir_entero("la cantidad de productos:")
             if cantidad > 0:
                 break
         pedido_hecho = True
