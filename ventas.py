@@ -6,7 +6,12 @@ import utilidades as util
 def menu_ventas(
     datos_ventas: dict, datos_inventario: dict, datos_empleados: dict
 ) -> None:
-    """Muestra el menu de Ventas"""
+    """
+    Muestra el menu de Ventas
+
+    Pre: Recibe tres diccionarios como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_ventas = ("Registrar Venta", "Promociones", "Volver al Menu Principal")
@@ -25,7 +30,12 @@ def menu_ventas(
 
 
 def impr_factura_venta(datos_venta: dict) -> None:
-    """Imprime la factura de la venta correspondiente con los datos recibidos."""
+    """
+    Imprime la factura de la venta correspondiente con los datos recibidos.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
 
     util.imprimir_titulo("factura de venta")
     print(f"ID DE VENTA: {util.formatear_id(datos_venta['id'])}")
@@ -53,7 +63,12 @@ def impr_factura_venta(datos_venta: dict) -> None:
 
 
 def _obtener_productos_activos(datos_inventario: dict) -> list[dict]:
-    """Devuelve los productos activos disponibles para la venta."""
+    """
+    Devuelve los productos activos disponibles para la venta.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: Retorna una lista de diccionarios.
+    """
 
     return [
         producto
@@ -63,7 +78,12 @@ def _obtener_productos_activos(datos_inventario: dict) -> list[dict]:
 
 
 def _buscar_producto_por_id(datos_inventario: dict, producto_id: str) -> dict | None:
-    """Obtiene un producto por su ID."""
+    """
+    Obtiene un producto por su ID.
+
+    Pre: Recibe un diccionario y un string como parámetro.
+    Post: Retorna un None o un diccionario.
+    """
 
     return next(
         (
@@ -76,7 +96,12 @@ def _buscar_producto_por_id(datos_inventario: dict, producto_id: str) -> dict | 
 
 
 def _calcular_totales(items_venta: dict[str, dict], descuento: float) -> tuple[float, float]:
-    """Calcula los totales bruto y neto aplicando el descuento."""
+    """
+    Calcula los totales bruto y neto aplicando el descuento.
+
+    Pre: Recibe un diccionario de strings y diccionarios y un flotante como parámetro.
+    Post: Retorna una tupla de dos flotantes.
+    """
 
     total_bruto = sum(item["subtotal"] for item in items_venta.values())
     if not total_bruto:
@@ -89,7 +114,11 @@ def _calcular_totales(items_venta: dict[str, dict], descuento: float) -> tuple[f
 
 
 def _mostrar_resumen_venta(items_venta: dict[str, dict], descuento: float) -> None:
-    """Muestra el detalle de los productos cargados y el total."""
+    """Muestra el detalle de los productos cargados y el total.
+
+    Pre: Recibe un diccionario de strings y diccionarios y un flotante.
+    Post: No retorna nada.
+    """
 
     if not items_venta:
         print("No hay productos cargados en la venta actual.")
@@ -119,7 +148,12 @@ def _mostrar_resumen_venta(items_venta: dict[str, dict], descuento: float) -> No
 
 
 def _seleccionar_producto_en_venta(items_venta: dict[str, dict]) -> str | None:
-    """Permite elegir un producto que ya esta en la venta."""
+    """
+    Permite elegir un producto que ya esta en la venta.
+
+    Pre: Recibe un diccionario de string y diccioanrios.
+    Post: Retorna un string o un None.
+    """
 
     if not items_venta:
         print("Aun no se agregaron productos a la venta.")
@@ -146,7 +180,12 @@ def _agregar_producto_a_venta(
     datos_inventario: dict,
     descuento: float,
 ) -> None:
-    """Agrega un producto a la venta actual."""
+    """
+    Agrega un producto a la venta actual.
+
+    Pre: Recibe un diccionario, otro diccionario de string y diccionarios y un flotante como parámetro.
+    Post: No retorna nada.
+    """
 
     productos_activos = _obtener_productos_activos(datos_inventario)
     if not productos_activos:
@@ -206,7 +245,12 @@ def _modificar_producto_en_venta(
     datos_inventario: dict,
     descuento: float,
 ) -> None:
-    """Permite ajustar la cantidad de un producto en la venta."""
+    """
+    Permite ajustar la cantidad de un producto en la venta.
+
+    Pre: Recibe un diccionario de string y diccionarios, un diccionario y un flotante.
+    Post: No retorna nada.
+    """
 
     producto_id = _seleccionar_producto_en_venta(items_venta)
     if producto_id is None:
@@ -247,7 +291,12 @@ def _modificar_producto_en_venta(
 def _quitar_producto_de_venta(
     items_venta: dict[str, dict], descuento: float
 ) -> None:
-    """Elimina un producto de la venta actual."""
+    """
+    Elimina un producto de la venta actual.
+
+    Pre: Recibe un diccionario de string y diccionarios y un flotante.
+    Post: No retorna nada.
+    """
 
     producto_id = _seleccionar_producto_en_venta(items_venta)
     if producto_id is None:
@@ -274,7 +323,12 @@ def _quitar_producto_de_venta(
 
 
 def _gestionar_descuento(descuento_actual: float) -> float:
-    """Permite aplicar o quitar un descuento a la venta."""
+    """
+    Permite aplicar o quitar un descuento a la venta.
+
+    Pre: Recibe un flotante.
+    Post: Retorna un flotante.
+    """
 
     util.limpiar_pantalla()
     util.imprimir_titulo("DESCUENTO DE LA VENTA")
@@ -293,7 +347,12 @@ def _confirmar_venta(
     datos_inventario: dict,
     empleado: dict,
 ) -> bool:
-    """Confirma la venta, actualiza inventario y guarda la informacion."""
+    """
+    Confirma la venta, actualiza inventario y guarda la informacion.
+
+    Pre: Recibe cuatro diccionarios y un flotante como parámetro.
+    Post: Retorna un booleano.
+    """
 
     if not items_venta:
         print("Debe agregar al menos un producto para registrar la venta.")
@@ -367,7 +426,12 @@ def _confirmar_venta(
 def registrar_ventas(
     datos_ventas: dict, datos_inventario: dict, datos_empleados: dict
 ) -> None:
-    """Registra ventas con un flujo interactivo mas cercano a un ERP real."""
+    """
+    Registra ventas con un flujo interactivo mas cercano a un ERP real.
+
+    Pre: Recibe tres diccionarios como parámetro.
+    Post: No retorna nada.
+    """
 
     if not datos_empleados.get("empleados"):
         print("No hay empleados registrados. Registre un empleado antes de continuar.")
@@ -435,12 +499,22 @@ def registrar_ventas(
 
 
 def aplicar_descuento(valor: float, descuento: float) -> float:
-    """Realiza un descuento y retorna el valor neto."""
+    """
+    Realiza un descuento y retorna el valor neto.
+
+    Pre: Recibe dos flotantes como parámetros.
+    Post: Retorna un flotante.
+    """
     return valor * (1 - descuento / 100)
 
 
 def aplicar_promocion(datos_inventario: dict) -> None:
-    """Gestiona promociones para productos."""
+    """
+    Gestiona promociones para productos.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_prod = (

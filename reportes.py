@@ -5,8 +5,11 @@ import utilidades as util
 
 
 def _productos_por_id(datos_inventario: dict) -> dict:
-    """Genera un mapeo rapido de ID de producto a su informacion."""
+    """Genera un mapeo rapido de ID de producto a su informacion.
 
+    Pre: Recibe un diccionario como parámetro.
+    Post: Retorna un diccionario.
+    """
     return {
         producto.get("id"): producto
         for producto in datos_inventario.get("productos", [])
@@ -15,7 +18,12 @@ def _productos_por_id(datos_inventario: dict) -> dict:
 
 
 def mostrar_reporte_inventario(datos_inventario: dict):
-    """Podes ver el reporte de inventario."""
+    """
+    Permite el reporte de inventario
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_alertas = (
@@ -40,6 +48,12 @@ def mostrar_reporte_inventario(datos_inventario: dict):
 
 
 def ver_valor_del_inventario(datos_inventario: dict):
+    """
+    Permite ver valores generales del inventario.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     print(
         "NOTA: Para calcular el valor total de su inventario se considera el precio que usted pago, es decir, el COSTO de los productos."
     )
@@ -57,7 +71,12 @@ def ver_valor_del_inventario(datos_inventario: dict):
 
 
 def ver_inactivos(datos_inventario: dict):
-    """Parte de reportes de inventario, se ven los productos inactivos."""
+    """
+    Permite ver inactivos
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     contador = 0
     for producto in datos_inventario.get("productos", []):
         if producto.get("estado") != "activo":
@@ -69,8 +88,12 @@ def ver_inactivos(datos_inventario: dict):
 
 
 def valor_inventario_por_categoria(datos_inventario: dict):
-    """Resume el valor y stock disponible agrupado por categoria."""
+    """
+    Resume el valor y stock disponible agrupado por categoria.
 
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     resumen = defaultdict(lambda: {"valor": 0.0, "stock": 0, "activos": 0, "inactivos": 0})
     for producto in datos_inventario.get("productos", []):
         categoria = producto.get("categoria", "sin categoria")
@@ -121,7 +144,12 @@ def valor_inventario_por_categoria(datos_inventario: dict):
 def mostrar_reporte_venta(
     datos_ventas: dict, datos_inventario: dict, datos_empleados: dict
 ):
-    """Ver el reporte de ventas."""
+    """
+    Permite ver el reporte de venta.
+
+    Pre: Recibe tres diccionarios como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_venta = (
@@ -153,6 +181,12 @@ def mostrar_reporte_venta(
 
 
 def mostrar_reporte_por_periodo(datos_ventas: dict):
+    """
+    Muestra reportes por período.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_venta = (
@@ -178,6 +212,12 @@ def mostrar_reporte_por_periodo(datos_ventas: dict):
 
 
 def _generar_reporte_ventas(datos_ventas: dict, formato_fecha: str, titulo: str):
+    """
+    Permite generar reportes de ventas.
+
+    Pre: Recibe un diccionario y dos strings como parámetro.
+    Post: No retorna nada.
+    """
     datos_para_la_tabla = []
     headers = ["id", "monto", "fecha_venta"]
     periodo_actual = datetime.now().strftime(formato_fecha)
@@ -206,6 +246,12 @@ def _generar_reporte_ventas(datos_ventas: dict, formato_fecha: str, titulo: str)
 
 
 def reporte_ventas_por_empleado(datos_ventas: dict, datos_empleados: dict):
+    """
+    Muestra reportes de ventas por empleado.
+
+    Pre: Recibe dos diccionarios como parámetro.
+    Post: No retorna nada.
+    """
     resumen = defaultdict(lambda: {"total": 0.0, "cantidad": 0})
     for venta in datos_ventas.get("ventas", []):
         nombre = venta.get("empleado_nombre", "Sin asignar")
@@ -232,6 +278,12 @@ def reporte_ventas_por_empleado(datos_ventas: dict, datos_empleados: dict):
 
 
 def reporte_top_productos(datos_ventas: dict, datos_inventario: dict):
+    """
+    Muestra los productos en orden.
+
+    Pre: Recibe dos diccionario como parámetro.
+    Post: No retorna nada.
+    """
     acumulado = defaultdict(int)
     for venta in datos_ventas.get("ventas", []):
         for producto in venta.get("info_venta", []):
@@ -266,8 +318,12 @@ def reporte_top_productos(datos_ventas: dict, datos_inventario: dict):
 def reporte_margen_por_producto(
     datos_ventas: dict, datos_inventario: dict
 ) -> None:
-    """Calcula ingresos, costos estimados y margen por producto vendido."""
+    """
+    Calcula ingresos, costos estimados y margen por producto vendido.
 
+    Pre: Recibe dos diccionarios como parámetro.
+    Post: No retorna nada.
+    """
     productos_por_id = _productos_por_id(datos_inventario)
     resumen = defaultdict(
         lambda: {"nombre": "", "cantidad": 0, "ingreso": 0.0, "costo": 0.0}
@@ -335,7 +391,12 @@ def reporte_margen_por_producto(
 def reporte_ventas_por_categoria(
     datos_ventas: dict, datos_inventario: dict
 ) -> None:
-    """Agrupa ventas por categoria de producto."""
+    """
+    Agrupa ventas por categoria de producto.
+
+    Pre: Recibe dos diccionarios como parámetro.
+    Post: No retorna nada.
+    """
 
     productos_por_id = _productos_por_id(datos_inventario)
     resumen = defaultdict(lambda: {"cantidad": 0, "ingreso": 0.0})
@@ -386,7 +447,12 @@ def reporte_ventas_por_categoria(
 
 
 def mostrar_reporte_empleados(datos_empleados: dict) -> None:
-    """Ver el reporte de los empleados."""
+    """
+    Ver el reporte de los empleados.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_empleados = ("reporte asistencias", "reporte sueldos.", "salir")
@@ -403,7 +469,12 @@ def mostrar_reporte_empleados(datos_empleados: dict) -> None:
 
 
 def reporte_asistencias(datos_empleados: dict) -> None:
-    """Se genera una tabla con las asistencias historicas de los empleados."""
+    """
+    Se genera una tabla con las asistencias historicas de los empleados.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
 
     datos_para_la_tabla = []
     headers = ["id", "nombre", "fecha de alta", "total de asistencias"]
@@ -424,7 +495,12 @@ def reporte_asistencias(datos_empleados: dict) -> None:
 
 
 def reporte_sueldos(datos_empleados: dict):
-    """Se visualizan todos los sueldos."""
+    """
+    Se visualizan todos los sueldos.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     mas_bajo = (float("inf"), "sin nombre")
     mas_alto = (0, "sin nombre")
     total = 0

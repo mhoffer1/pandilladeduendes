@@ -46,6 +46,12 @@ def menu_inventario(datos_inventario: dict, datos_ventas: dict):
 
 
 def agregar_producto(datos_inventario: dict):
+    """
+    Permite agregar productos.
+
+    Pre: Recibe un diccionario como parámetro
+    Post: No retorna nada, agrega un diccionario al JSON
+    """
     datos_inventario.setdefault("productos", [])
     datos_inventario.setdefault("prox_id", 1)
 
@@ -102,6 +108,12 @@ def agregar_producto(datos_inventario: dict):
 
 
 def ver_todos_los_productos(datos_inventario: dict):
+    """
+    Permite visualizar todos los productos.
+
+    Pre: Recibe un diccionario de parámetro
+    Post: No retorna nada.
+    """
     productos = datos_inventario.get("productos", [])
     if not productos:
         util.limpiar_pantalla()
@@ -126,6 +138,12 @@ def ver_todos_los_productos(datos_inventario: dict):
 
 
 def detalles_producto(datos_inventario: dict):
+    """
+    Permite visualizar los detalles de los productos.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         indice, producto = util.seleccionar_item(
             datos_inventario.get("productos", []), "producto", "DETALLES DE PRODUCTO"
@@ -141,6 +159,12 @@ def detalles_producto(datos_inventario: dict):
 
 
 def actualizar_producto(datos_inventario: dict):
+    """
+    Permite actualizar datos de un producto.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada, actualiza datos de un producto.
+    """
     while True:
         indice, producto = util.seleccionar_item(
             datos_inventario.get("productos", []),
@@ -193,6 +217,12 @@ def actualizar_producto(datos_inventario: dict):
 
 
 def estado_producto(datos_inventario: dict):
+    """
+    Permite cambiar el estado de un producto.
+
+    Pre: Recibe un diccionario de parámetro.
+    Post: No retorna nada, cambia el estado del producto.
+    """
     while True:
         indice, producto = util.seleccionar_item(
             datos_inventario.get("productos", []),
@@ -217,6 +247,12 @@ def estado_producto(datos_inventario: dict):
 
 
 def eliminar_producto(datos_inventario: dict, datos_ventas: dict):
+    """
+    Permite eliminar productos.
+
+    Pre: Recibe dos diccionarios como parámetros.
+    Post: No retorna nada, elimina un producto de JSON.
+    """
     while True:
         indice, producto = util.seleccionar_item(
             datos_inventario.get("productos", []),
@@ -375,6 +411,12 @@ def buscar_por_estado(productos: list[dict]) -> list[dict]:
 
 
 def buscar_producto(datos_inventario: dict):
+    """
+    Permite buscar un producto en el JSON.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     opciones_prod = ("buscar producto", "salir")
     while True:
         util.limpiar_pantalla()
@@ -452,6 +494,12 @@ def buscar_producto(datos_inventario: dict):
 
 
 def alerta_stock_bajo(datos_inventario: dict):
+    """
+    Permite visualizar alerta de stock bajo.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_alertas = ("Ver alertas de Alta rotacion", "Ver todas las alertas", "salir")

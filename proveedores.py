@@ -4,7 +4,12 @@ import utilidades as util
 
 
 def menu_proveedores(datos_proveedores: dict):
-    """Menu principal de proveedores."""
+    """
+    Menu principal de proveedores.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_prov = (
@@ -33,7 +38,12 @@ def menu_proveedores(datos_proveedores: dict):
 
 
 def registrar_provedores(datos_proveedores: dict):
-    """Registra nuevos proveedores."""
+    """
+    Permite registrar proveedores.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     datos_proveedores.setdefault("proveedores", [])
     datos_proveedores.setdefault("prox_id", 1)
 
@@ -75,7 +85,12 @@ def registrar_provedores(datos_proveedores: dict):
 
 
 def pedidos(datos_proveedores: dict):
-    """Gestiona los pedidos a proveedores."""
+    """
+    Gestiona los pedidos a proveedores.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_ = ("Registrar pedido", "ver pedidos", "eliminar pedidos", "salir")
@@ -95,7 +110,12 @@ def pedidos(datos_proveedores: dict):
 
 
 def registrar_pedidos(datos_proveedores: dict) -> None:
-    """Registra pedidos para un proveedor."""
+    """
+    Registrar pedidos para un proveedor.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     indice, proveedor = util.seleccionar_item(
         datos_proveedores.get("proveedores", []),
         "proveedor",
@@ -128,7 +148,12 @@ def registrar_pedidos(datos_proveedores: dict) -> None:
 
 
 def ver_pedidos(datos_proveedores: dict) -> None:
-    """Muestra los pedidos registrados."""
+    """
+    Muestra los pedidos registrados.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     listado = 1
     for proveedor in datos_proveedores.get("proveedores", []):
         if len(proveedor.get("pedido", [])) > 0:
@@ -140,7 +165,12 @@ def ver_pedidos(datos_proveedores: dict) -> None:
 
 
 def eliminar_pedidos(datos_proveedores: dict) -> None:
-    """Elimina los pedidos de un proveedor."""
+    """
+    Elimina los pedidos de un proveedor.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         opciones_ = ("eliminar pedido", "salir")
@@ -189,7 +219,12 @@ def busqueda_proveedor(proveedores: list[dict], a_buscar: str) -> list[dict]:
 
 
 def buscar_proveedor(datos_proveedores: dict):
-    """Permite buscar proveedores por diferentes criterios."""
+    """
+    Permite buscar proveedores por diferentes criterios.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     opciones_buscar = ("Buscar Proveedor", "Salir")
     while True:
         util.limpiar_pantalla()
@@ -248,7 +283,12 @@ def buscar_proveedor(datos_proveedores: dict):
 
 
 def mostrar_proveedores(datos_proveedores: dict):
-    """Muestra los proveedores y sus datos."""
+    """
+    Muestra los proveedores y sus datos.
+
+    Pre: Recibe un diccionario como parámetro.
+    Post: No retorna nada.
+    """
     while True:
         util.limpiar_pantalla()
         util.imprimir_titulo("mostrar proveedores")

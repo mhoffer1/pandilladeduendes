@@ -266,7 +266,13 @@ def imprimir_titulo(titulo: str) -> None:
     print(f"    {titulo.upper()}")
     guiones()
 
-def ingresar(tarea:str):
+def ingresar(tarea:str)->int:
+    """
+    Permite ingresar una opcion, limpia pantalla y muestra el título
+
+    Pre: Recibe como parametros una string.
+    Post: Retorna un entero.
+    """
     limpiar_pantalla()
     imprimir_titulo(tarea)
     opcion = input("Ingrese 0 para retroceder y 1 para continuar: ")
