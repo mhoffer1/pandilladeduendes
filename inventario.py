@@ -3,6 +3,16 @@ from datetime import datetime
 import utilidades as util
 
 
+def _productos_disponibles(datos_inventario: dict) -> list[dict]:
+    """Devuelve los productos no marcados como eliminados."""
+
+    return [
+        producto
+        for producto in datos_inventario.get("productos", [])
+        if not producto.get("eliminado", False)
+    ]
+
+
 def menu_inventario(datos_inventario: dict, datos_ventas: dict):
     """Muestra el menu de inventario"""
     while True:
@@ -91,6 +101,7 @@ def agregar_producto(datos_inventario: dict):
                         "fecha_alta": str(datetime.now().date()),
                         "ultima_modificacion": str(datetime.now().date()),
                         "estado": "activo",
+                        "eliminado": False,
                     }
                     datos_inventario["productos"].append(producto)
                     datos_inventario["prox_id"] += 1
@@ -118,7 +129,7 @@ def ver_todos_los_productos(datos_inventario: dict):
     if not productos:
         util.limpiar_pantalla()
         util.imprimir_titulo("Productos en inventario")
-        print("No hay productos cargados.")
+        print("No hay productos disponibles.")
         input("Presione Enter para continuar...")
         return
 
@@ -173,6 +184,11 @@ def actualizar_producto(datos_inventario: dict):
         )
         if producto is None:
             break
+
+        if producto.get("eliminado", False):
+            print("El producto esta marcado como eliminado y no puede modificarse.")
+            input("Presione enter.")
+            continue
 
         util.limpiar_pantalla()
         util.imprimir_titulo(
@@ -232,6 +248,13 @@ def estado_producto(datos_inventario: dict):
         if producto is None:
             break
 
+        if producto.get("eliminado", False):
+            print(
+                "El producto esta marcado como eliminado. No es posible cambiar su estado."
+            )
+            input("Presione Enter para continuar...")
+            continue
+
         estado_actual = producto.get("estado", "inactivo")
         print(f"El estado actual del producto es {estado_actual}.")
         confirmacion = input(
@@ -239,6 +262,7 @@ def estado_producto(datos_inventario: dict):
         )
         if confirmacion == "1":
             producto["estado"] = "inactivo" if estado_actual == "activo" else "activo"
+            producto["ultima_modificacion"] = str(datetime.now().date())
             util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
             print("\nEstado cambiado con exito.")
         else:
@@ -262,6 +286,11 @@ def eliminar_producto(datos_inventario: dict, datos_ventas: dict):
         if producto is None:
             break
 
+        if producto.get("eliminado", False):
+            print("El producto ya esta marcado como eliminado.")
+            input("Presione Enter para continuar...")
+            continue
+
         vendido = any(
             producto["id"] == venta_producto.get("id")
             for venta in datos_ventas.get("ventas", [])
@@ -279,9 +308,11 @@ def eliminar_producto(datos_inventario: dict, datos_ventas: dict):
             f"¿Esta seguro de eliminar el producto '{producto['nombre']}'? (1- Si, 0 u otra cosa- No): "
         )
         if confirmacion == "1":
-            del datos_inventario["productos"][indice]
+            producto["eliminado"] = True
+            producto["estado"] = "inactivo"
+            producto["ultima_modificacion"] = str(datetime.now().date())
             util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
-            print("Producto eliminado correctamente.")
+            print("Producto marcado como eliminado.")
         else:
             print("Operacion cancelada.")
         input("Presione Enter para continuar...")
@@ -515,6 +546,7 @@ def alerta_stock_bajo(datos_inventario: dict):
                     producto["alta_rotacion"] == "si"
                     and producto["stock"] <= 20
                     and producto.get("estado") == "activo"
+                    and not producto.get("eliminado", False)
                 ):
                     print(f"{contador}.{producto['nombre'].title()}")
                     contador += 1
@@ -529,7 +561,11 @@ def alerta_stock_bajo(datos_inventario: dict):
             encontrados = False
             enumerador = 1
             for producto in datos_inventario.get("productos", []):
-                if producto["stock"] <= 20 and producto.get("estado") == "activo":
+                if (
+                    producto["stock"] <= 20
+                    and producto.get("estado") == "activo"
+                    and not producto.get("eliminado", False)
+                ):
                     print(f"{enumerador}.{producto['nombre'].title()}")
                     enumerador += 1
                     encontrados = True

@@ -123,8 +123,19 @@ def imprimir_tabla_x_paginas(headers: list[str], lista_datos: list[dict], titulo
         fin = min(inicio + por_pagina, total)
 
         data = [
-            [valor if not isinstance(valor, str) and not isinstance(valor, list) and not isinstance(valor, dict) else valor.title() if isinstance(valor, str) and clave != "id" 
-             else formatear_id(valor) if clave == "id" else len(valor) for clave, valor in dato.items()] # Si es int o float lo imprime tal como esta, si es string lo imprime con .title(), si representa la ID lo formatea y si es lista o diccionario imprime el len()
+            [
+                valor
+                if not isinstance(valor, str)
+                and not isinstance(valor, list)
+                and not isinstance(valor, dict)
+                else valor.title()
+                if isinstance(valor, str) and clave != "id"
+                else formatear_id(valor)
+                if clave == "id"
+                else len(valor)
+                for clave, valor in dato.items()
+                if clave != "eliminado"
+            ]
             for dato in lista_datos[inicio:fin]
         ]
 
@@ -220,10 +231,21 @@ def seleccionar_item(lista_datos: list[dict], nombre_item: str, tarea: str) -> t
         input("Presione Enter para volver...")
         return None, None
 
+    elementos_disponibles = [
+        (indice, item)
+        for indice, item in enumerate(lista_datos)
+        if not item.get("eliminado", False)
+    ]
+
+    if not elementos_disponibles:
+        print(f"No hay {nombre_item.lower()} disponibles.")
+        input("Presione Enter para volver...")
+        return None, None
+
     while True:
         limpiar_pantalla()
         imprimir_titulo(tarea)
-        for i, item in enumerate(lista_datos, start=1):
+        for i, (_, item) in enumerate(elementos_disponibles, start=1):
             nombre = item.get("nombre", f"{nombre_item} {i}")
             texto = nombre.title() if isinstance(nombre, str) else nombre
             print(f"{i} - {texto}")
@@ -235,7 +257,13 @@ def seleccionar_item(lista_datos: list[dict], nombre_item: str, tarea: str) -> t
         if seleccion == "0":
             return None, None
 
-        for indice, item in enumerate(lista_datos):
+        if seleccion.isdigit():
+            posicion = int(seleccion)
+            if 1 <= posicion <= len(elementos_disponibles):
+                indice_original, item = elementos_disponibles[posicion - 1]
+                return indice_original, item
+
+        for indice_original, item in elementos_disponibles:
             nombre = item.get("nombre", "")
             if seleccion.isdigit() and int(seleccion) - 1 == indice:
                 return indice, item

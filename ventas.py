@@ -74,6 +74,7 @@ def _obtener_productos_activos(datos_inventario: dict) -> list[dict]:
         producto
         for producto in datos_inventario.get("productos", [])
         if producto.get("estado") == "activo"
+        and not producto.get("eliminado", False)
     ]
 
 
@@ -90,6 +91,7 @@ def _buscar_producto_por_id(datos_inventario: dict, producto_id: str) -> dict | 
             producto
             for producto in datos_inventario.get("productos", [])
             if producto.get("id") == producto_id
+            and not producto.get("eliminado", False)
         ),
         None,
     )
@@ -381,6 +383,12 @@ def _confirmar_venta(
             )
             input("Presione Enter para continuar...")
             return False
+        if producto.get("eliminado", False):
+            print(
+                f"El producto {item['nombre'].title()} esta marcado como eliminado en el inventario."
+            )
+            input("Presione Enter para continuar...")
+            return False
         if producto["stock"] < item["cantidad"]:
             print(
                 f"Stock insuficiente para {item['nombre'].title()}. Disponible: {producto['stock']}"
@@ -532,6 +540,8 @@ def aplicar_promocion(datos_inventario: dict) -> None:
             clase = input("Ingrese a que categoria desea hacerle una promocion:")
             encontrado = False
             for producto in datos_inventario.get("productos", []):
+                if producto.get("eliminado", False):
+                    continue
                 if producto["categoria"].strip().lower() == clase.strip().lower():
                     encontrado = True
                     descuento_a_aplicar = util.pedir_entero(
@@ -553,6 +563,8 @@ def aplicar_promocion(datos_inventario: dict) -> None:
         elif opcion == "2":
             hay_promociones = False
             for producto in datos_inventario.get("productos", []):
+                if producto.get("eliminado", False):
+                    continue
                 if producto.get("promocion"):
                     hay_promociones = True
                     print(
@@ -567,6 +579,8 @@ def aplicar_promocion(datos_inventario: dict) -> None:
             ).strip().lower()
             eliminado = False
             for producto in datos_inventario.get("productos", []):
+                if producto.get("eliminado", False):
+                    continue
                 if producto["categoria"].strip().lower() == a_eliminar:
                     producto["promocion"] = None
                     eliminado = True

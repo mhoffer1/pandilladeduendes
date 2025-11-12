@@ -60,6 +60,8 @@ def ver_valor_del_inventario(datos_inventario: dict):
     total_AR, total_NOAR = 0, 0
 
     for producto in datos_inventario.get("productos", []):
+        if producto.get("eliminado", False):
+            continue
         if producto["alta_rotacion"] == "si":
             total_AR += producto["costo"] * producto["stock"]
         else:
@@ -79,6 +81,8 @@ def ver_inactivos(datos_inventario: dict):
     """
     contador = 0
     for producto in datos_inventario.get("productos", []):
+        if producto.get("eliminado", False):
+            continue
         if producto.get("estado") != "activo":
             contador += 1
             print(f"{contador}.producto:{producto['nombre']}. ID:{producto['id']}")
@@ -96,6 +100,8 @@ def valor_inventario_por_categoria(datos_inventario: dict):
     """
     resumen = defaultdict(lambda: {"valor": 0.0, "stock": 0, "activos": 0, "inactivos": 0})
     for producto in datos_inventario.get("productos", []):
+        if producto.get("eliminado", False):
+            continue
         categoria = producto.get("categoria", "sin categoria")
         estado = producto.get("estado", "inactivo")
         stock = producto.get("stock", 0)
