@@ -239,7 +239,8 @@ def seleccionar_item(lista_datos: list[dict], nombre_item: str, tarea: str) -> t
             nombre = item.get("nombre", "")
             if seleccion.isdigit() and int(seleccion) - 1 == indice:
                 return indice, item
-            if isinstance(nombre, str) and seleccion.lower() == nombre.lower():
+            if isinstance(nombre, str) and seleccion.lower() == nombre.lower(): 
+                #verifica que sea str y que el nombre coincida.
                 return indice, item
 
         print(f"No se encontro ese {nombre_item.lower()}.")

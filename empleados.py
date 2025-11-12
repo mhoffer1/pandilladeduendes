@@ -44,9 +44,10 @@ def registrar_empleados(datos_empleados: dict):
     Pre: No recibe nada como parámetro
     Post: No retorna nada, agrega un diccionario al JSON
     """
-    datos_empleados.setdefault("empleados", [])
+    datos_empleados.setdefault("empleados", []) 
     datos_empleados.setdefault("prox_id", 1)
-    
+    #si no existe, se asigna un valor por defecto, soluciona bugs fatales de primera
+    #ejecucion.
     while True:
         opcion = util.ingresar("registrar empleados")
         if opcion == "0":
@@ -61,7 +62,7 @@ def registrar_empleados(datos_empleados: dict):
                     print("El sueldo debe ser un numero entero.")
                     input("Presione enter para continuar...")
                     continue
-                if sueldo > 0:
+                if sueldo > 50000:
                     empleado = {
                         "id": str(datos_empleados["prox_id"]),
                         "nombre": nombre.title(),
@@ -77,7 +78,7 @@ def registrar_empleados(datos_empleados: dict):
                     print("Empleado agregado correctamente.")
                     input("Presione Enter para continuar...")
                     break
-                print("El sueldo debe ser mayor a 0.")
+                print("El sueldo debe ser mayor a 50000.")
         else:
             util.limpiar_pantalla()
             util.imprimir_titulo("registrar empleados")
@@ -105,18 +106,18 @@ def editar_datos_de_empleados(datos_empleados: dict):
 
             print("Que dato desea cambiar: ")
             claves = list(empleado.keys())
-            for i, clave in enumerate(claves, start=1):
-                print(f"{i}- {clave.capitalize().replace('_', ' ')}")
+            for i, clave in enumerate(claves, start=1): #indice y key.
+                print(f"{i}- {clave.capitalize().replace('_', ' ')}") #reemplaza _ por espacio.
             dato = input("Ingrese el dato que desea cambiar: ")
 
             for i, clave in enumerate(claves, start=1):
-                if dato.lower() == clave.lower() or (dato.isdigit() and int(dato) == i):
-                    if clave in {"fecha_de_alta", "id"}:
+                if dato.lower() == clave.lower() or (dato.isdigit() and int(dato) == i): #osea si es igual a clave o a la opcion.
+                    if clave in ("fecha_de_alta", "id"): #TESTEAR SI FUNCIONA BIEN
                         print("Ese dato no se puede cambiar.")
                         input("Ingrese enter para salir.")
                         return
                     if clave == "asistencias":
-                        print("Para eso entrar al modulo registrar asistencias.")
+                        #print("Para eso entrar al modulo registrar asistencias.")
                         registrar_asistencia(datos_empleados)
                         return
                     if clave == "estado":
@@ -168,13 +169,13 @@ def asignar_roles(datos_empleados: dict):
             break
         elif opcion == "1":
             indice, empleado = util.seleccionar_item(
-                datos_empleados.get("empleados", []),
+                datos_empleados.get("empleados", []), #si no existe empleados, se pasa lista vacia para evitar errores.
                 "empleado",
                 "asignar roles",
             )
             if empleado:
                 rol = input(
-                    f"Ingrese el rol para el empleado {empleado['nombre']}: "
+                    f"Ingrese el rol para el empleado {empleado['nombre']}: " #seleccionas empleado en seleccionar item
                 )
                 empleado["rol"] = rol
                 util.guardar_datos_json(util.ARCHIVO_EMPLEADOS, datos_empleados)
@@ -296,7 +297,7 @@ def mostrar_empleados(datos_empleados: dict):
             util.limpiar_pantalla()
             if empleado_cual == "0":
                 break
-            headers = list(datos_empleados["empleados"][0].keys())
+            headers = list(datos_empleados["empleados"][0].keys()) #usamos los keys de empleados sub0 por que siempre son iguales, no hace falta recorrer otros.
             util.imprimir_tabla_x_paginas(
                 [header.capitalize() for header in headers],
                 datos_empleados["empleados"],
@@ -307,7 +308,7 @@ def mostrar_empleados(datos_empleados: dict):
 
 def validar_estado(data: dict, indice: int) -> bool:
     """
-    Valida el estado.
+    Valida el estado. No es opcion del menu, se utiliza en otras funciones.
 
     Pre: Recibe un diccionario y un entero.
     Post: Retorna un booleano.

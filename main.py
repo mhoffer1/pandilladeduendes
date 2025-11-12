@@ -48,7 +48,7 @@ def main_menu(
             print("Opcion invalida. Intente de nuevo.")
             input("Presione Enter para continuar...")
 
-
+#el unico menu en el main.
 def menu_reportes(datos_inventario, datos_ventas, datos_empleados):
     """Muestra el menu de reportes"""
     while True:
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     util.incializar_datos()  # primer uso, sino main_menu
 
     datos_inventario = util.cargar_datos_json(util.ARCHIVO_INVENTARIO)
-    datos_ventas = util.cargar_datos_json(util.ARCHIVO_VENTAS)
+    datos_ventas = util.cargar_datos_json(util.ARCHIVO_VENTAS) #se almacena el path de estos archivos.
     datos_empleados = util.cargar_datos_json(util.ARCHIVO_EMPLEADOS)
     datos_proveedores = util.cargar_datos_json(util.ARCHIVO_PROVEEDORES)
 

@@ -1,6 +1,6 @@
 #Sistema de Ventas Pandilla de Duendes
 
-##El sistema se encuentra dividido en distintos modulos con opciones internas, se puede acceder mediante un menu de opciones anidados, en varios modulos se comparte distinta informacion desde los Json. Por ejemplo: En ventas no solo se accede al.json de ventas, sino que al de inventario tambien. 
+##El sistema se encuentra dividido en distintos modulos con opciones internas, se puede acceder mediante un menu de opciones anidados, en varios modulos se comparte distinta informacion desde los Json. Por ejemplo: En ventas no solo se accede al.json de ventas, sino que al de inventario tambien.
 nota:Los ID en todo el ERP se manejan de manera secuencial(desde 1.)
 
 -Modulo 1, Ventas:
@@ -74,25 +74,24 @@ Las promociones establecen un nuevo precio_promocion que se usa automáticamente
 7.Buscar Producto (buscar_producto): Ofrece un menú de búsqueda avanzada con múltiples criterios de filtro: por Nombre, Categoría, Rango de Precio, Rango de Stock, Rotación (Alta/Baja) y Estado (Activo/Inactivo). Muestra los resultados en una tabla paginada.
 
 8.Mostrar Productos con Bajo Stock (alerta_stock_bajo): Genera alertas sobre productos cuyo stock es menor o igual a 20 unidades. Permite filtrar las alertas para ver solo los productos de Alta Rotación o ver la lista completa.
-                                    EJEMPLO DE JSON INVENTARIO:
-                                    {
-                                        "productos": [
-                                            {
-                                            "id": "1",
-                                            "nombre": "lapiz",
-                                            "costo": 300.0,
-                                            "precio": 1000.0,
-                                            "stock": 290,
-                                            "alta_rotacion": "si",
-                                            "categoria": "util escolar",
-                                            "fecha_alta": "2025-11-05",
-                                            "ultima_modificacion": "2025-11-05",
-                                            "estado": "activo"
-                                            }
-                                    ],
-                                    "prox_id": 2
-                                                            }
-
+EJEMPLO DE JSON INVENTARIO:
+{
+"productos": [
+{
+"id": "1",
+"nombre": "lapiz",
+"costo": 300.0,
+"precio": 1000.0,
+"stock": 290,
+"alta_rotacion": "si",
+"categoria": "util escolar",
+"fecha_alta": "2025-11-05",
+"ultima_modificacion": "2025-11-05",
+"estado": "activo"
+}
+],
+"prox_id": 2
+}
 
 -Modulo 3: Empleados.
 El sistema ofrece herramientas esenciales para la gestión del personal, reflejadas en las opciones de su menú principal:
@@ -108,21 +107,21 @@ El sistema ofrece herramientas esenciales para la gestión del personal, refleja
 Dar de Baja o Alta a un Empleado (dar_de_baja_alta): Controla el estado operativo de un empleado, alternándolo entre "Activo" e "Inactivo".
 
 Mostrar empleados (mostrar_empleados): Visualiza todos los empleados registrados en el sistema mediante una tabla paginada.
-                                    EJEMPLO DE JSON DE EMPLEADOS:
-                                                            {
-                                    "empleados": [
-                                        {
-                                        "id": "1",
-                                        "nombre": "Lucas Gamer",
-                                        "puesto": "Jefe",
-                                        "sueldo": 30000,
-                                        "fecha_de_alta": "2025-11-05",
-                                        "asistencias": [],
-                                        "estado": "Activo"
-                                        }
-                                    ],
-                                    "prox_id": 2
-                                                            }
+EJEMPLO DE JSON DE EMPLEADOS:
+{
+"empleados": [
+{
+"id": "1",
+"nombre": "Lucas Gamer",
+"puesto": "Jefe",
+"sueldo": 30000,
+"fecha_de_alta": "2025-11-05",
+"asistencias": [],
+"estado": "Activo"
+}
+],
+"prox_id": 2
+}
 
 -Modulo 4: Proveedores.
 Registrar Proveedor (registrar_provedores): Permite el alta de nuevos proveedores. Requiere que se ingrese al menos la marca o el tipo de producto con el que trabaja el proveedor para asegurar un registro. Registra automáticamente la fecha de alta.
@@ -160,7 +159,7 @@ Registrar Proveedor (registrar_provedores): Permite el alta de nuevos proveedore
                                         "prox_id": 3
                                                             }
 
--Modulo 5: Reportes. 
+-Modulo 5: Reportes.
 El módulo está dividido en tres áreas principales de análisis: Inventario, Ventas y Empleados.
 
 1.Reportes de Inventario. Incluye las siguientes 3 opciones:
@@ -189,7 +188,5 @@ El módulo está dividido en tres áreas principales de análisis: Inventario, V
 
     II.Reporte Sueldos (reporte_sueldos): Lista el sueldo de cada empleado. Proporciona Informacion clave general como sueldo mas bajo, mas alto, promedio.
 
-
-
 Con esto concluimos, en caso de surgir algun cambio en una version posterior, se añadira en novedades.md y se actualizara en este mismo archivo.
-                                                Att: Pandilla De Duendes.
+Att: Pandilla De Duendes.
