@@ -53,32 +53,37 @@ def registrar_empleados(datos_empleados: dict):
         if opcion == "0":
             break
         if opcion == "1":
+            sueldo_invalido = True
             while True:
+                if sueldo_invalido == False:
+                    break
                 nombre = input("Nombre completo: ")
                 puesto = input("Puesto: ")
-                try:
-                    sueldo = util.pedir_entero("Sueldo")
-                except ValueError:
-                    print("El sueldo debe ser un numero entero.")
-                    input("Presione enter para continuar...")
-                    continue
-                if sueldo > 50000:
-                    empleado = {
-                        "id": str(datos_empleados["prox_id"]),
-                        "nombre": nombre.title(),
-                        "puesto": puesto.title(),
-                        "sueldo": sueldo,
-                        "fecha_de_alta": str(datetime.now().date()),
-                        "asistencias": [],
-                        "estado": "Activo",
-                    }
-                    datos_empleados["prox_id"] += 1
-                    datos_empleados["empleados"].append(empleado)
-                    util.guardar_datos_json(util.ARCHIVO_EMPLEADOS, datos_empleados)
-                    print("Empleado agregado correctamente.")
-                    input("Presione Enter para continuar...")
-                    break
-                print("El sueldo debe ser mayor a 50000.")
+                while sueldo_invalido:
+                    try:
+                        sueldo = util.pedir_entero("Sueldo")
+                    except ValueError:
+                        print("El sueldo debe ser un numero entero.")
+                        input("Presione enter para continuar...")
+                        continue
+                    if sueldo > 50000:
+                        sueldo_invalido = False
+                        empleado = {
+                            "id": str(datos_empleados["prox_id"]),
+                            "nombre": nombre.title(),
+                            "puesto": puesto.title(),
+                            "sueldo": sueldo,
+                            "fecha_de_alta": str(datetime.now().date()),
+                            "asistencias": [],
+                            "estado": "Activo",
+                        }
+                        datos_empleados["prox_id"] += 1
+                        datos_empleados["empleados"].append(empleado)
+                        util.guardar_datos_json(util.ARCHIVO_EMPLEADOS, datos_empleados)
+                        print("Empleado agregado correctamente.")
+                        input("Presione Enter para continuar...")
+                        break
+                    print("El sueldo debe ser mayor a $50000.")
         else:
             util.limpiar_pantalla()
             util.imprimir_titulo("registrar empleados")
@@ -89,7 +94,6 @@ def registrar_empleados(datos_empleados: dict):
 def editar_datos_de_empleados(datos_empleados: dict):
     """
     Permite editar un atributo de un empleado al usuario.
-
     Pre: No recibe nada como parámetro.
     Post: No retorna nada, modifica un atributo del JSON.
     """
@@ -109,7 +113,7 @@ def editar_datos_de_empleados(datos_empleados: dict):
             for i, clave in enumerate(claves, start=1): #indice y key.
                 print(f"{i}- {clave.capitalize().replace('_', ' ')}") #reemplaza _ por espacio.
             dato = input("Ingrese el dato que desea cambiar: ")
-
+            
             for i, clave in enumerate(claves, start=1):
                 if dato.lower() == clave.lower() or (dato.isdigit() and int(dato) == i): #osea si es igual a clave o a la opcion.
                     if clave in ("fecha_de_alta", "id"): #TESTEAR SI FUNCIONA BIEN

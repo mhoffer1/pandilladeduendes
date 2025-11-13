@@ -56,7 +56,7 @@ def registrar_provedores(datos_proveedores: dict):
         if opcion == "0":
             break
         elif opcion == "1":
-            nombre = input("Ingrese el nombre del proveedor.").strip().lower()
+            nombre = input("Ingrese el nombre del proveedor:").strip().lower()
             marca = input(
                 "Ingrese la marca con la que trabaja el proveedor (De no haber presionar Enter): "
             ).lower().strip()
