@@ -263,13 +263,11 @@ def seleccionar_item(lista_datos: list[dict], nombre_item: str, tarea: str) -> t
                 indice_original, item = elementos_disponibles[posicion - 1]
                 return indice_original, item
 
+        seleccion_normalizado = seleccion.lower()
         for indice_original, item in elementos_disponibles:
             nombre = item.get("nombre", "")
-            if seleccion.isdigit() and int(seleccion) - 1 == indice:
-                return indice, item
-            if isinstance(nombre, str) and seleccion.lower() == nombre.lower(): 
-                #verifica que sea str y que el nombre coincida.
-                return indice, item
+            if isinstance(nombre, str) and seleccion_normalizado == nombre.lower():
+                return indice_original, item
 
         print(f"No se encontro ese {nombre_item.lower()}.")
         input("Presione Enter para intentarlo nuevamente...")

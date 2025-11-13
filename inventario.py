@@ -125,7 +125,7 @@ def ver_todos_los_productos(datos_inventario: dict):
     Pre: Recibe un diccionario de parámetro
     Post: No retorna nada.
     """
-    productos = datos_inventario.get("productos", [])
+    productos = _productos_disponibles(datos_inventario)
     if not productos:
         util.limpiar_pantalla()
         util.imprimir_titulo("Productos en inventario")
@@ -457,7 +457,7 @@ def buscar_producto(datos_inventario: dict):
             break
         elif opcion == "1":
             util.limpiar_pantalla()
-            if not datos_inventario.get("productos"):
+            if not _productos_disponibles(datos_inventario):
                 print("No se encontraron productos cargados.")
                 input("Presione Enter para continuar...")
                 break
@@ -480,7 +480,7 @@ def buscar_producto(datos_inventario: dict):
                     break
 
                 util.limpiar_pantalla()
-                lista_productos = datos_inventario.get("productos", [])
+                lista_productos = _productos_disponibles(datos_inventario)
 
                 if op == "1":
                     coincidencias = buscar_por_nombre(lista_productos)

@@ -14,6 +14,7 @@ def _productos_por_id(datos_inventario: dict) -> dict:
         producto.get("id"): producto
         for producto in datos_inventario.get("productos", [])
         if producto.get("id") is not None
+        and not producto.get("eliminado", False)
     }
 
 
