@@ -133,6 +133,10 @@ def registrar_pedidos(datos_proveedores: dict) -> None:
         prod = input("Ingrese el producto que quiere pedir(0 para salir):").strip()
         if prod == "0":
             break
+        elif not prod:
+            print("Dato invalido.")
+            input("enter para continuar...")
+            break
         while True:
             cantidad = util.pedir_entero("la cantidad de productos:")
             if cantidad > 0:
