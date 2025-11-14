@@ -75,24 +75,24 @@ Las promociones establecen un nuevo precio_promocion que se usa automáticamente
 
 8.Mostrar Productos con Bajo Stock (alerta_stock_bajo): Genera alertas sobre productos cuyo stock es menor o igual a 20 unidades. Permite filtrar las alertas para ver solo los productos de Alta Rotación o ver la lista completa.
 EJEMPLO DE JSON INVENTARIO:
-{
-"productos": [
-{
-"id": "1",
-"nombre": "lapiz",
-"costo": 300.0,
-"precio": 1000.0,
-"stock": 290,
-"alta_rotacion": "si",
-"categoria": "util escolar",
-"fecha_alta": "2025-11-05",
-"ultima_modificacion": "2025-11-05",
-"estado": "activo"
-}
-],
-"prox_id": 2
-}
 
+                                        {
+                                        "productos": [
+                                            {
+                                            "id": "1",
+                                            "nombre": "lapiz",
+                                            "costo": 300.0,
+                                            "precio": 1000.0,
+                                            "stock": 290,
+                                            "alta_rotacion": "si",
+                                            "categoria": "util escolar",
+                                            "fecha_alta": "2025-11-05",
+                                            "ultima_modificacion": "2025-11-05",
+                                            "estado": "activo"
+                                            }
+                                        ],
+                                        "prox_id": 2
+                                                             }
 -Modulo 3: Empleados.
 El sistema ofrece herramientas esenciales para la gestión del personal, reflejadas en las opciones de su menú principal:
 
@@ -107,22 +107,23 @@ El sistema ofrece herramientas esenciales para la gestión del personal, refleja
 Dar de Baja o Alta a un Empleado (dar_de_baja_alta): Controla el estado operativo de un empleado, alternándolo entre "Activo" e "Inactivo".
 
 Mostrar empleados (mostrar_empleados): Visualiza todos los empleados registrados en el sistema mediante una tabla paginada.
-EJEMPLO DE JSON DE EMPLEADOS:
-{
-"empleados": [
-{
-"id": "1",
-"nombre": "Lucas Gamer",
-"puesto": "Jefe",
-"sueldo": 30000,
-"fecha_de_alta": "2025-11-05",
-"asistencias": [],
-"estado": "Activo"
-}
-],
-"prox_id": 2
-}
 
+EJEMPLO DE JSON DE EMPLEADOS:
+
+                                        {
+                                        "empleados": [
+                                            {
+                                            "id": "1",
+                                            "nombre": "Lucas Gamer",
+                                            "puesto": "Jefe",
+                                            "sueldo": 30000,
+                                            "fecha_de_alta": "2025-11-05",
+                                            "asistencias": [],
+                                            "estado": "Activo"
+                                            }
+                                        ],
+                                        "prox_id": 2
+                                                             }
 -Modulo 4: Proveedores.
 Registrar Proveedor (registrar_provedores): Permite el alta de nuevos proveedores. Requiere que se ingrese al menos la marca o el tipo de producto con el que trabaja el proveedor para asegurar un registro. Registra automáticamente la fecha de alta.
 
