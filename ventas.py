@@ -79,22 +79,10 @@ def _obtener_productos_activos(datos_inventario: dict) -> list[dict]:
 
 
 def _buscar_producto_por_id(datos_inventario: dict, producto_id: str) -> dict | None:
-    """
-    Obtiene un producto por su ID.
-
-    Pre: Recibe un diccionario y un string como parámetro.
-    Post: Retorna un None o un diccionario.
-    """
-
-    return next(
-        (
-            producto
-            for producto in datos_inventario.get("productos", [])
-            if producto.get("id") == producto_id
-            and not producto.get("eliminado", False)
-        ),
-        None,
-    )
+    for producto in datos_inventario.get("productos", []):
+        if (producto.get("id") == producto_id and not producto.get("eliminado", False)):
+            return producto
+    return None
 
 
 def _calcular_totales(items_venta: dict[str, dict], descuento: float) -> tuple[float, float]:
