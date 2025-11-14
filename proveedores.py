@@ -3,7 +3,7 @@ from datetime import datetime
 import utilidades as util
 
 
-def menu_proveedores(datos_proveedores: dict):
+def menu_proveedores(datos_proveedores: dict)->None:
     """
     Menu principal de proveedores.
 
@@ -37,7 +37,7 @@ def menu_proveedores(datos_proveedores: dict):
             input("Presione Enter para continuar...")
 
 
-def registrar_provedores(datos_proveedores: dict):
+def registrar_provedores(datos_proveedores: dict)->None:
     """
     Permite registrar proveedores.
 
@@ -84,7 +84,7 @@ def registrar_provedores(datos_proveedores: dict):
                 input("Enter para continuar.")
 
 
-def pedidos(datos_proveedores: dict):
+def pedidos(datos_proveedores: dict)->None:
     """
     Gestiona los pedidos a proveedores.
 
@@ -226,7 +226,7 @@ def busqueda_proveedor(proveedores: list[dict], a_buscar: str) -> list[dict]:
     return coincidencias
 
 
-def buscar_proveedor(datos_proveedores: dict):
+def buscar_proveedor(datos_proveedores: dict)->None:
     """
     Permite buscar proveedores por diferentes criterios.
 
@@ -290,7 +290,7 @@ def buscar_proveedor(datos_proveedores: dict):
             input("Presione Enter para continuar...")
 
 
-def mostrar_proveedores(datos_proveedores: dict):
+def mostrar_proveedores(datos_proveedores: dict)->None:
     """
     Muestra los proveedores y sus datos.
 

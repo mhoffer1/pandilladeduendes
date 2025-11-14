@@ -13,7 +13,7 @@ def _productos_disponibles(datos_inventario: dict) -> list[dict]:
     ]
 
 
-def menu_inventario(datos_inventario: dict, datos_ventas: dict):
+def menu_inventario(datos_inventario: dict, datos_ventas: dict)->None:
     """Muestra el menu de inventario"""
     while True:
         util.limpiar_pantalla()
@@ -55,7 +55,7 @@ def menu_inventario(datos_inventario: dict, datos_ventas: dict):
             input("Presione Enter para continuar...")
 
 
-def agregar_producto(datos_inventario: dict):
+def agregar_producto(datos_inventario: dict)->None:
     """
     Permite agregar productos.
 
@@ -115,7 +115,7 @@ def agregar_producto(datos_inventario: dict):
         input("Presione Enter para continuar...")
 
 
-def ver_todos_los_productos(datos_inventario: dict):
+def ver_todos_los_productos(datos_inventario: dict)->None:
     """
     Permite visualizar todos los productos.
 
@@ -145,7 +145,7 @@ def ver_todos_los_productos(datos_inventario: dict):
     util.imprimir_tabla_x_paginas(headers, productos, "Productos en Inventario")
 
 
-def detalles_producto(datos_inventario: dict):
+def detalles_producto(datos_inventario: dict)->None:
     """
     Permite visualizar los detalles de los productos.
 
@@ -166,7 +166,7 @@ def detalles_producto(datos_inventario: dict):
         input("\nPresione Enter para continuar...")
 
 
-def actualizar_producto(datos_inventario: dict):
+def actualizar_producto(datos_inventario: dict)->None:
     """
     Permite actualizar datos de un producto.
 
@@ -229,7 +229,7 @@ def actualizar_producto(datos_inventario: dict):
         input("Presione enter.")
 
 
-def estado_producto(datos_inventario: dict):
+def estado_producto(datos_inventario: dict)->None:
     """
     Permite cambiar el estado de un producto.
 
@@ -267,7 +267,7 @@ def estado_producto(datos_inventario: dict):
         input("Presione Enter para continuar...")
 
 
-def eliminar_producto(datos_inventario: dict, datos_ventas: dict):
+def eliminar_producto(datos_inventario: dict, datos_ventas: dict)->None:
     """
     Permite eliminar productos.
 

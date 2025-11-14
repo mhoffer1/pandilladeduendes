@@ -17,7 +17,7 @@ def _productos_por_id(datos_inventario: dict) -> dict:
     }
 
 
-def mostrar_reporte_inventario(datos_inventario: dict):
+def mostrar_reporte_inventario(datos_inventario: dict)->None:
     """
     Permite el reporte de inventario
 
@@ -47,7 +47,7 @@ def mostrar_reporte_inventario(datos_inventario: dict):
             input("Presione Enter para continuar...")
 
 
-def ver_valor_del_inventario(datos_inventario: dict):
+def ver_valor_del_inventario(datos_inventario: dict)->None:
     """
     Permite ver valores generales del inventario.
 
@@ -72,7 +72,7 @@ def ver_valor_del_inventario(datos_inventario: dict):
     input("Enter para continuar...")
 
 
-def ver_inactivos(datos_inventario: dict):
+def ver_inactivos(datos_inventario: dict)->None:
     """
     Permite ver inactivos
 
@@ -91,7 +91,7 @@ def ver_inactivos(datos_inventario: dict):
     input("enter para continuar...")
 
 
-def valor_inventario_por_categoria(datos_inventario: dict):
+def valor_inventario_por_categoria(datos_inventario: dict)->None:
     """
     Resume el valor y stock disponible agrupado por categoria.
 
@@ -149,7 +149,7 @@ def valor_inventario_por_categoria(datos_inventario: dict):
 
 def mostrar_reporte_venta(
     datos_ventas: dict, datos_inventario: dict, datos_empleados: dict
-):
+)->None:
     """
     Permite ver el reporte de venta.
 
@@ -186,7 +186,7 @@ def mostrar_reporte_venta(
             input("Presione Enter para continuar...")
 
 
-def mostrar_reporte_por_periodo(datos_ventas: dict):
+def mostrar_reporte_por_periodo(datos_ventas: dict)->None:
     """
     Muestra reportes por período.
 
@@ -217,7 +217,7 @@ def mostrar_reporte_por_periodo(datos_ventas: dict):
             input("enter para continuar.")
 
 
-def _generar_reporte_ventas(datos_ventas: dict, formato_fecha: str, titulo: str):
+def _generar_reporte_ventas(datos_ventas: dict, formato_fecha: str, titulo: str)->None:
     """
     Permite generar reportes de ventas.
 
@@ -251,7 +251,7 @@ def _generar_reporte_ventas(datos_ventas: dict, formato_fecha: str, titulo: str)
     input("Enter para continuar...")
 
 
-def reporte_ventas_por_empleado(datos_ventas: dict, datos_empleados: dict):
+def reporte_ventas_por_empleado(datos_ventas: dict, datos_empleados: dict)->None:
     """
     Muestra reportes de ventas por empleado.
 
@@ -283,7 +283,7 @@ def reporte_ventas_por_empleado(datos_ventas: dict, datos_empleados: dict):
     input("Enter para continuar...")
 
 
-def reporte_top_productos(datos_ventas: dict, datos_inventario: dict):
+def reporte_top_productos(datos_ventas: dict, datos_inventario: dict)->None:
     """
     Muestra los productos en orden.
 
@@ -500,7 +500,7 @@ def reporte_asistencias(datos_empleados: dict) -> None:
     input("Enter para continuar...")
 
 
-def reporte_sueldos(datos_empleados: dict):
+def reporte_sueldos(datos_empleados: dict)->None:
     """
     Se visualizan todos los sueldos.
 
