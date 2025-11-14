@@ -32,7 +32,7 @@ def mostrar_reporte_inventario(datos_inventario: dict)->None:
             "Ver valor por categoria",
             "salir",
         )
-        util.opciones("buscar producto", opciones_alertas)
+        util.opciones("REPORTES INVENTARIO", opciones_alertas)
         opcion = input("Ingrese una opcion : ")
         if opcion == "0":
             break
@@ -463,7 +463,7 @@ def mostrar_reporte_empleados(datos_empleados: dict) -> None:
         util.limpiar_pantalla()
         opciones_empleados = ("reporte asistencias", "reporte sueldos.", "salir")
 
-        util.opciones("REPORTES VENTA", opciones_empleados)
+        util.opciones("REPORTES EMPLEADOS", opciones_empleados)
         opcion = input("Ingrese  una opcion: ")
 
         if opcion == "0":

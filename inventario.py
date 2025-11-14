@@ -194,9 +194,11 @@ def actualizar_producto(datos_inventario: dict)->None:
         datos = (producto['precio'], producto['nombre'].title(), producto['costo'], producto['stock'], producto['categoria'].title(), producto['alta_rotacion'].title())
         titulos = ("Precio", "Nombre", "Costo", "Stock", "Categoría", "Alta Rotación")
 
+        contador = 0
         for dato, titulo in zip(datos, titulos):
+            contador += 1
             simbolo = "$" if isinstance(dato, float) else ""
-            print(f"{titulo}: {simbolo}{dato}")
+            print(f"{contador}- {titulo}: {simbolo}{dato}")
 
         opcion = input("Ingrese que desea actualizar: ").strip()
         if opcion == "1":
