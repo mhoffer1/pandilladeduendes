@@ -6,7 +6,6 @@ import utilidades as util
 
 def _productos_por_id(datos_inventario: dict) -> dict:
     """Genera un mapeo rapido de ID de producto a su informacion.
-
     Pre: Recibe un diccionario como parámetro.
     Post: Retorna un diccionario.
     """

@@ -201,7 +201,16 @@ def pedir_float(nombre: str, max: int=1000000.0, min: int=1.0) -> float:
             continue
         else:
             return flotante
-
+def pedir_str(titulo:str)->None:
+    """
+    Se solicita un string y se valida que no sea vacio.
+    """
+    while True:
+        string= input(f"Ingrese un {titulo}: ").strip().lower()
+        if string:
+            return string
+        else:
+            print("Ingrese un dato.")
 
 def listar_datos(elemento: dict) -> None:
     """
@@ -306,3 +315,4 @@ def ingresar(tarea:str)->int:
     limpiar_pantalla()
     imprimir_titulo(tarea)
     return opcion
+

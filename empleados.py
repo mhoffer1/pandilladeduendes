@@ -37,7 +37,7 @@ def menu_empleados(datos_empleados: dict):
             input("Presione Enter para continuar...")
 
 
-def registrar_empleados(datos_empleados: dict):
+def registrar_empleados(datos_empleados: dict)->None:
     """
     Permite registrar empleados al usuario.
 
@@ -53,37 +53,27 @@ def registrar_empleados(datos_empleados: dict):
         if opcion == "0":
             break
         if opcion == "1":
-            sueldo_invalido = True
-            while True:
-                if sueldo_invalido == False:
-                    break
-                nombre = input("Nombre completo: ")
-                puesto = input("Puesto: ")
-                while sueldo_invalido:
-                    try:
-                        sueldo = util.pedir_entero("Sueldo")
-                    except ValueError:
-                        print("El sueldo debe ser un numero entero.")
-                        input("Presione enter para continuar...")
-                        continue
-                    if sueldo > 50000:
-                        sueldo_invalido = False
-                        empleado = {
-                            "id": str(datos_empleados["prox_id"]),
-                            "nombre": nombre.title(),
-                            "puesto": puesto.title(),
-                            "sueldo": sueldo,
-                            "fecha_de_alta": str(datetime.now().date()),
-                            "asistencias": [],
-                            "estado": "Activo",
-                        }
-                        datos_empleados["prox_id"] += 1
-                        datos_empleados["empleados"].append(empleado)
-                        util.guardar_datos_json(util.ARCHIVO_EMPLEADOS, datos_empleados)
-                        print("Empleado agregado correctamente.")
-                        input("Presione Enter para continuar...")
-                        break
-                    print("El sueldo debe ser mayor a $50000.")
+             
+            nombre = util.pedir_str("nombre completo")
+            puesto = util.pedir_str("puesto")
+            sueldo = util.pedir_entero("Sueldo(minimo $50000)",min=500000)
+            
+            empleado = {
+                "id": str(datos_empleados["prox_id"]),
+                "nombre": nombre.title(),
+                "puesto": puesto.title(),
+                "sueldo": sueldo,
+                "fecha_de_alta": str(datetime.now().date()),
+                "asistencias": [],
+                "estado": "Activo",
+            }
+            datos_empleados["prox_id"] += 1
+            datos_empleados["empleados"].append(empleado)
+            util.guardar_datos_json(util.ARCHIVO_EMPLEADOS, datos_empleados)
+            print("Empleado agregado correctamente.")
+            input("Presione Enter para continuar...")
+            break
+            
         else:
             util.limpiar_pantalla()
             util.imprimir_titulo("registrar empleados")
@@ -91,7 +81,7 @@ def registrar_empleados(datos_empleados: dict):
             input("Presione Enter para continuar...")
 
 
-def editar_datos_de_empleados(datos_empleados: dict):
+def editar_datos_de_empleados(datos_empleados: dict)->None:
     """
     Permite editar un atributo de un empleado al usuario.
     Pre: No recibe nada como parámetro.
@@ -100,50 +90,36 @@ def editar_datos_de_empleados(datos_empleados: dict):
     while True:
         op = util.ingresar("editar empleados")
         if op == "1":
-            indice, empleado = util.seleccionar_item(
-                datos_empleados.get("empleados", []),
-                "empleado",
-                "EDITAR EMPLEADO",
-            )
+            indice, empleado = util.seleccionar_item(datos_empleados.get("empleados", []),"empleado","EDITAR EMPLEADO")
             if empleado is None:
                 continue
-
+            util.limpiar_pantalla()
+            util.imprimir_titulo("EDITAR EMPLEADO")
             print("Que dato desea cambiar: ")
-            claves = list(empleado.keys())
-            for i, clave in enumerate(claves, start=1): #indice y key.
+            #claves = list(empleado.keys())
+            claves = [clave for clave in empleado.keys() if clave not in ("fecha_de_alta","id","asistencias")]
+            for i, clave in enumerate(claves,start= 1): 
                 print(f"{i}- {clave.capitalize().replace('_', ' ')}") #reemplaza _ por espacio.
             dato = input("Ingrese el dato que desea cambiar: ")
-            
+
             for i, clave in enumerate(claves, start=1):
                 if dato.lower() == clave.lower() or (dato.isdigit() and int(dato) == i): #osea si es igual a clave o a la opcion.
-                    if clave in ("fecha_de_alta", "id"): #TESTEAR SI FUNCIONA BIEN
-                        print("Ese dato no se puede cambiar.")
-                        input("Ingrese enter para salir.")
-                        return
-                    if clave == "asistencias":
-                        #print("Para eso entrar al modulo registrar asistencias.")
-                        registrar_asistencia(datos_empleados)
-                        return
                     if clave == "estado":
-                        print(f"El estado actual es {empleado[clave]}")
-                        op_estado = input(
-                            "Ingrese 1 para cambiar, 0 u otro para retroceder:"
-                        )
-                        if op_estado == "1":
-                            empleado[clave] = (
-                                "Inactivo" if empleado[clave] == "Activo" else "Activo"
-                            )
-                            util.guardar_datos_json(
-                                util.ARCHIVO_EMPLEADOS, datos_empleados
-                            )
-                            print("Cambio realizado con exito.")
-                        input("enter para continuar...")
-                        return
-
-                    nuevo_dato = input(
-                        f"Ingrese el nuevo valor para '{clave}': "
-                    )
+                        estado = empleado.get(clave)
+                        print(f"El estado actual es {estado}")
+                        op = input("Ingrese 1 si desea alternarlo:")
+                        if op == "1":
+                            if estado == "activo":
+                                nuevo_dato = "inactivo"
+                            else:
+                                nuevo_dato = "activo"
+                        else:
+                            break
+                    else:
+                        nuevo_dato = util.pedir_entero(f"Nuevo sueldo",min=50000 ) if clave == "sueldo" else util.pedir_str(f"Nuevo valor de {clave}:").lower()
+                    
                     empleado[clave] = nuevo_dato
+
                     util.guardar_datos_json(
                         util.ARCHIVO_EMPLEADOS, datos_empleados
                     )
@@ -152,15 +128,15 @@ def editar_datos_de_empleados(datos_empleados: dict):
                     return
 
             print("No existe ese dato.")
-            input("Enter")
+            input("Enter para continuar...")
         elif op == "0":
-            input("Ingrese enter para salir.")
+            input("Ingrese enter para salir...")
             break
         else:
             print("Opcion incorrecta.")
 
 
-def asignar_roles(datos_empleados: dict):
+def asignar_roles(datos_empleados: dict)->None:
     """
     Permite al usuario asignarle un rol a un empleado.
 
@@ -178,9 +154,7 @@ def asignar_roles(datos_empleados: dict):
                 "asignar roles",
             )
             if empleado:
-                rol = input(
-                    f"Ingrese el rol para el empleado {empleado['nombre']}: " #seleccionas empleado en seleccionar item
-                )
+                rol = util.pedir_str("rol")
                 empleado["rol"] = rol
                 util.guardar_datos_json(util.ARCHIVO_EMPLEADOS, datos_empleados)
                 print("Rol actualizado correctamente.")
@@ -192,7 +166,7 @@ def asignar_roles(datos_empleados: dict):
             input("Presione Enter para continuar...")
 
 
-def registrar_asistencia(datos_empleados: dict):
+def registrar_asistencia(datos_empleados: dict)->None:
     """
     Permite al usuario registrar asistencias de los empleados.
 
@@ -229,7 +203,7 @@ def registrar_asistencia(datos_empleados: dict):
             input("Presione Enter para salir...")
 
 
-def dar_de_baja_alta(datos_empleados: dict):
+def dar_de_baja_alta(datos_empleados: dict)->None:
     """
     Permite al usuario dar de baja o de alta a un empleado.
 

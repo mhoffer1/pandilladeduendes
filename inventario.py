@@ -76,42 +76,42 @@ def agregar_producto(datos_inventario: dict):
 
         if opcion == "1":
             while True:
-                nombre = input("Ingrese el nombre del producto: ").strip().lower()
+                nombre = util.pedir_str("nombre del producto").strip().lower()
 
                 costo = util.pedir_float("costo")
-                precio = util.pedir_float("precio de venta")
-                stock = util.pedir_entero("stock")
+                precio = util.pedir_float("precio de venta",min=costo +1 )
+                stock = util.pedir_entero("stock") #min default es 1.
 
-                categoria = input("Ingrese la categoria del producto: ").strip().lower()
+                categoria = util.pedir_str("Ingrese la categoria del producto: ")
 
-                if precio > costo and precio > 50 and stock > 0:
-                    alta_rotacion = input(
-                        "Es un producto de alta rotacion? (1 si, 0 u otra tecla no.)"
-                    )
-                    alta_rotacion = "si" if alta_rotacion == "1" else "no"
+                
+                alta_rotacion = input(
+                    "Es un producto de alta rotacion? (1 si, 0 u otra tecla no.)"
+                )
+                alta_rotacion = "si" if alta_rotacion == "1" else "no"
 
-                    producto = {
-                        "id": str(datos_inventario["prox_id"]),
-                        "nombre": nombre,
-                        "costo": costo,
-                        "precio": precio,
-                        "stock": stock,
-                        "alta_rotacion": alta_rotacion,
-                        "categoria": categoria,
-                        "fecha_alta": str(datetime.now().date()),
-                        "ultima_modificacion": str(datetime.now().date()),
-                        "estado": "activo",
-                        "eliminado": False,
-                    }
-                    datos_inventario["productos"].append(producto)
-                    datos_inventario["prox_id"] += 1
-                    util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
-                    print("Se agrego el producto correctamente.")
-                    input("Presione Enter para continuar...")
-                    break
-
-                print("precio invalido.")
+                producto = {
+                    "id": str(datos_inventario["prox_id"]),
+                    "nombre": nombre,
+                    "costo": costo,
+                    "precio": precio,
+                    "stock": stock,
+                    "alta_rotacion": alta_rotacion,
+                    "categoria": categoria,
+                    "fecha_alta": str(datetime.now().date()),
+                    "ultima_modificacion": str(datetime.now().date()),
+                    "estado": "activo",
+                    "eliminado": False,
+                }
+                datos_inventario["productos"].append(producto)
+                datos_inventario["prox_id"] += 1
+                util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
+                print("Se agrego el producto correctamente.")
                 input("Presione Enter para continuar...")
+                break
+
+            print("precio invalido.")
+            input("Presione Enter para continuar...")
             continue
 
         print("Opcion invalida. Intente de nuevo.")
@@ -205,14 +205,14 @@ def actualizar_producto(datos_inventario: dict):
         if opcion == "1":
             producto["precio"] = util.pedir_float("un nuevo precio")
         elif opcion == "2":
-            nuevo_nombre = input("Ingrese el nombre que desea modificar: ").strip().lower()
+            nuevo_nombre = util.pedir_str("nombre")
             producto["nombre"] = nuevo_nombre
         elif opcion == "3":
             producto["costo"] = util.pedir_float("el nuevo costo")
         elif opcion == "4":
             producto["stock"] = util.pedir_entero("el nuevo stock")
         elif opcion == "5":
-            nueva_categoria = input("Ingrese la nueva categoria: ").strip().lower()
+            nueva_categoria = util.pedir_str("nueva categoria")
             producto["categoria"] = nueva_categoria
         elif opcion == "6":
             alta_rotacion = input(
@@ -441,7 +441,7 @@ def buscar_por_estado(productos: list[dict]) -> list[dict]:
     return coincidencias
 
 
-def buscar_producto(datos_inventario: dict):
+def buscar_producto(datos_inventario: dict)->None:
     """
     Permite buscar un producto en el JSON.
 
@@ -524,7 +524,7 @@ def buscar_producto(datos_inventario: dict):
             input("Presione Enter para continuar...")
 
 
-def alerta_stock_bajo(datos_inventario: dict):
+def alerta_stock_bajo(datos_inventario: dict)->None:
     """
     Permite visualizar alerta de stock bajo.
 

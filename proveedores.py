@@ -56,7 +56,7 @@ def registrar_provedores(datos_proveedores: dict):
         if opcion == "0":
             break
         elif opcion == "1":
-            nombre = input("Ingrese el nombre del proveedor:").strip().lower()
+            nombre = util.pedir_str("nombre proveedor")
             marca = input(
                 "Ingrese la marca con la que trabaja el proveedor (De no haber presionar Enter): "
             ).lower().strip()
@@ -158,14 +158,18 @@ def ver_pedidos(datos_proveedores: dict) -> None:
     Pre: Recibe un diccionario como parámetro.
     Post: No retorna nada.
     """
-    listado = 1
+    listado = 0
     for proveedor in datos_proveedores.get("proveedores", []):
         if len(proveedor.get("pedido", [])) > 0:
-            print(f"{listado}.{proveedor['nombre']}")
             listado += 1
+            print(f"{listado}.{proveedor['nombre']}")
+            
             for producto, cantidad in proveedor["pedido"]:
                 print(f"-{producto}:{cantidad}")
-    input("enter para continuar...")
+    if not listado:
+        print("No hay pedidos cargados.")
+    input("Enter para continuar...")
+    
 
 
 def eliminar_pedidos(datos_proveedores: dict) -> None:
