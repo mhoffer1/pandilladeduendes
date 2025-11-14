@@ -107,12 +107,9 @@ def agregar_producto(datos_inventario: dict):
                 datos_inventario["prox_id"] += 1
                 util.guardar_datos_json(util.ARCHIVO_INVENTARIO, datos_inventario)
                 print("Se agrego el producto correctamente.")
+            
                 input("Presione Enter para continuar...")
-                break
-
-            print("precio invalido.")
-            input("Presione Enter para continuar...")
-            continue
+                return
 
         print("Opcion invalida. Intente de nuevo.")
         input("Presione Enter para continuar...")
