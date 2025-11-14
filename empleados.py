@@ -2,7 +2,7 @@ import utilidades as util
 from datetime import datetime
 
 
-def menu_empleados(datos_empleados: dict):
+def menu_empleados(datos_empleados: dict)->None:
     """Muestra el menu de empleados"""
     while True:
         util.limpiar_pantalla()
@@ -254,7 +254,7 @@ def dar_de_baja_alta(datos_empleados: dict)->None:
             input("Presione Enter para salir...")
 
 
-def mostrar_empleados(datos_empleados: dict):
+def mostrar_empleados(datos_empleados: dict)->None:
     """
     Permite al usuario visualizar los empleados.
 
