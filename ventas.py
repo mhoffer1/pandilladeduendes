@@ -36,7 +36,7 @@ def impr_factura_venta(datos_venta: dict) -> None:
     Pre: Recibe un diccionario como parámetro.
     Post: No retorna nada.
     """
-
+    util.limpiar_pantalla()
     util.imprimir_titulo("factura de venta")
     print(f"ID DE VENTA: {util.formatear_id(datos_venta['id'])}")
     print(f"FECHA DE EMISIÓN: {datos_venta['fecha_venta']}")
